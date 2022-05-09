@@ -55,6 +55,10 @@ if(${FRAMEWORK} STREQUAL ros)
     add_benchmark_executable(autoware_default_cbg
       src/ros2/executor/autoware_default_cbg.cpp)
   endif()
+
+  # New fixed priority executor that outsources scheduling to Linux FIFO scheduler
+  add_benchmark_executable(autoware_washu_fifo
+    src/ros2/executor/autoware_washu_fifo.cpp)
 endif()
 
 # Add new executors to test here
