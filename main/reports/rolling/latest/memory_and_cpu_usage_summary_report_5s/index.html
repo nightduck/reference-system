@@ -1,0 +1,1862 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <meta name="author" content="Evan Flynn">
+      
+      
+        <link rel="canonical" href="https://ros-realtime.github.io/reference-system/main/reports/rolling/latest/memory_and_cpu_usage_summary_report_5s/">
+      
+      <link rel="icon" href="../../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-7.3.6">
+    
+    
+      
+        <title>Memory and CPU usage report - Reference System Documentation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../assets/stylesheets/main.a57b2b03.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../../assets/stylesheets/palette.3f5d1f46.min.css">
+        
+      
+    
+    
+    
+      
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>:root{--md-text-font-family:"Roboto";--md-code-font-family:"Roboto Mono"}</style>
+      
+    
+    
+    
+    
+      
+
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="none" data-md-color-accent="none">
+  
+    
+    <script>function __prefix(e){return new URL("../../../..",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#memory-and-cpu-usage-report" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../../.." title="Reference System Documentation" class="md-header__button md-logo" aria-label="Reference System Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Reference System Documentation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Memory and CPU usage report
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        
+<a href="https://github.com/ros-realtime/reference-system.git/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../../.." title="Reference System Documentation" class="md-nav__button md-logo" aria-label="Reference System Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    Reference System Documentation
+  </label>
+  
+    <div class="md-nav__source">
+      
+<a href="https://github.com/ros-realtime/reference-system.git/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../.." class="md-nav__link">
+        Home
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../the-reference-system/" class="md-nav__link">
+        Reference System
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../the-autoware-reference-system/" class="md-nav__link">
+        Autoware Reference System
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" checked>
+      
+      
+      
+        
+          
+            
+          
+        
+          
+        
+          
+        
+      
+      
+        
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../../../">Reports</a>
+          
+            <label for="__nav_4">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
+      <nav class="md-nav" aria-label="Reports" data-md-level="1">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          Reports
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_2" type="checkbox" id="__nav_4_2" >
+      
+      
+      
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_4_2">
+          Humble
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Humble" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_2">
+          <span class="md-nav__icon md-icon"></span>
+          Humble
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_2_1" type="checkbox" id="__nav_4_2_1" >
+      
+      
+      
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_4_2_1">
+          2024 02 22 22 50 04
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="2024 02 22 22 50 04" data-md-level="3">
+        <label class="md-nav__title" for="__nav_4_2_1">
+          <span class="md-nav__icon md-icon"></span>
+          2024 02 22 22 50 04
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../humble/2024-02-22-22-50-04/executor_kpi_summary_report_5s/" class="md-nav__link">
+        Key performance indicator report
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../humble/2024-02-22-22-50-04/memory_and_cpu_usage_summary_report_5s/" class="md-nav__link">
+        Memory and CPU usage report
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_2_2" type="checkbox" id="__nav_4_2_2" >
+      
+      
+      
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_4_2_2">
+          Latest
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Latest" data-md-level="3">
+        <label class="md-nav__title" for="__nav_4_2_2">
+          <span class="md-nav__icon md-icon"></span>
+          Latest
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../humble/latest/executor_kpi_summary_report_5s/" class="md-nav__link">
+        Key performance indicator report
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../humble/latest/memory_and_cpu_usage_summary_report_5s/" class="md-nav__link">
+        Memory and CPU usage report
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_3" type="checkbox" id="__nav_4_3" checked>
+      
+      
+      
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_4_3">
+          Rolling
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Rolling" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_3">
+          <span class="md-nav__icon md-icon"></span>
+          Rolling
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_3_1" type="checkbox" id="__nav_4_3_1" >
+      
+      
+      
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_4_3_1">
+          2024 02 22 22 49 57
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="2024 02 22 22 49 57" data-md-level="3">
+        <label class="md-nav__title" for="__nav_4_3_1">
+          <span class="md-nav__icon md-icon"></span>
+          2024 02 22 22 49 57
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../2024-02-22-22-49-57/executor_kpi_summary_report_5s/" class="md-nav__link">
+        Key performance indicator report
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../2024-02-22-22-49-57/memory_and_cpu_usage_summary_report_5s/" class="md-nav__link">
+        Memory and CPU usage report
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_3_2" type="checkbox" id="__nav_4_3_2" checked>
+      
+      
+      
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_4_3_2">
+          Latest
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Latest" data-md-level="3">
+        <label class="md-nav__title" for="__nav_4_3_2">
+          <span class="md-nav__icon md-icon"></span>
+          Latest
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../executor_kpi_summary_report_5s/" class="md-nav__link">
+        Key performance indicator report
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Memory and CPU usage report
+      </a>
+      
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5" type="checkbox" id="__nav_5" >
+      
+      
+      
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_5">
+          API Reference
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="API Reference" data-md-level="1">
+        <label class="md-nav__title" for="__nav_5">
+          <span class="md-nav__icon md-icon"></span>
+          API Reference
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5_1" type="checkbox" id="__nav_5_1" >
+      
+      
+      
+        
+          
+            
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../../../../api-reference/Classes/">Classes</a>
+          
+            <label for="__nav_5_1">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
+      <nav class="md-nav" aria-label="Classes" data-md-level="2">
+        <label class="md-nav__title" for="__nav_5_1">
+          <span class="md-nav__icon md-icon"></span>
+          Classes
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../api-reference/Classes/classSampleManagementSettings/" class="md-nav__link">
+        SampleManagementSettings
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../api-reference/Classes/classTestNodeGraph/" class="md-nav__link">
+        TestNodeGraph
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../api-reference/Classes/classnodes_1_1rclcpp__system_1_1Command/" class="md-nav__link">
+        nodes::rclcpp_system::Command
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../api-reference/Classes/classnodes_1_1rclcpp__system_1_1Cyclic/" class="md-nav__link">
+        nodes::rclcpp_system::Cyclic
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../api-reference/Classes/classnodes_1_1rclcpp__system_1_1Fusion/" class="md-nav__link">
+        nodes::rclcpp_system::Fusion
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../api-reference/Classes/classnodes_1_1rclcpp__system_1_1Intersection/" class="md-nav__link">
+        nodes::rclcpp_system::Intersection
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../api-reference/Classes/classnodes_1_1rclcpp__system_1_1Sensor/" class="md-nav__link">
+        nodes::rclcpp_system::Sensor
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../api-reference/Classes/classnodes_1_1rclcpp__system_1_1Transform/" class="md-nav__link">
+        nodes::rclcpp_system::Transform
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../api-reference/Classes/classtest__requirements_1_1TestRequirementsAutowareReferenceSystem/" class="md-nav__link">
+        test_requirements::TestRequirementsAutowareReferenceSystem
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../api-reference/Classes/structRclcppSystem/" class="md-nav__link">
+        RclcppSystem
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../api-reference/Classes/structnodes_1_1CommandSettings/" class="md-nav__link">
+        nodes::CommandSettings
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../api-reference/Classes/structnodes_1_1CyclicSettings/" class="md-nav__link">
+        nodes::CyclicSettings
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../api-reference/Classes/structnodes_1_1FusionSettings/" class="md-nav__link">
+        nodes::FusionSettings
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../api-reference/Classes/structnodes_1_1IntersectionSettings/" class="md-nav__link">
+        nodes::IntersectionSettings
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../api-reference/Classes/structnodes_1_1IntersectionSettings_1_1Connection/" class="md-nav__link">
+        nodes::IntersectionSettings::Connection
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../api-reference/Classes/structnodes_1_1SensorSettings/" class="md-nav__link">
+        nodes::SensorSettings
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../api-reference/Classes/structnodes_1_1TransformSettings/" class="md-nav__link">
+        nodes::TransformSettings
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../api-reference/Classes/structnodes_1_1rclcpp__system_1_1Cyclic_1_1subscription__t/" class="md-nav__link">
+        nodes::rclcpp_system::Cyclic::subscription_t
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../api-reference/Classes/structnodes_1_1rclcpp__system_1_1Fusion_1_1subscription__t/" class="md-nav__link">
+        nodes::rclcpp_system::Fusion::subscription_t
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../api-reference/Classes/structnodes_1_1rclcpp__system_1_1Intersection_1_1Connection/" class="md-nav__link">
+        nodes::rclcpp_system::Intersection::Connection
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../api-reference/Classes/structnodes_1_1timing_1_1BenchmarkCPUUsage/" class="md-nav__link">
+        nodes::timing::BenchmarkCPUUsage
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../api-reference/Classes/structnodes_1_1timing_1_1BenchmarkThroughput/" class="md-nav__link">
+        nodes::timing::BenchmarkThroughput
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../api-reference/Classes/structnodes_1_1timing_1_1Default/" class="md-nav__link">
+        nodes::timing::Default
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../api-reference/Classes/structreference__interfaces_1_1msg_1_1Message4kb/" class="md-nav__link">
+        reference_interfaces::msg::Message4kb
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../api-reference/Classes/structreference__interfaces_1_1msg_1_1TransmissionStats/" class="md-nav__link">
+        reference_interfaces::msg::TransmissionStats
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../api-reference/Classes/structsample__statistic__t/" class="md-nav__link">
+        sample_statistic_t
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../api-reference/Classes/structstatistic__value__t/" class="md-nav__link">
+        statistic_value_t
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5_2" type="checkbox" id="__nav_5_2" >
+      
+      
+      
+        
+          
+            
+          
+        
+      
+      
+        
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../../../../api-reference/Modules/">Modules</a>
+          
+        </div>
+      
+      <nav class="md-nav" aria-label="Modules" data-md-level="2">
+        <label class="md-nav__title" for="__nav_5_2">
+          <span class="md-nav__icon md-icon"></span>
+          Modules
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5_3" type="checkbox" id="__nav_5_3" >
+      
+      
+      
+        
+          
+            
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../../../../api-reference/Namespaces/">Namespaces</a>
+          
+            <label for="__nav_5_3">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
+      <nav class="md-nav" aria-label="Namespaces" data-md-level="2">
+        <label class="md-nav__title" for="__nav_5_3">
+          <span class="md-nav__icon md-icon"></span>
+          Namespaces
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../api-reference/Namespaces/namespacebenchmark/" class="md-nav__link">
+        benchmark
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../api-reference/Namespaces/namespaceconftest/" class="md-nav__link">
+        conftest
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../api-reference/Namespaces/namespacenodes/" class="md-nav__link">
+        nodes
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../api-reference/Namespaces/namespacenodes_1_1rclcpp__system/" class="md-nav__link">
+        nodes::rclcpp_system
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../api-reference/Namespaces/namespacenodes_1_1timing/" class="md-nav__link">
+        nodes::timing
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../api-reference/Namespaces/namespacerclcpp/" class="md-nav__link">
+        rclcpp
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../api-reference/Namespaces/namespacereference__interfaces/" class="md-nav__link">
+        reference_interfaces
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../api-reference/Namespaces/namespacereference__interfaces_1_1msg/" class="md-nav__link">
+        reference_interfaces::msg
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../api-reference/Namespaces/namespacereference__interfaces_1_1msg_1_1Message4kb__Constants/" class="md-nav__link">
+        reference_interfaces::msg::Message4kb_Constants
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../api-reference/Namespaces/namespacereference__interfaces_1_1msg_1_1TransmissionStats__Constants/" class="md-nav__link">
+        reference_interfaces::msg::TransmissionStats_Constants
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../api-reference/Namespaces/namespacereference__system__py/" class="md-nav__link">
+        reference_system_py
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../api-reference/Namespaces/namespacereference__system__py_1_1benchmark/" class="md-nav__link">
+        reference_system_py::benchmark
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../api-reference/Namespaces/namespacereference__system__py_1_1callback__duration/" class="md-nav__link">
+        reference_system_py::callback_duration
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../api-reference/Namespaces/namespacereference__system__py_1_1constants/" class="md-nav__link">
+        reference_system_py::constants
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../api-reference/Namespaces/namespacereference__system__py_1_1dropped__messages/" class="md-nav__link">
+        reference_system_py::dropped_messages
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../api-reference/Namespaces/namespacereference__system__py_1_1memory__usage/" class="md-nav__link">
+        reference_system_py::memory_usage
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../api-reference/Namespaces/namespacereference__system__py_1_1plot__utils/" class="md-nav__link">
+        reference_system_py::plot_utils
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../api-reference/Namespaces/namespacereference__system__py_1_1report/" class="md-nav__link">
+        reference_system_py::report
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../api-reference/Namespaces/namespacereference__system__py_1_1std__latency/" class="md-nav__link">
+        reference_system_py::std_latency
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../api-reference/Namespaces/namespacereference__system__py_1_1trace__utils/" class="md-nav__link">
+        reference_system_py::trace_utils
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../api-reference/Namespaces/namespacesetup/" class="md-nav__link">
+        setup
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../api-reference/Namespaces/namespacestd_1_1chrono__literals/" class="md-nav__link">
+        std::chrono_literals
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../api-reference/Namespaces/namespacetest__platform/" class="md-nav__link">
+        test_platform
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../api-reference/Namespaces/namespacetest__requirements/" class="md-nav__link">
+        test_requirements
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../api-reference/Namespaces/namespacetesting/" class="md-nav__link">
+        testing
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../api-reference/Namespaces/namespaceunittest/" class="md-nav__link">
+        unittest
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                  <a href="https://github.com/ros-realtime/reference-system.git/edit/master/docs/reports/rolling/latest/memory_and_cpu_usage_summary_report_5s.md" title="Edit this page" class="md-content__button md-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
+                  </a>
+                
+                
+                <h1 id="memory-and-cpu-usage-report">Memory and CPU usage report</h1>
+<script type="text/javascript" src="https://cdn.bokeh.org/bokeh/release/bokeh-2.4.1.min.js"></script>
+<script type="text/javascript" src="https://cdn.bokeh.org/bokeh/release/bokeh-tables-2.4.1.min.js"></script>
+
+<script type="text/javascript">
+    (function() {
+          const fn = function() {
+            Bokeh.safely(function() {
+              (function(root) {
+                function embed_document(root) {
+
+                const docs_json = '{"c9f789ec-fa72-4101-85f7-d93456505b74":{"defs":[],"roots":{"references":[{"attributes":{"source":{"id":"7874"}},"id":"8065","type":"CDSView"},{"attributes":{},"id":"8088","type":"StringFormatter"},{"attributes":{},"id":"8090","type":"StringFormatter"},{"attributes":{},"id":"7952","type":"CategoricalTicker"},{"attributes":{"line_width":{"value":2},"x0":{"field":"x"},"x1":{"field":"x"},"y0":{"field":"box_top"},"y1":{"field":"high"}},"id":"8043","type":"Segment"},{"attributes":{"coordinates":null,"data_source":{"id":"7874"},"glyph":{"id":"8043"},"group":null,"hover_glyph":null,"muted_glyph":{"id":"8045"},"nonselection_glyph":{"id":"8044"},"view":{"id":"8047"}},"id":"8046","type":"GlyphRenderer"},{"attributes":{},"id":"8097","type":"StringEditor"},{"attributes":{"fill_alpha":{"value":0.2},"fill_color":{"field":"x","transform":{"id":"7875"}},"hatch_alpha":{"value":0.2},"line_alpha":{"value":0.2},"line_width":{"value":2},"marker":{"value":"dash"},"size":{"value":25},"x":{"field":"x"},"y":{"field":"low"}},"id":"8063","type":"Scatter"},{"attributes":{"source":{"id":"7872"}},"id":"7925","type":"CDSView"},{"attributes":{"line_width":{"value":2},"x0":{"field":"x"},"x1":{"field":"x"},"y0":{"field":"box_bottom"},"y1":{"field":"low"}},"id":"8037","type":"Segment"},{"attributes":{"data":{"box_bottom":{"__ndarray__":"w/UoXI96b8CamZmZmTlswMP1KFyPcm7ACtejcD1aYsBSuB6F69lvwLgehetRkG/A4XoUrkepY8B7FK5H4VJtwOF6FK5HsWzAPQrXo3CdcMDhehSuBzC2wFyPwvUo/G/A16NwPQrXYsA9CtejcIVuwI/C9Shcd2/A","dtype":"float64","order":"little","shape":[15]},"box_top":{"__ndarray__":"Urgehettd0A9CtejcI1zQGZmZmZmfnVAFK5H4XoUckApXI/C9TB3QJqZmZmZkXdAKVyPwvVYckAAAAAAAFx0QArXo3A9XnRAPQrXo3Ddd0DhehSuBx+2QM3MzMzMiHZAXI/C9SgQcUCamZmZmQl1QOxRuB6FI3ZA","dtype":"float64","order":"little","shape":[15]},"exe":["autoware_default_cbg","autoware_default_cbg","autoware_default_cbg","autoware_default_multithreaded","autoware_default_multithreaded","autoware_default_multithreaded","autoware_default_prioritized","autoware_default_prioritized","autoware_default_prioritized","autoware_default_singlethreaded","autoware_default_singlethreaded","autoware_default_singlethreaded","autoware_default_staticsinglethreaded","autoware_default_staticsinglethreaded","autoware_default_staticsinglethreaded"],"high":{"__ndarray__":"MzMzMzM+pEAzMzMzM1CgQGZmZmZmnqdAZmZmZmZEl0AAAAAAADmwQDMzMzMzGKRAAAAAAACgnUAzMzMzM2+gQAAAAAAA+aZAZmZmZma2q0AzMzMzM0ygQDMzMzMzxaxAAAAAAACWmUCamZmZmYmgQGZmZmbmNLBA","dtype":"float64","order":"little","shape":[15]},"index":[57,37,17,49,29,9,41,21,1,53,33,13,45,25,5],"low":{"__ndarray__":"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACamZmZRfwhwQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA","dtype":"float64","order":"little","shape":[15]},"mean":{"__ndarray__":"w/UoXI/CTkDD9Shcj8JFQBSuR+F6FElAH4XrUbjOUUBxPQrXoxBNQIXrUbgeJU9AKVyPwvUIUUAK16NwPcpGQPYoXI/CFUhAAAAAAAAATUAAAAAAAAAhwOxRuB6FK0pAMzMzMzOTTkBcj8L1KBxHQB+F61G4nklA","dtype":"float64","order":"little","shape":[15]},"rmw":["rmw_connextdds","rmw_cyclonedds_cpp","rmw_fastrtps_cpp","rmw_connextdds","rmw_cyclonedds_cpp","rmw_fastrtps_cpp","rmw_connextdds","rmw_cyclonedds_cpp","rmw_fastrtps_cpp","rmw_connextdds","rmw_cyclonedds_cpp","rmw_fastrtps_cpp","rmw_connextdds","rmw_cyclonedds_cpp","rmw_fastrtps_cpp"],"std_dev":{"__ndarray__":"mpmZmZmVc0CF61G4HtVwQKRwPQrXW3JAmpmZmZlBa0DXo3A9Co9zQClcj8L1rHNAPQrXo3AtbEAfhetRuIJxQOxRuB6FW3FAPQrXo3A9dEDhehSuhye2QOxRuB6FQ3NA7FG4HoV7akAK16NwPSZyQEjhehSu73JA","dtype":"float64","order":"little","shape":[15]},"type":["cpu","cpu","cpu","cpu","cpu","cpu","cpu","cpu","cpu","cpu","cpu","cpu","cpu","cpu","cpu"]},"selected":{"id":"8099"},"selection_policy":{"id":"8098"}},"id":"8074","type":"ColumnDataSource"},{"attributes":{"editor":{"id":"8095"},"field":"high","formatter":{"id":"8094"},"title":"Max"},"id":"8072","type":"TableColumn"},{"attributes":{},"id":"8120","type":"AllLabels"},{"attributes":{"tools":[{"id":"7958"},{"id":"7959"},{"id":"7960"},{"id":"7961"},{"id":"7962"},{"id":"7963"},{"id":"8002"}]},"id":"7965","type":"Toolbar"},{"attributes":{"line_alpha":{"value":0.2},"line_width":{"value":2},"x0":{"field":"x"},"x1":{"field":"x"},"y0":{"field":"box_top"},"y1":{"field":"high"}},"id":"7917","type":"Segment"},{"attributes":{"autosize_mode":"fit_viewport","columns":[{"id":"8068"},{"id":"8069"},{"id":"8070"},{"id":"8071"},{"id":"8072"},{"id":"8073"}],"height":750,"margin":[0,10,10,10],"source":{"id":"8074"},"view":{"id":"8077"},"width":1250},"id":"8075","type":"DataTable"},{"attributes":{"line_alpha":{"value":0.1},"line_width":{"value":2},"x0":{"field":"x"},"x1":{"field":"x"},"y0":{"field":"box_bottom"},"y1":{"field":"low"}},"id":"7910","type":"Segment"},{"attributes":{"axis_label":"Executors (with RMW)","axis_label_text_font_size":"20px","coordinates":null,"formatter":{"id":"8205"},"group":null,"group_text_font_size":"15px","major_label_orientation":0.19634954084936207,"major_label_policy":{"id":"8206"},"major_label_text_font_size":"14px","ticker":{"id":"7952"}},"id":"7951","type":"CategoricalAxis"},{"attributes":{"axis":{"id":"7890"},"coordinates":null,"dimension":1,"group":null,"ticker":null},"id":"7893","type":"Grid"},{"attributes":{"editor":{"id":"8091"},"field":"low","formatter":{"id":"8090"},"title":"Min"},"id":"8070","type":"TableColumn"},{"attributes":{"source":{"id":"8078"}},"id":"8081","type":"CDSView"},{"attributes":{"below":[{"id":"7951"}],"center":[{"id":"7953"},{"id":"7957"}],"height":800,"left":[{"id":"7954"}],"margin":[10,10,10,10],"renderers":[{"id":"7976"},{"id":"7982"},{"id":"7988"},{"id":"7994"},{"id":"8000"}],"sizing_mode":"scale_width","title":{"id":"7942"},"toolbar":{"id":"7965"},"width":1600,"x_range":{"id":"7940"},"x_scale":{"id":"7947"},"y_range":{"id":"7945"},"y_scale":{"id":"7949"}},"id":"7941","subtype":"Figure","type":"Plot"},{"attributes":{},"id":"7947","type":"CategoricalScale"},{"attributes":{"axis":{"id":"8018"},"coordinates":null,"dimension":1,"group":null,"ticker":null},"id":"8021","type":"Grid"},{"attributes":{"coordinates":null,"data_source":{"id":"7872"},"glyph":{"id":"7921"},"group":null,"hover_glyph":null,"muted_glyph":{"id":"7923"},"nonselection_glyph":{"id":"7922"},"view":{"id":"7925"}},"id":"7924","type":"GlyphRenderer"},{"attributes":{"fill_alpha":{"value":0.2},"fill_color":{"field":"x","transform":{"id":"7875"}},"hatch_alpha":{"value":0.2},"line_alpha":{"value":0.2},"line_width":{"value":2},"marker":{"value":"dash"},"size":{"value":25},"x":{"field":"x"},"y":{"field":"high"}},"id":"8057","type":"Scatter"},{"attributes":{},"id":"7895","type":"WheelZoomTool"},{"attributes":{},"id":"7883","type":"CategoricalScale"},{"attributes":{"overlay":{"id":"7964"}},"id":"7960","type":"BoxZoomTool"},{"attributes":{"columns":[{"id":"8068"},{"id":"8069"},{"id":"8070"},{"id":"8071"},{"id":"8072"},{"id":"8073"}],"height":750,"margin":[0,10,10,10],"source":{"id":"8078"},"view":{"id":"8081"},"width":1250},"id":"8079","type":"DataTable"},{"attributes":{"overlay":{"id":"8028"}},"id":"8024","type":"BoxZoomTool"},{"attributes":{},"id":"8116","type":"BasicTickFormatter"},{"attributes":{},"id":"8271","type":"Selection"},{"attributes":{},"id":"8119","type":"CategoricalTickFormatter"},{"attributes":{"coordinates":null,"group":null,"text":"Real Memory Usage Over Time 5s","text_font_size":"22px"},"id":"7942","type":"Title"},{"attributes":{"fill_alpha":{"value":0.2},"fill_color":{"field":"x","transform":{"id":"7875"}},"hatch_alpha":{"value":0.2},"line_alpha":{"value":0.2},"line_width":{"value":2},"marker":{"value":"dash"},"size":{"value":25},"x":{"field":"x"},"y":{"field":"high"}},"id":"7929","type":"Scatter"},{"attributes":{"fill_alpha":{"value":0.1},"fill_color":{"field":"x","transform":{"id":"7875"}},"hatch_alpha":{"value":0.1},"line_alpha":{"value":0.1},"line_width":{"value":2},"marker":{"value":"dash"},"size":{"value":25},"x":{"field":"x"},"y":{"field":"low"}},"id":"8062","type":"Scatter"},{"attributes":{"fill_color":{"field":"x","transform":{"id":"7875"}},"line_width":{"value":2},"marker":{"value":"dash"},"size":{"value":25},"x":{"field":"x"},"y":{"field":"low"}},"id":"8061","type":"Scatter"},{"attributes":{"line_width":{"value":2},"x0":{"field":"x"},"x1":{"field":"x"},"y0":{"field":"box_bottom"},"y1":{"field":"low"}},"id":"7973","type":"Segment"},{"attributes":{},"id":"8270","type":"UnionRenderers"},{"attributes":{"coordinates":null,"data_source":{"id":"7873"},"glyph":{"id":"7991"},"group":null,"hover_glyph":null,"muted_glyph":{"id":"7993"},"nonselection_glyph":{"id":"7992"},"view":{"id":"7995"}},"id":"7994","type":"GlyphRenderer"},{"attributes":{},"id":"8022","type":"PanTool"},{"attributes":{},"id":"8336","type":"BasicTickFormatter"},{"attributes":{},"id":"8025","type":"SaveTool"},{"attributes":{},"id":"7885","type":"LinearScale"},{"attributes":{"fill_color":{"field":"x","transform":{"id":"7875"}},"line_width":{"value":2},"marker":{"value":"dash"},"size":{"value":25},"x":{"field":"x"},"y":{"field":"high"}},"id":"8055","type":"Scatter"},{"attributes":{},"id":"8019","type":"BasicTicker"},{"attributes":{"line_width":{"value":2},"x0":{"field":"x"},"x1":{"field":"x"},"y0":{"field":"box_bottom"},"y1":{"field":"low"}},"id":"7909","type":"Segment"},{"attributes":{"source":{"id":"7872"}},"id":"7931","type":"CDSView"},{"attributes":{},"id":"8117","type":"AllLabels"},{"attributes":{"bottom":{"field":"box_bottom"},"fill_alpha":{"value":0.1},"fill_color":{"field":"x","transform":{"id":"7875"}},"hatch_alpha":{"value":0.1},"line_alpha":{"value":0.1},"top":{"field":"box_top"},"width":{"value":0.2},"x":{"field":"x"}},"id":"7986","type":"VBar"},{"attributes":{"line_alpha":{"value":0.1},"line_width":{"value":2},"x0":{"field":"x"},"x1":{"field":"x"},"y0":{"field":"box_bottom"},"y1":{"field":"low"}},"id":"8038","type":"Segment"},{"attributes":{"bottom":{"field":"box_bottom"},"fill_alpha":{"value":0.2},"fill_color":{"field":"x","transform":{"id":"7875"}},"hatch_alpha":{"value":0.2},"line_alpha":{"value":0.2},"top":{"field":"box_top"},"width":{"value":0.2},"x":{"field":"x"}},"id":"7987","type":"VBar"},{"attributes":{"axis_label":"Executors (with RMW)","axis_label_text_font_size":"20px","coordinates":null,"formatter":{"id":"8119"},"group":null,"group_text_font_size":"15px","major_label_orientation":0.19634954084936207,"major_label_policy":{"id":"8120"},"major_label_text_font_size":"14px","ticker":{"id":"7888"}},"id":"7887","type":"CategoricalAxis"},{"attributes":{"tools":[{"id":"8022"},{"id":"8023"},{"id":"8024"},{"id":"8025"},{"id":"8026"},{"id":"8027"},{"id":"8066"}]},"id":"8029","type":"Toolbar"},{"attributes":{"bottom":{"field":"box_bottom"},"fill_alpha":{"value":0.2},"fill_color":{"field":"x","transform":{"id":"7875"}},"hatch_alpha":{"value":0.2},"line_alpha":{"value":0.2},"top":{"field":"box_top"},"width":{"value":0.2},"x":{"field":"x"}},"id":"7923","type":"VBar"},{"attributes":{},"id":"7955","type":"BasicTicker"},{"attributes":{},"id":"7899","type":"HelpTool"},{"attributes":{},"id":"8086","type":"StringFormatter"},{"attributes":{"coordinates":null,"data_source":{"id":"7872"},"glyph":{"id":"7927"},"group":null,"hover_glyph":null,"muted_glyph":{"id":"7929"},"nonselection_glyph":{"id":"7928"},"view":{"id":"7931"}},"id":"7930","type":"GlyphRenderer"},{"attributes":{"start":0},"id":"8009","type":"DataRange1d"},{"attributes":{"source":{"id":"7874"}},"id":"8053","type":"CDSView"},{"attributes":{"callback":null,"tooltips":[["Benchmark","@{exe} [@{rmw}]"],["Average CPU (%)","@{mean}{0.00}"],["Minimum CPU (%)","@{low}{0.00}"],["Maximum CPU (%)","@{high}{0.00}"]]},"id":"7938","type":"HoverTool"},{"attributes":{"source":{"id":"7872"}},"id":"7913","type":"CDSView"},{"attributes":{},"id":"8161","type":"Selection"},{"attributes":{"overlay":{"id":"7900"}},"id":"7896","type":"BoxZoomTool"},{"attributes":{"bottom_units":"screen","coordinates":null,"fill_alpha":0.5,"fill_color":"lightgrey","group":null,"left_units":"screen","level":"overlay","line_alpha":1.0,"line_color":"black","line_dash":[4,4],"line_width":2,"right_units":"screen","syncable":false,"top_units":"screen"},"id":"7964","type":"BoxAnnotation"},{"attributes":{"coordinates":null,"data_source":{"id":"7872"},"glyph":{"id":"7909"},"group":null,"hover_glyph":null,"muted_glyph":{"id":"7911"},"nonselection_glyph":{"id":"7910"},"view":{"id":"7913"}},"id":"7912","type":"GlyphRenderer"},{"attributes":{"line_alpha":{"value":0.2},"line_width":{"value":2},"x0":{"field":"x"},"x1":{"field":"x"},"y0":{"field":"box_bottom"},"y1":{"field":"low"}},"id":"8039","type":"Segment"},{"attributes":{"coordinates":null,"group":null,"text":"CPU Usage Over Time 5s","text_font_size":"22px"},"id":"7878","type":"Title"},{"attributes":{},"id":"8207","type":"UnionRenderers"},{"attributes":{"line_alpha":{"value":0.2},"line_width":{"value":2},"x0":{"field":"x"},"x1":{"field":"x"},"y0":{"field":"box_top"},"y1":{"field":"high"}},"id":"7981","type":"Segment"},{"attributes":{"end":1,"factors":["rmw_connextdds","rmw_cyclonedds_cpp","rmw_fastrtps_cpp"],"palette":["#00204C","#7B7B78","#FFE945"]},"id":"7875","type":"CategoricalColorMapper"},{"attributes":{},"id":"7962","type":"ResetTool"},{"attributes":{"factors":[["rmw_connextdds","autoware_default_cbg"],["rmw_cyclonedds_cpp","autoware_default_cbg"],["rmw_fastrtps_cpp","autoware_default_cbg"],["rmw_connextdds","autoware_default_multithreaded"],["rmw_cyclonedds_cpp","autoware_default_multithreaded"],["rmw_fastrtps_cpp","autoware_default_multithreaded"],["rmw_connextdds","autoware_default_prioritized"],["rmw_cyclonedds_cpp","autoware_default_prioritized"],["rmw_fastrtps_cpp","autoware_default_prioritized"],["rmw_connextdds","autoware_default_singlethreaded"],["rmw_cyclonedds_cpp","autoware_default_singlethreaded"],["rmw_fastrtps_cpp","autoware_default_singlethreaded"],["rmw_connextdds","autoware_default_staticsinglethreaded"],["rmw_cyclonedds_cpp","autoware_default_staticsinglethreaded"],["rmw_fastrtps_cpp","autoware_default_staticsinglethreaded"]],"range_padding":0.1},"id":"7876","type":"FactorRange"},{"attributes":{},"id":"8208","type":"Selection"},{"attributes":{},"id":"8205","type":"CategoricalTickFormatter"},{"attributes":{"line_width":{"value":2},"x0":{"field":"x"},"x1":{"field":"x"},"y0":{"field":"box_top"},"y1":{"field":"high"}},"id":"7979","type":"Segment"},{"attributes":{"fill_alpha":{"value":0.2},"fill_color":{"field":"x","transform":{"id":"7875"}},"hatch_alpha":{"value":0.2},"line_alpha":{"value":0.2},"line_width":{"value":2},"marker":{"value":"dash"},"size":{"value":25},"x":{"field":"x"},"y":{"field":"low"}},"id":"7935","type":"Scatter"},{"attributes":{"source":{"id":"7872"}},"id":"7937","type":"CDSView"},{"attributes":{"bottom_units":"screen","coordinates":null,"fill_alpha":0.5,"fill_color":"lightgrey","group":null,"left_units":"screen","level":"overlay","line_alpha":1.0,"line_color":"black","line_dash":[4,4],"line_width":2,"right_units":"screen","syncable":false,"top_units":"screen"},"id":"8028","type":"BoxAnnotation"},{"attributes":{"line_alpha":{"value":0.2},"line_width":{"value":2},"x0":{"field":"x"},"x1":{"field":"x"},"y0":{"field":"box_bottom"},"y1":{"field":"low"}},"id":"7911","type":"Segment"},{"attributes":{"tools":[{"id":"7894"},{"id":"7895"},{"id":"7896"},{"id":"7897"},{"id":"7898"},{"id":"7899"},{"id":"7938"}]},"id":"7901","type":"Toolbar"},{"attributes":{"fill_color":{"field":"x","transform":{"id":"7875"}},"line_width":{"value":2},"marker":{"value":"dash"},"size":{"value":25},"x":{"field":"x"},"y":{"field":"low"}},"id":"7997","type":"Scatter"},{"attributes":{},"id":"8087","type":"StringEditor"},{"attributes":{"axis_label":"CPU (%)","axis_label_text_font_size":"20px","coordinates":null,"formatter":{"id":"8116"},"group":null,"major_label_policy":{"id":"8117"},"major_label_text_font_size":"14px","ticker":{"id":"7891"}},"id":"7890","type":"LinearAxis"},{"attributes":{"data":{"box_bottom":{"__ndarray__":"XX/kQgCrk0C6lWHmyhyRQNf1fYia9IdA63GodzF6kUCfDtvc67ONQCYmgrh3YItAkKsoZaBekkBEoCBSkB6RQGczICO9CohAxs3aexDSjkA3PhdANbGGQAZknaBNDYVAyE7CW6M+jkBaG1ZRdLKGQIlVCHRbHYVA","dtype":"float64","order":"little","shape":[15]},"box_top":{"__ndarray__":"M/0d7ZdpmECIuNKAbnaSQFFg6FZoJoxAn2eeevdclUC9y2Ns+JWPQLaKJQkyDY9AKIuqmSS2mEB+QZDDC3aSQCfMbfS+GoxApaoEZfcykUCtBVRQK7uHQMaLKpgR6oZAdI2QQvxckUBWQ4zDpLqHQJEgbgrc/oZA","dtype":"float64","order":"little","shape":[15]},"exe":["autoware_default_cbg","autoware_default_cbg","autoware_default_cbg","autoware_default_multithreaded","autoware_default_multithreaded","autoware_default_multithreaded","autoware_default_prioritized","autoware_default_prioritized","autoware_default_prioritized","autoware_default_singlethreaded","autoware_default_singlethreaded","autoware_default_singlethreaded","autoware_default_staticsinglethreaded","autoware_default_staticsinglethreaded","autoware_default_staticsinglethreaded"],"high":{"__ndarray__":"vHSTGIS6l0DLoUW2c5eSQMP1KFyPWIxAeekmMQg2lUB56SYxCBqQQLTIdr6fhY9Ay6FFtnM2l0Ce76fGy9eSQNEi2/l+WIxA6SYxCKx4kUDhehSuRzaJQHnpJjEICohAUrgehWt5kUCWQ4ts5zaJQEoMAiuHHIhA","dtype":"float64","order":"little","shape":[15]},"index":[59,39,19,51,31,11,43,23,3,55,35,15,47,27,7],"low":{"__ndarray__":"ObTIdr6fBkA5tMh2vp8GQAAAAAAAAAAAObTIdr6fBkA5tMh2vp8GQDm0yHa+nwZAObTIdr6fBkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA","dtype":"float64","order":"little","shape":[15]},"mean":{"__ndarray__":"SD4BGEwKlkAhJ5qznMmRQBQrs2+BDYpAxWwjeZRrk0AubZ8k8qSOQG7Y0+DUNo1AXJtpf2KKlUDhcNgKTsqRQMf/xgu+EopAxAh50f9NkEDyoTVIMDaHQOb3Y5yv+4VAbNo4+CY+kEBYL3GKjDaHQA07O78bDoZA","dtype":"float64","order":"little","shape":[15]},"rmw":["rmw_connextdds","rmw_cyclonedds_cpp","rmw_fastrtps_cpp","rmw_connextdds","rmw_cyclonedds_cpp","rmw_fastrtps_cpp","rmw_connextdds","rmw_cyclonedds_cpp","rmw_fastrtps_cpp","rmw_connextdds","rmw_cyclonedds_cpp","rmw_fastrtps_cpp","rmw_connextdds","rmw_cyclonedds_cpp","rmw_fastrtps_cpp"],"std_dev":{"__ndarray__":"W/flqF76YkDeLBKnOZpFQOWpqTk3x1BAma2vFzAWX0DY0Yv4yCA+QH0kG4XSZU1AYH4H0hBeaUCeE/oWt3dFQP9iNkUHQFBAGjx0cfKeTEBtd8wDYZ8wQAF80ng/zD1AfjB7pVTtUUDMf2IjB4MwQH6wXGYJGD5A","dtype":"float64","order":"little","shape":[15]},"type":["virtual","virtual","virtual","virtual","virtual","virtual","virtual","virtual","virtual","virtual","virtual","virtual","virtual","virtual","virtual"],"x":[["rmw_connextdds","autoware_default_cbg"],["rmw_cyclonedds_cpp","autoware_default_cbg"],["rmw_fastrtps_cpp","autoware_default_cbg"],["rmw_connextdds","autoware_default_multithreaded"],["rmw_cyclonedds_cpp","autoware_default_multithreaded"],["rmw_fastrtps_cpp","autoware_default_multithreaded"],["rmw_connextdds","autoware_default_prioritized"],["rmw_cyclonedds_cpp","autoware_default_prioritized"],["rmw_fastrtps_cpp","autoware_default_prioritized"],["rmw_connextdds","autoware_default_singlethreaded"],["rmw_cyclonedds_cpp","autoware_default_singlethreaded"],["rmw_fastrtps_cpp","autoware_default_singlethreaded"],["rmw_connextdds","autoware_default_staticsinglethreaded"],["rmw_cyclonedds_cpp","autoware_default_staticsinglethreaded"],["rmw_fastrtps_cpp","autoware_default_staticsinglethreaded"]]},"selected":{"id":"8342"},"selection_policy":{"id":"8341"}},"id":"7874","type":"ColumnDataSource"},{"attributes":{"line_alpha":{"value":0.2},"line_width":{"value":2},"x0":{"field":"x"},"x1":{"field":"x"},"y0":{"field":"box_top"},"y1":{"field":"high"}},"id":"8045","type":"Segment"},{"attributes":{},"id":"8092","type":"StringFormatter"},{"attributes":{"fill_alpha":{"value":0.1},"fill_color":{"field":"x","transform":{"id":"7875"}},"hatch_alpha":{"value":0.1},"line_alpha":{"value":0.1},"line_width":{"value":2},"marker":{"value":"dash"},"size":{"value":25},"x":{"field":"x"},"y":{"field":"low"}},"id":"7934","type":"Scatter"},{"attributes":{"axis":{"id":"7951"},"coordinates":null,"group":null,"ticker":null},"id":"7953","type":"Grid"},{"attributes":{"source":{"id":"7873"}},"id":"7977","type":"CDSView"},{"attributes":{"fill_alpha":{"value":0.1},"fill_color":{"field":"x","transform":{"id":"7875"}},"hatch_alpha":{"value":0.1},"line_alpha":{"value":0.1},"line_width":{"value":2},"marker":{"value":"dash"},"size":{"value":25},"x":{"field":"x"},"y":{"field":"low"}},"id":"7998","type":"Scatter"},{"attributes":{"coordinates":null,"data_source":{"id":"7872"},"glyph":{"id":"7915"},"group":null,"hover_glyph":null,"muted_glyph":{"id":"7917"},"nonselection_glyph":{"id":"7916"},"view":{"id":"7919"}},"id":"7918","type":"GlyphRenderer"},{"attributes":{},"id":"8339","type":"CategoricalTickFormatter"},{"attributes":{"below":[{"id":"8015"}],"center":[{"id":"8017"},{"id":"8021"}],"height":800,"left":[{"id":"8018"}],"margin":[10,10,10,10],"renderers":[{"id":"8040"},{"id":"8046"},{"id":"8052"},{"id":"8058"},{"id":"8064"}],"sizing_mode":"scale_width","title":{"id":"8006"},"toolbar":{"id":"8029"},"width":1600,"x_range":{"id":"8004"},"x_scale":{"id":"8011"},"y_range":{"id":"8009"},"y_scale":{"id":"8013"}},"id":"8005","subtype":"Figure","type":"Plot"},{"attributes":{"source":{"id":"7872"}},"id":"7919","type":"CDSView"},{"attributes":{"line_alpha":{"value":0.1},"line_width":{"value":2},"x0":{"field":"x"},"x1":{"field":"x"},"y0":{"field":"box_top"},"y1":{"field":"high"}},"id":"7916","type":"Segment"},{"attributes":{"start":0},"id":"7945","type":"DataRange1d"},{"attributes":{"source":{"id":"8082"}},"id":"8085","type":"CDSView"},{"attributes":{},"id":"8089","type":"StringEditor"},{"attributes":{"fill_alpha":{"value":0.2},"fill_color":{"field":"x","transform":{"id":"7875"}},"hatch_alpha":{"value":0.2},"line_alpha":{"value":0.2},"line_width":{"value":2},"marker":{"value":"dash"},"size":{"value":25},"x":{"field":"x"},"y":{"field":"high"}},"id":"7993","type":"Scatter"},{"attributes":{"data":{"box_bottom":{"__ndarray__":"XX/kQgCrk0C6lWHmyhyRQNf1fYia9IdA63GodzF6kUCfDtvc67ONQCYmgrh3YItAkKsoZaBekkBEoCBSkB6RQGczICO9CohAxs3aexDSjkA3PhdANbGGQAZknaBNDYVAyE7CW6M+jkBaG1ZRdLKGQIlVCHRbHYVA","dtype":"float64","order":"little","shape":[15]},"box_top":{"__ndarray__":"M/0d7ZdpmECIuNKAbnaSQFFg6FZoJoxAn2eeevdclUC9y2Ns+JWPQLaKJQkyDY9AKIuqmSS2mEB+QZDDC3aSQCfMbfS+GoxApaoEZfcykUCtBVRQK7uHQMaLKpgR6oZAdI2QQvxckUBWQ4zDpLqHQJEgbgrc/oZA","dtype":"float64","order":"little","shape":[15]},"exe":["autoware_default_cbg","autoware_default_cbg","autoware_default_cbg","autoware_default_multithreaded","autoware_default_multithreaded","autoware_default_multithreaded","autoware_default_prioritized","autoware_default_prioritized","autoware_default_prioritized","autoware_default_singlethreaded","autoware_default_singlethreaded","autoware_default_singlethreaded","autoware_default_staticsinglethreaded","autoware_default_staticsinglethreaded","autoware_default_staticsinglethreaded"],"high":{"__ndarray__":"vHSTGIS6l0DLoUW2c5eSQMP1KFyPWIxAeekmMQg2lUB56SYxCBqQQLTIdr6fhY9Ay6FFtnM2l0Ce76fGy9eSQNEi2/l+WIxA6SYxCKx4kUDhehSuRzaJQHnpJjEICohAUrgehWt5kUCWQ4ts5zaJQEoMAiuHHIhA","dtype":"float64","order":"little","shape":[15]},"index":[59,39,19,51,31,11,43,23,3,55,35,15,47,27,7],"low":{"__ndarray__":"ObTIdr6fBkA5tMh2vp8GQAAAAAAAAAAAObTIdr6fBkA5tMh2vp8GQDm0yHa+nwZAObTIdr6fBkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA","dtype":"float64","order":"little","shape":[15]},"mean":{"__ndarray__":"SD4BGEwKlkAhJ5qznMmRQBQrs2+BDYpAxWwjeZRrk0AubZ8k8qSOQG7Y0+DUNo1AXJtpf2KKlUDhcNgKTsqRQMf/xgu+EopAxAh50f9NkEDyoTVIMDaHQOb3Y5yv+4VAbNo4+CY+kEBYL3GKjDaHQA07O78bDoZA","dtype":"float64","order":"little","shape":[15]},"rmw":["rmw_connextdds","rmw_cyclonedds_cpp","rmw_fastrtps_cpp","rmw_connextdds","rmw_cyclonedds_cpp","rmw_fastrtps_cpp","rmw_connextdds","rmw_cyclonedds_cpp","rmw_fastrtps_cpp","rmw_connextdds","rmw_cyclonedds_cpp","rmw_fastrtps_cpp","rmw_connextdds","rmw_cyclonedds_cpp","rmw_fastrtps_cpp"],"std_dev":{"__ndarray__":"W/flqF76YkDeLBKnOZpFQOWpqTk3x1BAma2vFzAWX0DY0Yv4yCA+QH0kG4XSZU1AYH4H0hBeaUCeE/oWt3dFQP9iNkUHQFBAGjx0cfKeTEBtd8wDYZ8wQAF80ng/zD1AfjB7pVTtUUDMf2IjB4MwQH6wXGYJGD5A","dtype":"float64","order":"little","shape":[15]},"type":["virtual","virtual","virtual","virtual","virtual","virtual","virtual","virtual","virtual","virtual","virtual","virtual","virtual","virtual","virtual"]},"selected":{"id":"8271"},"selection_policy":{"id":"8270"}},"id":"8082","type":"ColumnDataSource"},{"attributes":{"coordinates":null,"data_source":{"id":"7873"},"glyph":{"id":"7979"},"group":null,"hover_glyph":null,"muted_glyph":{"id":"7981"},"nonselection_glyph":{"id":"7980"},"view":{"id":"7983"}},"id":"7982","type":"GlyphRenderer"},{"attributes":{},"id":"8203","type":"AllLabels"},{"attributes":{"fill_color":{"field":"x","transform":{"id":"7875"}},"line_width":{"value":2},"marker":{"value":"dash"},"size":{"value":25},"x":{"field":"x"},"y":{"field":"high"}},"id":"7927","type":"Scatter"},{"attributes":{"coordinates":null,"data_source":{"id":"7874"},"glyph":{"id":"8061"},"group":null,"hover_glyph":null,"muted_glyph":{"id":"8063"},"nonselection_glyph":{"id":"8062"},"view":{"id":"8065"}},"id":"8064","type":"GlyphRenderer"},{"attributes":{},"id":"7959","type":"WheelZoomTool"},{"attributes":{"start":0},"id":"7881","type":"DataRange1d"},{"attributes":{},"id":"7888","type":"CategoricalTicker"},{"attributes":{},"id":"8016","type":"CategoricalTicker"},{"attributes":{"editor":{"id":"8093"},"field":"mean","formatter":{"id":"8092"},"title":"Mean"},"id":"8071","type":"TableColumn"},{"attributes":{},"id":"7898","type":"ResetTool"},{"attributes":{"callback":null,"tooltips":[["Benchmark","@{exe} [@{rmw}]"],["Average Real Memory Usage (MB)","@{mean}{0.00}"],["Minimum Real Memory Usage (MB)","@{low}{0.00}"],["Maximum Real Memory Usage (MB)","@{high}{0.00}"]]},"id":"8002","type":"HoverTool"},{"attributes":{"source":{"id":"7873"}},"id":"8001","type":"CDSView"},{"attributes":{"line_alpha":{"value":0.1},"line_width":{"value":2},"x0":{"field":"x"},"x1":{"field":"x"},"y0":{"field":"box_bottom"},"y1":{"field":"low"}},"id":"7974","type":"Segment"},{"attributes":{"source":{"id":"7874"}},"id":"8059","type":"CDSView"},{"attributes":{},"id":"8121","type":"UnionRenderers"},{"attributes":{},"id":"8340","type":"AllLabels"},{"attributes":{},"id":"8122","type":"Selection"},{"attributes":{"coordinates":null,"data_source":{"id":"7874"},"glyph":{"id":"8055"},"group":null,"hover_glyph":null,"muted_glyph":{"id":"8057"},"nonselection_glyph":{"id":"8056"},"view":{"id":"8059"}},"id":"8058","type":"GlyphRenderer"},{"attributes":{"below":[{"id":"7887"}],"center":[{"id":"7889"},{"id":"7893"}],"height":800,"left":[{"id":"7890"}],"margin":[10,10,10,10],"renderers":[{"id":"7912"},{"id":"7918"},{"id":"7924"},{"id":"7930"},{"id":"7936"}],"sizing_mode":"scale_width","title":{"id":"7878"},"toolbar":{"id":"7901"},"width":1600,"x_range":{"id":"7876"},"x_scale":{"id":"7883"},"y_range":{"id":"7881"},"y_scale":{"id":"7885"}},"id":"7877","subtype":"Figure","type":"Plot"},{"attributes":{"data":{"box_bottom":{"__ndarray__":"oxtsfU6JYUCIhWpK7A0/QK4kqQma11JAOnkY2JnTXkAlT5ATlw88QBv33Vw6hVNAGmHULQPiXkAiciKp14U/QJTCmywN3lJAZLKK70SwYEDC6gh3tww8QIS91g+ZLVNAAu6qajRPX0CnfzssY8c9QO+AjY0vAFRA","dtype":"float64","order":"little","shape":[15]},"box_top":{"__ndarray__":"ubw+xm2DZ0ByU8bcbYVAQDAwRhXtb1VA06qzX1iQZ0An63kj0qo9QAeo9teVolZAq39NkKPbZ0A30FT3CJlAQOCg7DqxjFVAYHgL5Z9sZkAyobpJx2I9QDy5hGdHM1ZA3ea7ZzBIZ0DN6qytXDA/QO+4n+MbLVdA","dtype":"float64","order":"little","shape":[15]},"exe":["autoware_default_cbg","autoware_default_cbg","autoware_default_cbg","autoware_default_multithreaded","autoware_default_multithreaded","autoware_default_multithreaded","autoware_default_prioritized","autoware_default_prioritized","autoware_default_prioritized","autoware_default_singlethreaded","autoware_default_singlethreaded","autoware_default_singlethreaded","autoware_default_staticsinglethreaded","autoware_default_staticsinglethreaded","autoware_default_staticsinglethreaded"],"high":{"__ndarray__":"2c73U+NdZUAv3SQGgRVAQDm0yHa+T1RA0SLb+X42ZUDy0k1iEPg8QI2XbhKDYFVAaJHtfD8tZUCcxCCwcjhAQIcW2c73Y1RAvp8aL92IZEAbL90kBgE9QAAAAAAA6FRAVg4tsp3rZEDZzvdT46U+QKJFtvP91FVA","dtype":"float64","order":"little","shape":[15]},"index":[58,38,18,50,30,10,42,22,2,54,34,14,46,26,6],"low":{"__ndarray__":"AAAAAAAA+D8AAAAAAAD4PwAAAAAAAAAAAAAAAAAA+j8AAAAAAAD4PwAAAAAAAPo/AAAAAAAA+D8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA","dtype":"float64","order":"little","shape":[15]},"mean":{"__ndarray__":"LmzVIV6GZEAby/0AMgZAQG+qd4/DI1RAuPPfpRJ9Y0AmHYWbNN08QJFPahroE1VAHNibk1KmY0CkBPNl+i1AQLoxxDNfNVRAYhVLanKOY0D6xWFgv7c8QGC7rTtwsFRA766ITuV3Y0A6NfTs33s+QO+clrilllVA","dtype":"float64","order":"little","shape":[15]},"rmw":["rmw_connextdds","rmw_cyclonedds_cpp","rmw_fastrtps_cpp","rmw_connextdds","rmw_cyclonedds_cpp","rmw_fastrtps_cpp","rmw_connextdds","rmw_cyclonedds_cpp","rmw_fastrtps_cpp","rmw_connextdds","rmw_cyclonedds_cpp","rmw_fastrtps_cpp","rmw_connextdds","rmw_cyclonedds_cpp","rmw_fastrtps_cpp"],"std_dev":{"__ndarray__":"W4RKI33oN0DHFSLy9s7vPxBc6FyYwhRAa9xO5xZNQEAgwJn+sLPpP12Hxdjb6hhAPZ7G8kPVQEDN5HJYpMPqP2HyhnIgdRVA9BcD1mvxNkD/Zhsr/WDlP7jdb71yLRhAb7+ZyViCPkBsshYXmI/mP/m/kbBiZxlA","dtype":"float64","order":"little","shape":[15]},"type":["real","real","real","real","real","real","real","real","real","real","real","real","real","real","real"],"x":[["rmw_connextdds","autoware_default_cbg"],["rmw_cyclonedds_cpp","autoware_default_cbg"],["rmw_fastrtps_cpp","autoware_default_cbg"],["rmw_connextdds","autoware_default_multithreaded"],["rmw_cyclonedds_cpp","autoware_default_multithreaded"],["rmw_fastrtps_cpp","autoware_default_multithreaded"],["rmw_connextdds","autoware_default_prioritized"],["rmw_cyclonedds_cpp","autoware_default_prioritized"],["rmw_fastrtps_cpp","autoware_default_prioritized"],["rmw_connextdds","autoware_default_singlethreaded"],["rmw_cyclonedds_cpp","autoware_default_singlethreaded"],["rmw_fastrtps_cpp","autoware_default_singlethreaded"],["rmw_connextdds","autoware_default_staticsinglethreaded"],["rmw_cyclonedds_cpp","autoware_default_staticsinglethreaded"],["rmw_fastrtps_cpp","autoware_default_staticsinglethreaded"]]},"selected":{"id":"8208"},"selection_policy":{"id":"8207"}},"id":"7873","type":"ColumnDataSource"},{"attributes":{},"id":"8027","type":"HelpTool"},{"attributes":{},"id":"7961","type":"SaveTool"},{"attributes":{"editor":{"id":"8097"},"field":"std_dev","formatter":{"id":"8096"},"title":"Std. Dev."},"id":"8073","type":"TableColumn"},{"attributes":{"data":{"box_bottom":{"__ndarray__":"qFz4xKV6b8Cw/bPyjzlswPMMx4xxcm7A8mBtHElaYsA6nDnD6dlvwLmO6+tqkG/A4RLgXDOpY8DGWI5b5FJtwPtA6u5rsWzAdRLfQHqdcMDVp+3XBzC2wIZ7MSMw/G/AUiHTuerWYsCs1ZjZbYVuwA54gCNhd2/A","dtype":"float64","order":"little","shape":[15]},"box_top":{"__ndarray__":"qkoSRvhtd0A4771UaI1zQKx6sIp4fnVAv5etBG8UckBt1wdu+TB3QFQWjj+bkXdATpFG5v9YckD7UjBY+Ft0QD7OaAZPXnRABVJX0Xbdd0BRNOEWCB+2QNkAM0XgiHZAFKmAhTUQcUA2Bxaypgl1QKeQ4+eCI3ZA","dtype":"float64","order":"little","shape":[15]},"exe":["autoware_default_cbg","autoware_default_cbg","autoware_default_cbg","autoware_default_multithreaded","autoware_default_multithreaded","autoware_default_multithreaded","autoware_default_prioritized","autoware_default_prioritized","autoware_default_prioritized","autoware_default_singlethreaded","autoware_default_singlethreaded","autoware_default_singlethreaded","autoware_default_staticsinglethreaded","autoware_default_staticsinglethreaded","autoware_default_staticsinglethreaded"],"high":{"__ndarray__":"MzMzMzM+pEAzMzMzM1CgQGZmZmZmnqdAZmZmZmZEl0AAAAAAADmwQDMzMzMzGKRAAAAAAACgnUAzMzMzM2+gQAAAAAAA+aZAZmZmZma2q0AzMzMzM0ygQDMzMzMzxaxAAAAAAACWmUCamZmZmYmgQGZmZmbmNLBA","dtype":"float64","order":"little","shape":[15]},"index":[57,37,17,49,29,9,41,21,1,53,33,13,45,25,5],"low":{"__ndarray__":"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACamZmZRfwhwQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA","dtype":"float64","order":"little","shape":[15]},"mean":{"__ndarray__":"V3FYjpXCTkCBwY9tgcJFQMvQMxH/FElAi87t7JTOUUA+JawxEhBNQN07YSaXJU9AvA+tb8wIUUBhmqSpGMpGQAS3zjtkFkhAPf7gQfL/TECfhHMMwf8gwFYMac4gK0pArGFcogCTTkCAcSYVvxtHQH9SjVhJn0lA","dtype":"float64","order":"little","shape":[15]},"rmw":["rmw_connextdds","rmw_cyclonedds_cpp","rmw_fastrtps_cpp","rmw_connextdds","rmw_cyclonedds_cpp","rmw_fastrtps_cpp","rmw_connextdds","rmw_cyclonedds_cpp","rmw_fastrtps_cpp","rmw_connextdds","rmw_cyclonedds_cpp","rmw_fastrtps_cpp","rmw_connextdds","rmw_cyclonedds_cpp","rmw_fastrtps_cpp"],"std_dev":{"__ndarray__":"fzxHlKWVc0AI9wsnGNVwQJMAiqjYW3JAOEjkkpNBa0DFUtIn945zQNjuwVrorHNAv5q2lJktbECvv/tCtYJxQF737n6CW3FAPTIbiXg9dEATbmf3hye2QE7fZSt8Q3NAvTlq4qp7akAGOXHPLiZyQFfm0byZ73JA","dtype":"float64","order":"little","shape":[15]},"type":["cpu","cpu","cpu","cpu","cpu","cpu","cpu","cpu","cpu","cpu","cpu","cpu","cpu","cpu","cpu"],"x":[["rmw_connextdds","autoware_default_cbg"],["rmw_cyclonedds_cpp","autoware_default_cbg"],["rmw_fastrtps_cpp","autoware_default_cbg"],["rmw_connextdds","autoware_default_multithreaded"],["rmw_cyclonedds_cpp","autoware_default_multithreaded"],["rmw_fastrtps_cpp","autoware_default_multithreaded"],["rmw_connextdds","autoware_default_prioritized"],["rmw_cyclonedds_cpp","autoware_default_prioritized"],["rmw_fastrtps_cpp","autoware_default_prioritized"],["rmw_connextdds","autoware_default_singlethreaded"],["rmw_cyclonedds_cpp","autoware_default_singlethreaded"],["rmw_fastrtps_cpp","autoware_default_singlethreaded"],["rmw_connextdds","autoware_default_staticsinglethreaded"],["rmw_cyclonedds_cpp","autoware_default_staticsinglethreaded"],["rmw_fastrtps_cpp","autoware_default_staticsinglethreaded"]]},"selected":{"id":"8122"},"selection_policy":{"id":"8121"}},"id":"7872","type":"ColumnDataSource"},{"attributes":{},"id":"7958","type":"PanTool"},{"attributes":{"coordinates":null,"group":null,"text":"Virtual Memory Usage Over Time 5s","text_font_size":"22px"},"id":"8006","type":"Title"},{"attributes":{"coordinates":null,"data_source":{"id":"7873"},"glyph":{"id":"7985"},"group":null,"hover_glyph":null,"muted_glyph":{"id":"7987"},"nonselection_glyph":{"id":"7986"},"view":{"id":"7989"}},"id":"7988","type":"GlyphRenderer"},{"attributes":{"axis_label":"Virtual Memory Usage (MB)","axis_label_text_font_size":"20px","coordinates":null,"formatter":{"id":"8336"},"group":null,"major_label_policy":{"id":"8337"},"major_label_text_font_size":"14px","ticker":{"id":"8019"}},"id":"8018","type":"LinearAxis"},{"attributes":{},"id":"8342","type":"Selection"},{"attributes":{"line_alpha":{"value":0.1},"line_width":{"value":2},"x0":{"field":"x"},"x1":{"field":"x"},"y0":{"field":"box_top"},"y1":{"field":"high"}},"id":"8044","type":"Segment"},{"attributes":{},"id":"8341","type":"UnionRenderers"},{"attributes":{"fill_alpha":{"value":0.1},"fill_color":{"field":"x","transform":{"id":"7875"}},"hatch_alpha":{"value":0.1},"line_alpha":{"value":0.1},"line_width":{"value":2},"marker":{"value":"dash"},"size":{"value":25},"x":{"field":"x"},"y":{"field":"high"}},"id":"8056","type":"Scatter"},{"attributes":{"coordinates":null,"data_source":{"id":"7872"},"glyph":{"id":"7933"},"group":null,"hover_glyph":null,"muted_glyph":{"id":"7935"},"nonselection_glyph":{"id":"7934"},"view":{"id":"7937"}},"id":"7936","type":"GlyphRenderer"},{"attributes":{"source":{"id":"7873"}},"id":"7989","type":"CDSView"},{"attributes":{},"id":"8023","type":"WheelZoomTool"},{"attributes":{},"id":"7897","type":"SaveTool"},{"attributes":{"source":{"id":"7873"}},"id":"7983","type":"CDSView"},{"attributes":{},"id":"8095","type":"StringEditor"},{"attributes":{"source":{"id":"7873"}},"id":"7995","type":"CDSView"},{"attributes":{},"id":"8011","type":"CategoricalScale"},{"attributes":{"coordinates":null,"data_source":{"id":"7874"},"glyph":{"id":"8049"},"group":null,"hover_glyph":null,"muted_glyph":{"id":"8051"},"nonselection_glyph":{"id":"8050"},"view":{"id":"8053"}},"id":"8052","type":"GlyphRenderer"},{"attributes":{"factors":[["rmw_connextdds","autoware_default_cbg"],["rmw_cyclonedds_cpp","autoware_default_cbg"],["rmw_fastrtps_cpp","autoware_default_cbg"],["rmw_connextdds","autoware_default_multithreaded"],["rmw_cyclonedds_cpp","autoware_default_multithreaded"],["rmw_fastrtps_cpp","autoware_default_multithreaded"],["rmw_connextdds","autoware_default_prioritized"],["rmw_cyclonedds_cpp","autoware_default_prioritized"],["rmw_fastrtps_cpp","autoware_default_prioritized"],["rmw_connextdds","autoware_default_singlethreaded"],["rmw_cyclonedds_cpp","autoware_default_singlethreaded"],["rmw_fastrtps_cpp","autoware_default_singlethreaded"],["rmw_connextdds","autoware_default_staticsinglethreaded"],["rmw_cyclonedds_cpp","autoware_default_staticsinglethreaded"],["rmw_fastrtps_cpp","autoware_default_staticsinglethreaded"]],"range_padding":0.1},"id":"7940","type":"FactorRange"},{"attributes":{},"id":"8096","type":"StringFormatter"},{"attributes":{"axis_label":"Real Memory Usage (MB)","axis_label_text_font_size":"20px","coordinates":null,"formatter":{"id":"8202"},"group":null,"major_label_policy":{"id":"8203"},"major_label_text_font_size":"14px","ticker":{"id":"7955"}},"id":"7954","type":"LinearAxis"},{"attributes":{"callback":null,"tooltips":[["Benchmark","@{exe} [@{rmw}]"],["Average Virtual Memory Usage (MB)","@{mean}{0.00}"],["Minimum Virtual Memory Usage (MB)","@{low}{0.00}"],["Maximum Virtual Memory Usage (MB)","@{high}{0.00}"]]},"id":"8066","type":"HoverTool"},{"attributes":{"axis":{"id":"8015"},"coordinates":null,"group":null,"ticker":null},"id":"8017","type":"Grid"},{"attributes":{"line_alpha":{"value":0.2},"line_width":{"value":2},"x0":{"field":"x"},"x1":{"field":"x"},"y0":{"field":"box_bottom"},"y1":{"field":"low"}},"id":"7975","type":"Segment"},{"attributes":{"columns":[{"id":"8068"},{"id":"8069"},{"id":"8070"},{"id":"8071"},{"id":"8072"},{"id":"8073"}],"height":750,"margin":[0,10,10,10],"source":{"id":"8082"},"view":{"id":"8085"},"width":1250},"id":"8083","type":"DataTable"},{"attributes":{},"id":"8091","type":"StringEditor"},{"attributes":{},"id":"8099","type":"Selection"},{"attributes":{"coordinates":null,"data_source":{"id":"7873"},"glyph":{"id":"7997"},"group":null,"hover_glyph":null,"muted_glyph":{"id":"7999"},"nonselection_glyph":{"id":"7998"},"view":{"id":"8001"}},"id":"8000","type":"GlyphRenderer"},{"attributes":{"axis_label":"Executors (with RMW)","axis_label_text_font_size":"20px","coordinates":null,"formatter":{"id":"8339"},"group":null,"group_text_font_size":"15px","major_label_orientation":0.19634954084936207,"major_label_policy":{"id":"8340"},"major_label_text_font_size":"14px","ticker":{"id":"8016"}},"id":"8015","type":"CategoricalAxis"},{"attributes":{"editor":{"id":"8087"},"field":"exe","formatter":{"id":"8086"},"title":"Benchmark"},"id":"8068","type":"TableColumn"},{"attributes":{"editor":{"id":"8089"},"field":"rmw","formatter":{"id":"8088"},"title":"RMW"},"id":"8069","type":"TableColumn"},{"attributes":{"source":{"id":"7874"}},"id":"8047","type":"CDSView"},{"attributes":{"source":{"id":"7874"}},"id":"8041","type":"CDSView"},{"attributes":{},"id":"7894","type":"PanTool"},{"attributes":{"coordinates":null,"data_source":{"id":"7873"},"glyph":{"id":"7973"},"group":null,"hover_glyph":null,"muted_glyph":{"id":"7975"},"nonselection_glyph":{"id":"7974"},"view":{"id":"7977"}},"id":"7976","type":"GlyphRenderer"},{"attributes":{"bottom":{"field":"box_bottom"},"fill_alpha":{"value":0.2},"fill_color":{"field":"x","transform":{"id":"7875"}},"hatch_alpha":{"value":0.2},"line_alpha":{"value":0.2},"top":{"field":"box_top"},"width":{"value":0.2},"x":{"field":"x"}},"id":"8051","type":"VBar"},{"attributes":{"bottom_units":"screen","coordinates":null,"fill_alpha":0.5,"fill_color":"lightgrey","group":null,"left_units":"screen","level":"overlay","line_alpha":1.0,"line_color":"black","line_dash":[4,4],"line_width":2,"right_units":"screen","syncable":false,"top_units":"screen"},"id":"7900","type":"BoxAnnotation"},{"attributes":{"factors":[["rmw_connextdds","autoware_default_cbg"],["rmw_cyclonedds_cpp","autoware_default_cbg"],["rmw_fastrtps_cpp","autoware_default_cbg"],["rmw_connextdds","autoware_default_multithreaded"],["rmw_cyclonedds_cpp","autoware_default_multithreaded"],["rmw_fastrtps_cpp","autoware_default_multithreaded"],["rmw_connextdds","autoware_default_prioritized"],["rmw_cyclonedds_cpp","autoware_default_prioritized"],["rmw_fastrtps_cpp","autoware_default_prioritized"],["rmw_connextdds","autoware_default_singlethreaded"],["rmw_cyclonedds_cpp","autoware_default_singlethreaded"],["rmw_fastrtps_cpp","autoware_default_singlethreaded"],["rmw_connextdds","autoware_default_staticsinglethreaded"],["rmw_cyclonedds_cpp","autoware_default_staticsinglethreaded"],["rmw_fastrtps_cpp","autoware_default_staticsinglethreaded"]],"range_padding":0.1},"id":"8004","type":"FactorRange"},{"attributes":{},"id":"8160","type":"UnionRenderers"},{"attributes":{},"id":"8337","type":"AllLabels"},{"attributes":{"coordinates":null,"data_source":{"id":"7874"},"glyph":{"id":"8037"},"group":null,"hover_glyph":null,"muted_glyph":{"id":"8039"},"nonselection_glyph":{"id":"8038"},"view":{"id":"8041"}},"id":"8040","type":"GlyphRenderer"},{"attributes":{},"id":"8206","type":"AllLabels"},{"attributes":{"bottom":{"field":"box_bottom"},"fill_color":{"field":"x","transform":{"id":"7875"}},"top":{"field":"box_top"},"width":{"value":0.2},"x":{"field":"x"}},"id":"8049","type":"VBar"},{"attributes":{"fill_alpha":{"value":0.1},"fill_color":{"field":"x","transform":{"id":"7875"}},"hatch_alpha":{"value":0.1},"line_alpha":{"value":0.1},"line_width":{"value":2},"marker":{"value":"dash"},"size":{"value":25},"x":{"field":"x"},"y":{"field":"high"}},"id":"7992","type":"Scatter"},{"attributes":{},"id":"7949","type":"LinearScale"},{"attributes":{"source":{"id":"8074"}},"id":"8077","type":"CDSView"},{"attributes":{"fill_alpha":{"value":0.1},"fill_color":{"field":"x","transform":{"id":"7875"}},"hatch_alpha":{"value":0.1},"line_alpha":{"value":0.1},"line_width":{"value":2},"marker":{"value":"dash"},"size":{"value":25},"x":{"field":"x"},"y":{"field":"high"}},"id":"7928","type":"Scatter"},{"attributes":{},"id":"8093","type":"StringEditor"},{"attributes":{"fill_color":{"field":"x","transform":{"id":"7875"}},"line_width":{"value":2},"marker":{"value":"dash"},"size":{"value":25},"x":{"field":"x"},"y":{"field":"low"}},"id":"7933","type":"Scatter"},{"attributes":{},"id":"8026","type":"ResetTool"},{"attributes":{"line_width":{"value":2},"x0":{"field":"x"},"x1":{"field":"x"},"y0":{"field":"box_top"},"y1":{"field":"high"}},"id":"7915","type":"Segment"},{"attributes":{"axis":{"id":"7954"},"coordinates":null,"dimension":1,"group":null,"ticker":null},"id":"7957","type":"Grid"},{"attributes":{"line_alpha":{"value":0.1},"line_width":{"value":2},"x0":{"field":"x"},"x1":{"field":"x"},"y0":{"field":"box_top"},"y1":{"field":"high"}},"id":"7980","type":"Segment"},{"attributes":{"bottom":{"field":"box_bottom"},"fill_color":{"field":"x","transform":{"id":"7875"}},"top":{"field":"box_top"},"width":{"value":0.2},"x":{"field":"x"}},"id":"7985","type":"VBar"},{"attributes":{},"id":"8013","type":"LinearScale"},{"attributes":{},"id":"7963","type":"HelpTool"},{"attributes":{"fill_color":{"field":"x","transform":{"id":"7875"}},"line_width":{"value":2},"marker":{"value":"dash"},"size":{"value":25},"x":{"field":"x"},"y":{"field":"high"}},"id":"7991","type":"Scatter"},{"attributes":{},"id":"7891","type":"BasicTicker"},{"attributes":{"fill_alpha":{"value":0.2},"fill_color":{"field":"x","transform":{"id":"7875"}},"hatch_alpha":{"value":0.2},"line_alpha":{"value":0.2},"line_width":{"value":2},"marker":{"value":"dash"},"size":{"value":25},"x":{"field":"x"},"y":{"field":"low"}},"id":"7999","type":"Scatter"},{"attributes":{"bottom":{"field":"box_bottom"},"fill_color":{"field":"x","transform":{"id":"7875"}},"top":{"field":"box_top"},"width":{"value":0.2},"x":{"field":"x"}},"id":"7921","type":"VBar"},{"attributes":{},"id":"8202","type":"BasicTickFormatter"},{"attributes":{"axis":{"id":"7887"},"coordinates":null,"group":null,"ticker":null},"id":"7889","type":"Grid"},{"attributes":{},"id":"8094","type":"StringFormatter"},{"attributes":{"bottom":{"field":"box_bottom"},"fill_alpha":{"value":0.1},"fill_color":{"field":"x","transform":{"id":"7875"}},"hatch_alpha":{"value":0.1},"line_alpha":{"value":0.1},"top":{"field":"box_top"},"width":{"value":0.2},"x":{"field":"x"}},"id":"8050","type":"VBar"},{"attributes":{"data":{"box_bottom":{"__ndarray__":"oxtsfU6JYUCIhWpK7A0/QK4kqQma11JAOnkY2JnTXkAlT5ATlw88QBv33Vw6hVNAGmHULQPiXkAiciKp14U/QJTCmywN3lJAZLKK70SwYEDC6gh3tww8QIS91g+ZLVNAAu6qajRPX0CnfzssY8c9QO+AjY0vAFRA","dtype":"float64","order":"little","shape":[15]},"box_top":{"__ndarray__":"ubw+xm2DZ0ByU8bcbYVAQDAwRhXtb1VA06qzX1iQZ0An63kj0qo9QAeo9teVolZAq39NkKPbZ0A30FT3CJlAQOCg7DqxjFVAYHgL5Z9sZkAyobpJx2I9QDy5hGdHM1ZA3ea7ZzBIZ0DN6qytXDA/QO+4n+MbLVdA","dtype":"float64","order":"little","shape":[15]},"exe":["autoware_default_cbg","autoware_default_cbg","autoware_default_cbg","autoware_default_multithreaded","autoware_default_multithreaded","autoware_default_multithreaded","autoware_default_prioritized","autoware_default_prioritized","autoware_default_prioritized","autoware_default_singlethreaded","autoware_default_singlethreaded","autoware_default_singlethreaded","autoware_default_staticsinglethreaded","autoware_default_staticsinglethreaded","autoware_default_staticsinglethreaded"],"high":{"__ndarray__":"2c73U+NdZUAv3SQGgRVAQDm0yHa+T1RA0SLb+X42ZUDy0k1iEPg8QI2XbhKDYFVAaJHtfD8tZUCcxCCwcjhAQIcW2c73Y1RAvp8aL92IZEAbL90kBgE9QAAAAAAA6FRAVg4tsp3rZEDZzvdT46U+QKJFtvP91FVA","dtype":"float64","order":"little","shape":[15]},"index":[58,38,18,50,30,10,42,22,2,54,34,14,46,26,6],"low":{"__ndarray__":"AAAAAAAA+D8AAAAAAAD4PwAAAAAAAAAAAAAAAAAA+j8AAAAAAAD4PwAAAAAAAPo/AAAAAAAA+D8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA","dtype":"float64","order":"little","shape":[15]},"mean":{"__ndarray__":"LmzVIV6GZEAby/0AMgZAQG+qd4/DI1RAuPPfpRJ9Y0AmHYWbNN08QJFPahroE1VAHNibk1KmY0CkBPNl+i1AQLoxxDNfNVRAYhVLanKOY0D6xWFgv7c8QGC7rTtwsFRA766ITuV3Y0A6NfTs33s+QO+clrilllVA","dtype":"float64","order":"little","shape":[15]},"rmw":["rmw_connextdds","rmw_cyclonedds_cpp","rmw_fastrtps_cpp","rmw_connextdds","rmw_cyclonedds_cpp","rmw_fastrtps_cpp","rmw_connextdds","rmw_cyclonedds_cpp","rmw_fastrtps_cpp","rmw_connextdds","rmw_cyclonedds_cpp","rmw_fastrtps_cpp","rmw_connextdds","rmw_cyclonedds_cpp","rmw_fastrtps_cpp"],"std_dev":{"__ndarray__":"W4RKI33oN0DHFSLy9s7vPxBc6FyYwhRAa9xO5xZNQEAgwJn+sLPpP12Hxdjb6hhAPZ7G8kPVQEDN5HJYpMPqP2HyhnIgdRVA9BcD1mvxNkD/Zhsr/WDlP7jdb71yLRhAb7+ZyViCPkBsshYXmI/mP/m/kbBiZxlA","dtype":"float64","order":"little","shape":[15]},"type":["real","real","real","real","real","real","real","real","real","real","real","real","real","real","real"]},"selected":{"id":"8161"},"selection_policy":{"id":"8160"}},"id":"8078","type":"ColumnDataSource"},{"attributes":{"bottom":{"field":"box_bottom"},"fill_alpha":{"value":0.1},"fill_color":{"field":"x","transform":{"id":"7875"}},"hatch_alpha":{"value":0.1},"line_alpha":{"value":0.1},"top":{"field":"box_top"},"width":{"value":0.2},"x":{"field":"x"}},"id":"7922","type":"VBar"},{"attributes":{},"id":"8098","type":"UnionRenderers"}],"root_ids":["8075","7877","8079","7941","8083","8005"]},"title":"Bokeh Application","version":"2.4.1"}}';
+                const render_items = [{"docid":"c9f789ec-fa72-4101-85f7-d93456505b74","root_ids":["8075","7877","8079","7941","8083","8005"],"roots":{"7877":"fc27ca47-741f-427d-9afa-909fe029063f","7941":"fb7f1f77-0816-4257-857d-eec70c68517a","8005":"8bd1554c-cbcc-4ebf-aa50-db5cb4e2be82","8075":"3cb34eab-d252-48a0-b46b-73880e2b0414","8079":"80d7adf0-87a0-4ccb-af60-bc8368032271","8083":"31184171-e171-4f7a-8278-f1f75f756ac6"}}];
+                root.Bokeh.embed.embed_items(docs_json, render_items);
+
+                }
+                if (root.Bokeh !== undefined) {
+                  embed_document(root);
+                } else {
+                  let attempts = 0;
+                  const timer = setInterval(function(root) {
+                    if (root.Bokeh !== undefined) {
+                      clearInterval(timer);
+                      embed_document(root);
+                    } else {
+                      attempts++;
+                      if (attempts > 100) {
+                        clearInterval(timer);
+                        console.log("Bokeh: ERROR: Unable to run BokehJS code because BokehJS library is missing");
+                      }
+                    }
+                  }, 10, root)
+                }
+              })(window);
+            });
+          };
+          if (document.readyState != "loading") fn();
+          else document.addEventListener("DOMContentLoaded", fn);
+        })();
+</script>
+
+<div class="bk-root" id="3cb34eab-d252-48a0-b46b-73880e2b0414" data-root-id="8075"></div>
+
+<div class="bk-root" id="fc27ca47-741f-427d-9afa-909fe029063f" data-root-id="7877"></div>
+
+<div class="bk-root" id="80d7adf0-87a0-4ccb-af60-bc8368032271" data-root-id="8079"></div>
+
+<div class="bk-root" id="fb7f1f77-0816-4257-857d-eec70c68517a" data-root-id="7941"></div>
+
+<div class="bk-root" id="31184171-e171-4f7a-8278-f1f75f756ac6" data-root-id="8083"></div>
+
+<div class="bk-root" id="8bd1554c-cbcc-4ebf-aa50-db5cb4e2be82" data-root-id="8005"></div>
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+        
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="Footer">
+      
+        
+        <a href="../executor_kpi_summary_report_5s/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Key performance indicator report" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              Key performance indicator report
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="../../../../api-reference/Classes/" class="md-footer__link md-footer__link--next" aria-label="Next: Classes" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              Classes
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        
+          Made with
+          <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+            Material for MkDocs
+          </a>
+        
+        
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "../../../..", "features": ["navigation.indexes", "navigation.tracking"], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../../../assets/javascripts/workers/search.fcfe8b6d.min.js", "version": {"provider": "mike"}}</script>
+    
+    
+      <script src="../../../../assets/javascripts/bundle.b1047164.min.js"></script>
+      
+    
+  </body>
+</html>
