@@ -62,6 +62,14 @@ endif()
 #  src/ros2/executor/autoware_default_custom.cpp
 #)
 
+# Static Single Threaded Executor
+add_benchmark_executable(autoware_default_events
+  src/ros2/executor/autoware_default_events.cpp)
+
+# Prioritized Executor
+add_benchmark_executable(autoware_default_graph
+  src/ros2/executor/autoware_default_graph.cpp)
+
 if(${BUILD_TESTING})
   find_package(ament_lint_auto REQUIRED)
   ament_lint_auto_find_test_dependencies()
