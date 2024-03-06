@@ -51,7 +51,7 @@ public:
     publisher_ = this->create_publisher<message_t>(settings.output_topic, 1);
     timer_ = this->create_wall_timer(
       settings.cycle_time,
-      [this] {timer_callback();});
+      [this] {timer_callback();}, nullptr, {publisher_});
   }
 
 private:

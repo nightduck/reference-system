@@ -35,10 +35,11 @@ public:
   : Node(settings.node_name),
     number_crunch_limit_(settings.number_crunch_limit)
   {
+    publisher_ = this->create_publisher<message_t>(settings.output_topic, 1);
     subscription_ = this->create_subscription<message_t>(
       settings.input_topic, 1,
-      [this](const message_t::SharedPtr msg) {input_callback(msg);});
-    publisher_ = this->create_publisher<message_t>(settings.output_topic, 1);
+      [this](const message_t::SharedPtr msg) {input_callback(msg);},
+      {publisher_});
   }
 
 private:

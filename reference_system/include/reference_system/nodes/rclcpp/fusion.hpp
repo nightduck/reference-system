@@ -35,14 +35,14 @@ public:
   : Node(settings.node_name),
     number_crunch_limit_(settings.number_crunch_limit)
   {
+    publisher_ = this->create_publisher<message_t>(settings.output_topic, 1);
     subscriptions_[0].subscription = this->create_subscription<message_t>(
       settings.input_0, 1,
-      [this](const message_t::SharedPtr msg) {input_callback(0U, msg);});
+      [this](const message_t::SharedPtr msg) {input_callback(0U, msg);}, {publisher_});
 
     subscriptions_[1].subscription = this->create_subscription<message_t>(
       settings.input_1, 1,
-      [this](const message_t::SharedPtr msg) {input_callback(1U, msg);});
-    publisher_ = this->create_publisher<message_t>(settings.output_topic, 1);
+      [this](const message_t::SharedPtr msg) {input_callback(1U, msg);}, {publisher_});
   }
 
 private:
