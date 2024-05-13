@@ -72,5 +72,13 @@ struct SensorSettings
   std::string topic_name;
   std::chrono::nanoseconds cycle_time;
 };
+
+struct PeriodicSensorSettings
+{
+  std::string node_name;
+  std::string topic_name;
+  std::chrono::nanoseconds cycle_time;
+  uint64_t number_crunch_limit;
+};
 }  // namespace nodes
 #endif  // REFERENCE_SYSTEM__NODES__SETTINGS_HPP_
