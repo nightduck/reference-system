@@ -26,3 +26,11 @@ if(BUILD_TESTING)
   set(ament_cmake_cpplint_FOUND TRUE)
   ament_lint_auto_find_test_dependencies()
 endif()
+
+
+install(TARGETS timers_only
+  RUNTIME DESTINATION lib/${PROJECT_NAME}
+)
+
+ament_export_include_directories(include)
+ament_package()
