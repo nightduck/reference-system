@@ -70,9 +70,6 @@ add_benchmark_executable(autoware_default_events
 add_benchmark_executable(autoware_default_graph
   src/ros2/executor/autoware_default_graph.cpp)
 
-
-ament_auto_add_executable(timers_only src/timers_only.cpp)
-
 if(${BUILD_TESTING})
   find_package(ament_lint_auto REQUIRED)
   ament_lint_auto_find_test_dependencies()

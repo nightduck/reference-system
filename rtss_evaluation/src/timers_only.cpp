@@ -14,11 +14,10 @@
 
 #include "rclcpp/rclcpp.hpp"
 
-#include "reference_system/system/type/rclcpp_system.hpp"
+#include "rtss_evaluation/rt_system.hpp"
 
-#include "timers_only_system_builder.hpp"
-#include "autoware_reference_system/system/timing/benchmark.hpp"
-#include "autoware_reference_system/system/timing/default.hpp"
+#include "rtss_evaluation/timers_only_system_builder.hpp"
+#include "rtss_evaluation/default.hpp"
 #include "rclcpp/experimental/executors/events_executor/events_executor.hpp"
 #include "rclcpp/experimental/executors/graph_executor.hpp"
 
@@ -32,13 +31,13 @@ int main(int argc, char * argv[])
 
   rclcpp::init(argc, argv);
 
-  using TimeConfig = nodes::timing::Default;
+  using TimeConfig = rt_nodes::timing::Default;
   // uncomment for benchmarking
   // using TimeConfig = nodes::timing::BenchmarkCPUUsage;
   // set_benchmark_mode(true);
 
   // Build a set of timers
-  auto nodes = create_timer_only_nodes<RclcppSystem, TimeConfig>();
+  auto nodes = create_timer_only_nodes<RTSystem, TimeConfig>();
 
   // Using argv[3] as a string argument, ascertain which executor we're running
   if (strcmp(argv[1], "rm") == 0) {
@@ -72,6 +71,11 @@ int main(int argc, char * argv[])
       executor.add_node(node);
     }
     executor.spin();
+  }
+
+  std::cout << "Dropped jobs: " << std::endl;
+  for (auto & node : nodes) {
+    std::cout << node->get_name() << ": " << node->get_dropped_jobs() << std::endl;
   }
 
   nodes.clear();
