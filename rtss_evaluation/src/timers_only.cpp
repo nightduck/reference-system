@@ -61,15 +61,31 @@ int main(int argc, char * argv[])
       std::cout << "Using rate monotonic fixed priority executor in RO mode" << std::endl;
     }
 
-    rclcpp::experimental::executors::GraphExecutor executor = rclcpp::experimental::executors::GraphExecutor();
+    rclcpp::experimental::executors::GraphExecutor executor
+      = rclcpp::experimental::executors::GraphExecutor(execute_timers_separate_thread);
 
     for (auto & node : nodes) {
       executor.add_node(node);
     }
     executor.assign_priority();
     executor.spin();
-  } else if (strcmp(argv[2], "events") == 0) {
+  } else if (strcmp(argv[2], "edf") == 0) {
+    // Get argv[4] to determine RO or RE
+    bool execute_timers_separate_thread = false;
+    if (argc >= 3 && strcmp(argv[3], "RE") == 0) {
+      execute_timers_separate_thread = true;
+      std::cout << "Using events executor in RE mode" << std::endl;
+    } else {
+      std::cout << "Using events executor in RO mode" << std::endl;
+    }
 
+    auto events_queue = std::make_unique<rclcpp::experimental::executors::EDFEventsQueue>();
+    rclcpp::experimental::executors::EventsExecutor executor(std::move(events_queue), execute_timers_separate_thread);
+    for (auto & node : nodes) {
+      executor.add_node(node);
+    }
+    executor.spin();
+  } else if (strcmp(argv[2], "events") == 0) {
     // Get argv[4] to determine RO or RE
     bool execute_timers_separate_thread = false;
     if (argc >= 3 && strcmp(argv[3], "RE") == 0) {
