@@ -39,7 +39,7 @@ int main(int argc, char * argv[])
   // set_benchmark_mode(true);
 
   // Build a set of timers
-  auto nodes = create_timer_only_nodes<RTSystem, TimeConfig>();
+  auto nodes = create_timer_only_nodes_high_utilization<RTSystem, TimeConfig>();
 
   int duration = std::stoi(argv[1]);
 

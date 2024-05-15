@@ -15,6 +15,8 @@ ament_auto_find_build_dependencies()
 
 ament_auto_add_executable(timers_only src/timers_only.cpp)
 
+ament_auto_add_executable(timers_only_high_utilization src/timers_only_high_utilization.cpp)
+
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
   # the following line skips the linter which checks for copyrights
@@ -28,7 +30,7 @@ if(BUILD_TESTING)
 endif()
 
 
-install(TARGETS timers_only
+install(TARGETS timers_only timers_only_high_utilization
   RUNTIME DESTINATION lib/${PROJECT_NAME}
 )
 
