@@ -83,8 +83,8 @@ private:
       this->get_name(), sequence_number_++, missed_jobs, timestamp,
       message.get());
 
-    std::cout << "Sensor: " << this->get_name() << " published message " << sequence_number_ <<
-      " at " << timestamp << std::endl;
+    // std::cout << timestamp << ": " << this->get_name() << " published message " << sequence_number_ 
+    //   << std::endl;
     publisher_->publish(std::move(message));
   }
 

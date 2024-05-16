@@ -33,7 +33,7 @@ int main(int argc, char * argv[])
   auto nodes = create_autoware_nodes<RclcppSystem, TimeConfig>();
 
   auto events_queue = std::make_unique<rclcpp::experimental::executors::PriorityEventsQueue>();
-  rclcpp::experimental::executors::EventsExecutor executor(std::move(events_queue), false);
+  rclcpp::experimental::executors::EventsExecutor executor(std::move(events_queue));
   for (auto & node : nodes) {
     executor.add_node(node);
   }
