@@ -41,6 +41,7 @@ public:
     timer_ = this->create_wall_timer(
       settings.cycle_time,
       [this] {timer_callback();}, nullptr, {publisher_});
+    period = settings.cycle_time.count();
   }
 
   uint32_t
@@ -55,6 +56,24 @@ public:
     return sequence_number_;
   }
 
+  uint64_t
+  get_first_job()
+  {
+    return first_job;
+  }
+
+  uint64_t
+  get_last_job()
+  {
+    return last_job;
+  }
+
+  uint64_t
+  get_timer_period()
+  {
+    return period;
+  }
+
 private:
   void timer_callback()
   {
@@ -66,7 +85,7 @@ private:
     int64_t period = timer_->get_period();
     uint32_t missed_jobs = 0;
     if (sequence_number_ == 0) {
-      ;
+      first_job = timestamp;
     } else if (next_arrival_time - period > expected_arrival_time) {
       // !!! Dropped a job!!
       // std::cout << "Dropped a job! Expected arrival time: " << expected_arrival_time <<
@@ -74,6 +93,7 @@ private:
       missed_jobs = ((next_arrival_time - expected_arrival_time) / period) - 1;
       dropped_jobs_ += missed_jobs;
     }
+    last_job = timestamp;
     expected_arrival_time = next_arrival_time;
 
     auto message = publisher_->borrow_loaned_message();
@@ -120,6 +140,9 @@ private:
   rclcpp::TimerBase::SharedPtr timer_;
   uint32_t sequence_number_ = 0;
   uint32_t dropped_jobs_ = 0;
+  uint64_t first_job = 0;
+  uint64_t last_job = 0;
+  uint64_t period = 0;
 };
 }  // namespace rclcpp_system
 }  // namespace nodes
