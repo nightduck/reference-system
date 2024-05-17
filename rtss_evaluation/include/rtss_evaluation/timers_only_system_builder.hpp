@@ -64,13 +64,6 @@ auto create_timer_only_nodes()
 
   nodes.emplace_back(
     std::make_shared<typename SystemType::Sensor>(
-      rt_nodes::SensorSettings{.node_name = "RearCamera",
-        .topic_name = "RearCamera",
-        .cycle_time = TimingConfig::CAMERA_DRIVER_PERIOD,
-        .number_crunch_limit = TimingConfig::CAMERA_DURATION}));
-
-  nodes.emplace_back(
-    std::make_shared<typename SystemType::Sensor>(
       rt_nodes::SensorSettings{.node_name = "LeftCamera",
         .topic_name = "LeftCamera",
         .cycle_time = TimingConfig::CAMERA_DRIVER_PERIOD,

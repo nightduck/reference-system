@@ -54,30 +54,25 @@ int main(int argc, char * argv[])
   if (strcmp(argv[2], "rm") == 0) {
 
     // Get argv[4] to determine RO or RE
-    bool execute_timers_separate_thread = false;
     rclcpp::experimental::executors::RMEventsQueue::UniquePtr timers_queue = nullptr;
     if (argc > 3 && (strcmp(argv[3], "re") == 0)) {
-      execute_timers_separate_thread = true;
       std::cout << "Using rate monotonic fixed priority executor in RE mode" << std::endl;
       timers_queue = std::make_unique<rclcpp::experimental::executors::RMEventsQueue>();
     } else {
       std::cout << "Using rate monotonic fixed priority executor in RO mode" << std::endl;
     }
 
-    rclcpp::experimental::executors::GraphExecutor executor
-      = rclcpp::experimental::executors::GraphExecutor(std::move(timers_queue));
+    auto events_queue = std::make_unique<rclcpp::experimental::executors::RMEventsQueue>();
+    rclcpp::experimental::executors::EventsExecutor executor(std::move(events_queue), std::move(timers_queue));
 
     for (auto & node : nodes) {
       executor.add_node(node);
     }
-    executor.assign_priority();
     executor.spin();
   } else if (strcmp(argv[2], "edf") == 0) {
     // Get argv[4] to determine RO or RE
-    bool execute_timers_separate_thread = false;
     rclcpp::experimental::executors::EDFEventsQueue::UniquePtr timers_queue = nullptr;
     if (argc > 3 && (strcmp(argv[3], "re") == 0)) {
-      execute_timers_separate_thread = true;
       std::cout << "Using edf executor in RE mode" << std::endl;
       timers_queue = std::make_unique<rclcpp::experimental::executors::EDFEventsQueue>();
     } else {
@@ -92,10 +87,8 @@ int main(int argc, char * argv[])
     executor.spin();
   } else if (strcmp(argv[2], "events") == 0) {
     // Get argv[4] to determine RO or RE
-    bool execute_timers_separate_thread = false;
     rclcpp::experimental::executors::SimpleEventsQueue::UniquePtr timers_queue = nullptr;
     if (argc > 3 && (strcmp(argv[3], "re") == 0)) {
-      execute_timers_separate_thread = true;
       std::cout << "Using events executor in RE mode" << std::endl;
       timers_queue = std::make_unique<rclcpp::experimental::executors::SimpleEventsQueue>();
     } else {
