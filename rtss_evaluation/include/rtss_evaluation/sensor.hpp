@@ -42,6 +42,7 @@ public:
       settings.cycle_time,
       [this] {timer_callback();}, nullptr, {publisher_});
     period = settings.cycle_time.count();
+    wcet = settings.wcet;
   }
 
   uint32_t
@@ -90,11 +91,14 @@ private:
       //   " next arrival time: " << next_arrival_time << " period: " << period << std::endl;
       missed_jobs = ((next_arrival_time - expected_arrival_time) / period) - 1;
       dropped_jobs_ += missed_jobs;
+      last_job = timestamp;
+      expected_arrival_time = next_arrival_time;
+      return;
     }
     last_job = timestamp;
     expected_arrival_time = next_arrival_time;
     
-    auto number_cruncher_result = number_cruncher(number_crunch_limit_, timestamp + period);
+    auto number_cruncher_result = number_cruncher(number_crunch_limit_, timestamp + wcet);
 
     auto message = publisher_->borrow_loaned_message();
     message.get().size = 0;
@@ -143,6 +147,7 @@ private:
   uint64_t first_job = UINT64_MAX;
   uint64_t last_job = 0;
   uint64_t period = 0;
+  uint64_t wcet = 0;
 };
 }  // namespace rclcpp_system
 }  // namespace nodes

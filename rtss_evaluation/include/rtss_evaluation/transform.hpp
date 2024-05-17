@@ -41,6 +41,7 @@ public:
       [this](const message_t::SharedPtr msg) {input_callback(msg);},
       {publisher_});
     period = settings.cycle_time.count();
+    wcet = settings.wcet;
   }
 
   uint32_t
@@ -96,7 +97,7 @@ private:
     last_job = timestamp;
     // expected_arrival_time += period;
 
-    auto number_cruncher_result = number_cruncher(number_crunch_limit_, timestamp + period);
+    auto number_cruncher_result = number_cruncher(number_crunch_limit_, timestamp + wcet);
 
     auto output_message = publisher_->borrow_loaned_message();
     output_message.get().size = 0;
@@ -126,6 +127,7 @@ private:
   uint64_t first_job = UINT64_MAX;
   uint64_t last_job = 0;
   uint64_t period = 0;
+  uint64_t wcet = 0;
 };
 }  // namespace rclcpp_system
 }  // namespace nodes

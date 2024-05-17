@@ -48,7 +48,7 @@ struct Default
   static constexpr uint64_t CAMERA_WCET = 4900000;
   static constexpr uint64_t IMU_WCET = 400000;
   static constexpr uint64_t LIDAR_WCET_HIGH_UTILIZATION = 9900000;
-  static constexpr uint64_t CAMERA_WCET_HIGH_UTILIZATION = 7400000;
+  static constexpr uint64_t CAMERA_WCET_HIGH_UTILIZATION = 6900000;
 };
 
 constexpr Default::time_t Default::LIDAR_DRIVER_PERIOD;
