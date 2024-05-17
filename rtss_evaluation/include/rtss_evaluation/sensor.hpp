@@ -20,6 +20,7 @@
 #include "rclcpp/rclcpp.hpp"
 #include "reference_system/msg_types.hpp"
 #include "settings.hpp"
+#include "rtnode.hpp"
 #include "reference_system/number_cruncher.hpp"
 #include "reference_system/sample_management.hpp"
 
@@ -30,11 +31,11 @@ namespace rt_nodes
 namespace rt_system
 {
 
-class Sensor : public rclcpp::Node
+class Sensor : public RTNode
 {
 public:
   explicit Sensor(const SensorSettings & settings)
-  : Node(settings.node_name),
+  : RTNode(settings.node_name),
     number_crunch_limit_(settings.number_crunch_limit)
   {
     publisher_ = this->create_publisher<message_t>(settings.topic_name, 1);
@@ -45,31 +46,31 @@ public:
   }
 
   uint32_t
-  get_dropped_jobs()
+  get_dropped_jobs() const override
   {
     return dropped_jobs_;
   }
 
   uint32_t
-  get_completed_jobs()
+  get_completed_jobs() const override
   {
     return sequence_number_;
   }
 
   uint64_t
-  get_first_job()
+  get_first_job() const override
   {
     return first_job;
   }
 
   uint64_t
-  get_last_job()
+  get_last_job() const override
   {
     return last_job;
   }
 
   uint64_t
-  get_timer_period()
+  get_timer_period() const override
   {
     return period;
   }
@@ -78,11 +79,9 @@ private:
   void timer_callback()
   {
     uint64_t timestamp = now_as_int();
-    auto number_cruncher_result = number_cruncher(number_crunch_limit_);
 
     // Get the next arrival time of timer_, and determine if a job was dropped
     int64_t next_arrival_time = timer_->get_arrival_time();
-    int64_t period = timer_->get_period();
     uint32_t missed_jobs = 0;
     if (sequence_number_ == 0) {
       first_job = timestamp;
@@ -95,6 +94,8 @@ private:
     }
     last_job = timestamp;
     expected_arrival_time = next_arrival_time;
+    
+    auto number_cruncher_result = number_cruncher(number_crunch_limit_);
 
     auto message = publisher_->borrow_loaned_message();
     message.get().size = 0;
@@ -140,7 +141,7 @@ private:
   rclcpp::TimerBase::SharedPtr timer_;
   uint32_t sequence_number_ = 0;
   uint32_t dropped_jobs_ = 0;
-  uint64_t first_job = 0;
+  uint64_t first_job = UINT64_MAX;
   uint64_t last_job = 0;
   uint64_t period = 0;
 };

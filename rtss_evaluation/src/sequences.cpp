@@ -18,7 +18,7 @@
 
 #include "rtss_evaluation/rt_system.hpp"
 
-#include "rtss_evaluation/timers_only_system_builder.hpp"
+#include "rtss_evaluation/sequences_system_builder.hpp"
 #include "rtss_evaluation/default.hpp"
 #include "rclcpp/experimental/executors/events_executor/events_executor.hpp"
 #include "rclcpp/experimental/executors/graph_executor.hpp"
@@ -38,8 +38,8 @@ int main(int argc, char * argv[])
   // using TimeConfig = nodes::timing::BenchmarkCPUUsage;
   // set_benchmark_mode(true);
 
-  // Build a set of timers
-  auto nodes = create_timers_only_nodes<RTSystem, TimeConfig>();
+  // Build a set of nodes
+  auto nodes = create_sequences_nodes<RTSystem, TimeConfig>();
 
   int duration = std::stoi(argv[1]);
 
@@ -62,25 +62,8 @@ int main(int argc, char * argv[])
       std::cout << "Using rate monotonic fixed priority executor in RO mode" << std::endl;
     }
 
-    auto events_queue = std::make_unique<rclcpp::experimental::executors::RMEventsQueue>();
-    rclcpp::experimental::executors::EventsExecutor executor(std::move(events_queue), std::move(timers_queue));
+    rclcpp::experimental::executors::GraphExecutor executor(std::move(timers_queue));
 
-    for (auto & node : nodes) {
-      executor.add_node(node);
-    }
-    executor.spin();
-  } else if (strcmp(argv[2], "edf") == 0) {
-    // Get argv[4] to determine RO or RE
-    rclcpp::experimental::executors::EDFEventsQueue::UniquePtr timers_queue = nullptr;
-    if (argc > 3 && (strcmp(argv[3], "re") == 0)) {
-      std::cout << "Using edf executor in RE mode" << std::endl;
-      timers_queue = std::make_unique<rclcpp::experimental::executors::EDFEventsQueue>();
-    } else {
-      std::cout << "Using edf executor in RO mode" << std::endl;
-    }
-
-    auto events_queue = std::make_unique<rclcpp::experimental::executors::EDFEventsQueue>();
-    rclcpp::experimental::executors::EventsExecutor executor(std::move(events_queue), std::move(timers_queue));
     for (auto & node : nodes) {
       executor.add_node(node);
     }

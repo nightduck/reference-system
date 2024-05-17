@@ -22,7 +22,7 @@
 #include "reference_system/sample_management.hpp"
 
 template<typename SystemType, typename TimingConfig>
-auto create_timer_only_nodes()
+auto create_timers_only_nodes()
 ->std::vector<std::shared_ptr<typename SystemType::Sensor>>
 {
   std::vector<std::shared_ptr<typename SystemType::Sensor>> nodes;
@@ -88,7 +88,7 @@ auto create_timer_only_nodes()
 }
 
 template<typename SystemType, typename TimingConfig>
-auto create_timer_only_nodes_high_utilization()
+auto create_timers_only_nodes_high_utilization()
 ->std::vector<std::shared_ptr<typename SystemType::Sensor>>
 {
   std::vector<std::shared_ptr<typename SystemType::Sensor>> nodes;
@@ -151,20 +151,6 @@ auto create_timer_only_nodes_high_utilization()
 #pragma GCC diagnostic pop
 
   return nodes;
-}
-
-template<typename NodeType>
-std::shared_ptr<NodeType> get_node(
-  const std::string & name,
-  const std::vector<std::shared_ptr<NodeType>> & v)
-{
-  for (const auto & n : v) {
-    if (n->get_name() == std::string(name)) {
-      return n;
-    }
-  }
-
-  return std::shared_ptr<NodeType>();
 }
 
 #endif  // AUTOWARE_REFERENCE_SYSTEM__TIMERS_ONLY_SYSTEM_BUILDER_HPP_

@@ -42,6 +42,7 @@ struct TransformSettings
   std::string input_topic;
   std::string output_topic;
   uint64_t number_crunch_limit;
+  std::chrono::nanoseconds cycle_time;
 };
 
 struct IntersectionSettings

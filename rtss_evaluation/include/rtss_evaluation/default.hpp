@@ -38,9 +38,10 @@ struct Default
   static constexpr uint64_t LIDAR_DURATION = 4096;
   static constexpr uint64_t CAMERA_DURATION = 4096;
   static constexpr uint64_t IMU_DURATION = 512;
+  static constexpr uint64_t LIDAR_TRANSFORM_DURATION = 4096;
+  static constexpr uint64_t CAMERA_TRANSFORM_DURATION = 4096;
   static constexpr uint64_t LIDAR_DURATION_OVERUTILIZATED = 8192;
-  static constexpr uint64_t CAMERA_DURATION_OVERUTILIZATED = 6144;
-  static constexpr uint64_t IMU_DURATION_OVERUTILIZATED = 4096;
+  static constexpr uint64_t CAMERA_DURATION_OVERUTILIZATED = 5120;
 };
 
 constexpr Default::time_t Default::LIDAR_DRIVER_PERIOD;
@@ -51,7 +52,6 @@ constexpr uint64_t Default::CAMERA_DURATION;
 constexpr uint64_t Default::IMU_DURATION;
 constexpr uint64_t Default::LIDAR_DURATION_OVERUTILIZATED;
 constexpr uint64_t Default::CAMERA_DURATION_OVERUTILIZATED;
-constexpr uint64_t Default::IMU_DURATION_OVERUTILIZATED;
 
 }  // namespace timing
 }  // namespace rt_nodes
