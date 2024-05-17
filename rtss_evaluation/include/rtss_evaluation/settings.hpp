@@ -43,6 +43,7 @@ struct TransformSettings
   std::string output_topic;
   uint64_t number_crunch_limit;
   std::chrono::nanoseconds cycle_time;
+  uint64_t wcet;
 };
 
 struct IntersectionSettings
@@ -73,6 +74,7 @@ struct SensorSettings
   std::string topic_name;
   std::chrono::nanoseconds cycle_time;
   uint64_t number_crunch_limit;
+  uint64_t wcet;
 };
 }  // namespace nodes
 #endif  // REFERENCE_SYSTEM__NODES__SETTINGS_HPP_

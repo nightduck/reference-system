@@ -39,49 +39,56 @@ auto create_timers_only_nodes()
       rt_nodes::SensorSettings{.node_name = "FrontLidarDriver",
         .topic_name = "FrontLidarDriver",
         .cycle_time = TimingConfig::LIDAR_DRIVER_PERIOD,
-        .number_crunch_limit = TimingConfig::LIDAR_DURATION}));
+        .number_crunch_limit = TimingConfig::LIDAR_DURATION,
+        .wcet = TimingConfig::LIDAR_WCET}));
 
   nodes.emplace_back(
     std::make_shared<typename SystemType::Sensor>(
       rt_nodes::SensorSettings{.node_name = "RearLidarDriver",
         .topic_name = "RearLidarDriver",
         .cycle_time = TimingConfig::LIDAR_DRIVER_PERIOD,
-        .number_crunch_limit = TimingConfig::LIDAR_DURATION}));
+        .number_crunch_limit = TimingConfig::LIDAR_DURATION,
+        .wcet = TimingConfig::LIDAR_WCET}));
 
   nodes.emplace_back(
     std::make_shared<typename SystemType::Sensor>(
       rt_nodes::SensorSettings{.node_name = "FrontCamera",
         .topic_name = "FrontCamera",
         .cycle_time = TimingConfig::CAMERA_DRIVER_PERIOD,
-        .number_crunch_limit = TimingConfig::CAMERA_DURATION}));
+        .number_crunch_limit = TimingConfig::CAMERA_DURATION,
+        .wcet = TimingConfig::CAMERA_WCET}));
 
-  // nodes.emplace_back(
-  //   std::make_shared<typename SystemType::Sensor>(
-  //     rt_nodes::SensorSettings{.node_name = "RearCamera",
-  //       .topic_name = "RearCamera",
-  //       .cycle_time = TimingConfig::CAMERA_DRIVER_PERIOD,
-  //       .number_crunch_limit = TimingConfig::CAMERA_DURATION}));
+  nodes.emplace_back(
+    std::make_shared<typename SystemType::Sensor>(
+      rt_nodes::SensorSettings{.node_name = "RearCamera",
+        .topic_name = "RearCamera",
+        .cycle_time = TimingConfig::CAMERA_DRIVER_PERIOD,
+        .number_crunch_limit = TimingConfig::CAMERA_DURATION,
+        .wcet = TimingConfig::CAMERA_WCET}));
 
-  // nodes.emplace_back(
-  //   std::make_shared<typename SystemType::Sensor>(
-  //     rt_nodes::SensorSettings{.node_name = "LeftCamera",
-  //       .topic_name = "LeftCamera",
-  //       .cycle_time = TimingConfig::CAMERA_DRIVER_PERIOD,
-  //       .number_crunch_limit = TimingConfig::CAMERA_DURATION}));
+  nodes.emplace_back(
+    std::make_shared<typename SystemType::Sensor>(
+      rt_nodes::SensorSettings{.node_name = "LeftCamera",
+        .topic_name = "LeftCamera",
+        .cycle_time = TimingConfig::CAMERA_DRIVER_PERIOD,
+        .number_crunch_limit = TimingConfig::CAMERA_DURATION,
+        .wcet = TimingConfig::CAMERA_WCET}));
 
-  // nodes.emplace_back(
-  //   std::make_shared<typename SystemType::Sensor>(
-  //     rt_nodes::SensorSettings{.node_name = "RightCamera",
-  //       .topic_name = "RightCamera",
-  //       .cycle_time = TimingConfig::CAMERA_DRIVER_PERIOD,
-  //       .number_crunch_limit = TimingConfig::CAMERA_DURATION}));
+  nodes.emplace_back(
+    std::make_shared<typename SystemType::Sensor>(
+      rt_nodes::SensorSettings{.node_name = "RightCamera",
+        .topic_name = "RightCamera",
+        .cycle_time = TimingConfig::CAMERA_DRIVER_PERIOD,
+        .number_crunch_limit = TimingConfig::CAMERA_DURATION,
+        .wcet = TimingConfig::CAMERA_WCET}));
 
   nodes.emplace_back(
     std::make_shared<typename SystemType::Sensor>(
       rt_nodes::SensorSettings{.node_name = "IMU",
         .topic_name = "imu",
         .cycle_time = TimingConfig::IMU_DRIVER_PERIOD,
-        .number_crunch_limit = TimingConfig::IMU_DURATION}));
+        .number_crunch_limit = TimingConfig::IMU_DURATION,
+        .wcet = TimingConfig::IMU_WCET}));
 #pragma GCC diagnostic pop
 
   return nodes;
@@ -105,49 +112,129 @@ auto create_timers_only_nodes_high_utilization()
       rt_nodes::SensorSettings{.node_name = "FrontLidarDriver",
         .topic_name = "FrontLidarDriver",
         .cycle_time = TimingConfig::LIDAR_DRIVER_PERIOD,
-        .number_crunch_limit = TimingConfig::LIDAR_DURATION_OVERUTILIZATED}));
+        .number_crunch_limit = TimingConfig::LIDAR_DURATION_HIGH_UTILIZATION,
+        .wcet = TimingConfig::LIDAR_WCET_HIGH_UTILIZATION}));
 
   nodes.emplace_back(
     std::make_shared<typename SystemType::Sensor>(
       rt_nodes::SensorSettings{.node_name = "RearLidarDriver",
         .topic_name = "RearLidarDriver",
         .cycle_time = TimingConfig::LIDAR_DRIVER_PERIOD,
-        .number_crunch_limit = TimingConfig::LIDAR_DURATION_OVERUTILIZATED}));
+        .number_crunch_limit = TimingConfig::LIDAR_DURATION_HIGH_UTILIZATION,
+        .wcet = TimingConfig::LIDAR_WCET_HIGH_UTILIZATION}));
 
   nodes.emplace_back(
     std::make_shared<typename SystemType::Sensor>(
       rt_nodes::SensorSettings{.node_name = "FrontCamera",
         .topic_name = "FrontCamera",
         .cycle_time = TimingConfig::CAMERA_DRIVER_PERIOD,
-        .number_crunch_limit = TimingConfig::CAMERA_DURATION_OVERUTILIZATED}));
+        .number_crunch_limit = TimingConfig::CAMERA_DURATION_HIGH_UTILIZATION,
+        .wcet = TimingConfig::CAMERA_WCET_HIGH_UTILIZATION}));
 
   nodes.emplace_back(
     std::make_shared<typename SystemType::Sensor>(
       rt_nodes::SensorSettings{.node_name = "RearCamera",
         .topic_name = "RearCamera",
         .cycle_time = TimingConfig::CAMERA_DRIVER_PERIOD,
-        .number_crunch_limit = TimingConfig::CAMERA_DURATION_OVERUTILIZATED}));
+        .number_crunch_limit = TimingConfig::CAMERA_DURATION_HIGH_UTILIZATION,
+        .wcet = TimingConfig::CAMERA_WCET_HIGH_UTILIZATION}));
 
   nodes.emplace_back(
     std::make_shared<typename SystemType::Sensor>(
       rt_nodes::SensorSettings{.node_name = "LeftCamera",
         .topic_name = "LeftCamera",
         .cycle_time = TimingConfig::CAMERA_DRIVER_PERIOD,
-        .number_crunch_limit = TimingConfig::CAMERA_DURATION_OVERUTILIZATED}));
+        .number_crunch_limit = TimingConfig::CAMERA_DURATION_HIGH_UTILIZATION,
+        .wcet = TimingConfig::CAMERA_WCET_HIGH_UTILIZATION}));
 
   nodes.emplace_back(
     std::make_shared<typename SystemType::Sensor>(
       rt_nodes::SensorSettings{.node_name = "RightCamera",
         .topic_name = "RightCamera",
         .cycle_time = TimingConfig::CAMERA_DRIVER_PERIOD,
-        .number_crunch_limit = TimingConfig::CAMERA_DURATION_OVERUTILIZATED}));
+        .number_crunch_limit = TimingConfig::CAMERA_DURATION_HIGH_UTILIZATION,
+        .wcet = TimingConfig::CAMERA_WCET_HIGH_UTILIZATION}));
 
   nodes.emplace_back(
     std::make_shared<typename SystemType::Sensor>(
       rt_nodes::SensorSettings{.node_name = "IMU",
         .topic_name = "imu",
         .cycle_time = TimingConfig::IMU_DRIVER_PERIOD,
-        .number_crunch_limit = TimingConfig::IMU_DURATION}));
+        .number_crunch_limit = TimingConfig::IMU_DURATION,
+        .wcet = TimingConfig::IMU_WCET}));
+#pragma GCC diagnostic pop
+
+  return nodes;
+}
+
+template<typename SystemType, typename TimingConfig>
+auto create_timers_only_nodes_over_utilization()
+->std::vector<std::shared_ptr<typename SystemType::Sensor>>
+{
+  std::vector<std::shared_ptr<typename SystemType::Sensor>> nodes;
+
+// ignore the warning about designated initializers - they make the code much
+// more readable
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wpedantic"
+
+  // setup communication graph
+  // sensor nodes
+  nodes.emplace_back(
+    std::make_shared<typename SystemType::Sensor>(
+      rt_nodes::SensorSettings{.node_name = "FrontLidarDriver",
+        .topic_name = "FrontLidarDriver",
+        .cycle_time = TimingConfig::LIDAR_DRIVER_PERIOD_OVERUTILIZATION,
+        .number_crunch_limit = TimingConfig::LIDAR_DURATION_HIGH_UTILIZATION,
+        .wcet = TimingConfig::LIDAR_WCET_HIGH_UTILIZATION}));
+
+  nodes.emplace_back(
+    std::make_shared<typename SystemType::Sensor>(
+      rt_nodes::SensorSettings{.node_name = "RearLidarDriver",
+        .topic_name = "RearLidarDriver",
+        .cycle_time = TimingConfig::LIDAR_DRIVER_PERIOD_OVERUTILIZATION,
+        .number_crunch_limit = TimingConfig::LIDAR_DURATION_HIGH_UTILIZATION,
+        .wcet = TimingConfig::LIDAR_WCET_HIGH_UTILIZATION}));
+
+  nodes.emplace_back(
+    std::make_shared<typename SystemType::Sensor>(
+      rt_nodes::SensorSettings{.node_name = "FrontCamera",
+        .topic_name = "FrontCamera",
+        .cycle_time = TimingConfig::CAMERA_DRIVER_PERIOD_OVERUTILIZATION,
+        .number_crunch_limit = TimingConfig::CAMERA_DURATION_HIGH_UTILIZATION,
+        .wcet = TimingConfig::CAMERA_WCET_HIGH_UTILIZATION}));
+
+  nodes.emplace_back(
+    std::make_shared<typename SystemType::Sensor>(
+      rt_nodes::SensorSettings{.node_name = "RearCamera",
+        .topic_name = "RearCamera",
+        .cycle_time = TimingConfig::CAMERA_DRIVER_PERIOD_OVERUTILIZATION,
+        .number_crunch_limit = TimingConfig::CAMERA_DURATION_HIGH_UTILIZATION,
+        .wcet = TimingConfig::CAMERA_WCET_HIGH_UTILIZATION}));
+
+  nodes.emplace_back(
+    std::make_shared<typename SystemType::Sensor>(
+      rt_nodes::SensorSettings{.node_name = "LeftCamera",
+        .topic_name = "LeftCamera",
+        .cycle_time = TimingConfig::CAMERA_DRIVER_PERIOD_OVERUTILIZATION,
+        .number_crunch_limit = TimingConfig::CAMERA_DURATION_HIGH_UTILIZATION,
+        .wcet = TimingConfig::CAMERA_WCET_HIGH_UTILIZATION}));
+
+  nodes.emplace_back(
+    std::make_shared<typename SystemType::Sensor>(
+      rt_nodes::SensorSettings{.node_name = "RightCamera",
+        .topic_name = "RightCamera",
+        .cycle_time = TimingConfig::CAMERA_DRIVER_PERIOD_OVERUTILIZATION,
+        .number_crunch_limit = TimingConfig::CAMERA_DURATION_HIGH_UTILIZATION,
+        .wcet = TimingConfig::CAMERA_WCET_HIGH_UTILIZATION}));
+
+  nodes.emplace_back(
+    std::make_shared<typename SystemType::Sensor>(
+      rt_nodes::SensorSettings{.node_name = "IMU",
+        .topic_name = "imu",
+        .cycle_time = TimingConfig::IMU_DRIVER_PERIOD,
+        .number_crunch_limit = TimingConfig::IMU_DURATION,
+        .wcet = TimingConfig::IMU_WCET}));
 #pragma GCC diagnostic pop
 
   return nodes;
