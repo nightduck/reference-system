@@ -58,6 +58,56 @@ std::shared_ptr<NodeType> get_node(
   return std::shared_ptr<NodeType>();
 }
   
+// prevents the compiler from optimizing access to value.
+// Taken from http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2016/p0412r0.html
+template<typename Tp>
+inline void escape(Tp const & value)
+{
+  asm volatile ("" : : "g" (value) : "memory");
+}
+
+// Computes an expensive function (count number of primes below maximum_number)
+// This serves as a scalable dummy-workload for the various nodes.
+static inline int64_t number_cruncher(const uint64_t maximum_number, uint64_t cutoff_time=UINT64_MAX)
+{
+  int64_t number_of_primes = 0;
+  uint64_t initial_value = 2;
+  // edge case where max number is too low
+  if (maximum_number <= initial_value) {
+    return 2;
+  }
+  for (uint64_t i = initial_value; i <= maximum_number; ++i) {
+    bool is_prime = true;
+    for (uint64_t n = initial_value; n < i; ++n) {
+      if (i % n == 0) {
+        is_prime = false;
+        break;
+      }
+    }
+    escape(is_prime);
+    if (is_prime) {
+      // number_of_primes cannot overflow since there are fewer than 2**63
+      // primes in [0, 2**64).
+      ++number_of_primes;
+    }
+    if (now_as_int() > cutoff_time) {
+      break;
+    }
+  }
+  return number_of_primes;
+}
+
+// Returns the time (in ms of wall-clock time) needed to compute number_cruncher(maximum_number)
+static inline long double get_crunch_time_in_ms(const uint64_t maximum_number)
+{
+  auto start = std::chrono::system_clock::now();
+  number_cruncher(maximum_number);
+  auto stop = std::chrono::system_clock::now();
+
+  using milliseconds_ld = std::chrono::duration<long double, std::milli>;
+  return milliseconds_ld(stop - start).count();
+}
+
 }  // namespace rt_system
 }  // namespace rt_nodes
 

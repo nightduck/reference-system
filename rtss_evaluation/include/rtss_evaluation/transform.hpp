@@ -18,10 +18,9 @@
 #include <utility>
 
 #include "rclcpp/rclcpp.hpp"
-#include "reference_system/msg_types.hpp"
 #include "settings.hpp"
 #include "rtnode.hpp"
-#include "reference_system/number_cruncher.hpp"
+#include "reference_system/msg_types.hpp"
 #include "reference_system/sample_management.hpp"
 
 namespace rt_nodes
@@ -97,7 +96,7 @@ private:
     last_job = timestamp;
     // expected_arrival_time += period;
 
-    auto number_cruncher_result = number_cruncher(number_crunch_limit_);
+    auto number_cruncher_result = number_cruncher(number_crunch_limit_, timestamp + period);
 
     auto output_message = publisher_->borrow_loaned_message();
     output_message.get().size = 0;
