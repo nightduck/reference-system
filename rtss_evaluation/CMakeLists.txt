@@ -17,6 +17,8 @@ ament_auto_add_executable(timers_only src/timers_only.cpp)
 
 ament_auto_add_executable(timers_only_high_utilization src/timers_only_high_utilization.cpp)
 
+ament_auto_add_executable(timers_only_over_utilization src/timers_only_over_utilization.cpp)
+
 ament_auto_add_executable(sequences src/sequences.cpp)
 
 ament_auto_add_executable(sequences_high_utilization src/sequences_high_utilization.cpp)
