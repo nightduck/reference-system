@@ -62,13 +62,21 @@ endif()
 #  src/ros2/executor/autoware_default_custom.cpp
 #)
 
-# Static Single Threaded Executor
+# Events Executor (in RO mode)
 add_benchmark_executable(autoware_default_events
   src/ros2/executor/autoware_default_events.cpp)
 
-# Prioritized Executor
-add_benchmark_executable(autoware_default_graph
-  src/ros2/executor/autoware_default_graph.cpp)
+# RM Executor (in RO mode)
+add_benchmark_executable(autoware_default_rm
+  src/ros2/executor/autoware_default_rm.cpp)
+
+# Events Executor (in RE mode)
+add_benchmark_executable(autoware_default_events_re
+  src/ros2/executor/autoware_default_events_re.cpp)
+
+# RM Executor (in RE mode)
+add_benchmark_executable(autoware_default_rm_re
+  src/ros2/executor/autoware_default_rm_re.cpp)
 
 if(${BUILD_TESTING})
   find_package(ament_lint_auto REQUIRED)
