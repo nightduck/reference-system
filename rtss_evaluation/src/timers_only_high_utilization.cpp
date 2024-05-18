@@ -45,6 +45,13 @@ int main(int argc, char * argv[])
 
   // Create a new thread that sleeps for the specified duration
   std::thread shutdown_thread([duration]() {
+    struct sched_param params;
+    params.sched_priority = 91;
+    int ret = pthread_setschedparam(pthread_self(), SCHED_FIFO, &params);
+    if (ret != 0) {
+      RCLCPP_WARN(rclcpp::get_logger("rclcpp"), "Failed to elevate priority of kill thread: %s", strerror(ret));
+    }
+
     std::this_thread::sleep_for(std::chrono::seconds(duration));
     std::cout << "Shutting down" << std::endl;
     rclcpp::shutdown();
