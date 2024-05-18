@@ -112,7 +112,7 @@ auto create_timers_only_nodes_high_utilization()
       rt_nodes::SensorSettings{.node_name = "FrontLidarDriver",
         .topic_name = "FrontLidarDriver",
         .cycle_time = TimingConfig::LIDAR_DRIVER_PERIOD,
-        .number_crunch_limit = TimingConfig::LIDAR_DURATION_HIGH_UTILIZATION,
+        .number_crunch_limit = TimingConfig::DEFAULT_DURATION,
         .wcet = TimingConfig::LIDAR_WCET_HIGH_UTILIZATION}));
 
   nodes.emplace_back(
@@ -120,7 +120,7 @@ auto create_timers_only_nodes_high_utilization()
       rt_nodes::SensorSettings{.node_name = "RearLidarDriver",
         .topic_name = "RearLidarDriver",
         .cycle_time = TimingConfig::LIDAR_DRIVER_PERIOD,
-        .number_crunch_limit = TimingConfig::LIDAR_DURATION_HIGH_UTILIZATION,
+        .number_crunch_limit = TimingConfig::DEFAULT_DURATION,
         .wcet = TimingConfig::LIDAR_WCET_HIGH_UTILIZATION}));
 
   nodes.emplace_back(
@@ -128,7 +128,7 @@ auto create_timers_only_nodes_high_utilization()
       rt_nodes::SensorSettings{.node_name = "FrontCamera",
         .topic_name = "FrontCamera",
         .cycle_time = TimingConfig::CAMERA_DRIVER_PERIOD,
-        .number_crunch_limit = TimingConfig::CAMERA_DURATION_HIGH_UTILIZATION,
+        .number_crunch_limit = TimingConfig::DEFAULT_DURATION,
         .wcet = TimingConfig::CAMERA_WCET_HIGH_UTILIZATION}));
 
   nodes.emplace_back(
@@ -136,7 +136,7 @@ auto create_timers_only_nodes_high_utilization()
       rt_nodes::SensorSettings{.node_name = "RearCamera",
         .topic_name = "RearCamera",
         .cycle_time = TimingConfig::CAMERA_DRIVER_PERIOD,
-        .number_crunch_limit = TimingConfig::CAMERA_DURATION_HIGH_UTILIZATION,
+        .number_crunch_limit = TimingConfig::DEFAULT_DURATION,
         .wcet = TimingConfig::CAMERA_WCET_HIGH_UTILIZATION}));
 
   nodes.emplace_back(
@@ -144,7 +144,7 @@ auto create_timers_only_nodes_high_utilization()
       rt_nodes::SensorSettings{.node_name = "LeftCamera",
         .topic_name = "LeftCamera",
         .cycle_time = TimingConfig::CAMERA_DRIVER_PERIOD,
-        .number_crunch_limit = TimingConfig::CAMERA_DURATION_HIGH_UTILIZATION,
+        .number_crunch_limit = TimingConfig::DEFAULT_DURATION,
         .wcet = TimingConfig::CAMERA_WCET_HIGH_UTILIZATION}));
 
   nodes.emplace_back(
@@ -152,7 +152,7 @@ auto create_timers_only_nodes_high_utilization()
       rt_nodes::SensorSettings{.node_name = "RightCamera",
         .topic_name = "RightCamera",
         .cycle_time = TimingConfig::CAMERA_DRIVER_PERIOD,
-        .number_crunch_limit = TimingConfig::CAMERA_DURATION_HIGH_UTILIZATION,
+        .number_crunch_limit = TimingConfig::DEFAULT_DURATION,
         .wcet = TimingConfig::CAMERA_WCET_HIGH_UTILIZATION}));
 
   nodes.emplace_back(
@@ -185,7 +185,7 @@ auto create_timers_only_nodes_over_utilization()
       rt_nodes::SensorSettings{.node_name = "FrontLidarDriver",
         .topic_name = "FrontLidarDriver",
         .cycle_time = TimingConfig::LIDAR_DRIVER_PERIOD_OVERUTILIZATION,
-        .number_crunch_limit = TimingConfig::LIDAR_DURATION_HIGH_UTILIZATION,
+        .number_crunch_limit = TimingConfig::DEFAULT_DURATION,
         .wcet = TimingConfig::LIDAR_WCET_HIGH_UTILIZATION}));
 
   nodes.emplace_back(
@@ -193,7 +193,7 @@ auto create_timers_only_nodes_over_utilization()
       rt_nodes::SensorSettings{.node_name = "RearLidarDriver",
         .topic_name = "RearLidarDriver",
         .cycle_time = TimingConfig::LIDAR_DRIVER_PERIOD_OVERUTILIZATION,
-        .number_crunch_limit = TimingConfig::LIDAR_DURATION_HIGH_UTILIZATION,
+        .number_crunch_limit = TimingConfig::DEFAULT_DURATION,
         .wcet = TimingConfig::LIDAR_WCET_HIGH_UTILIZATION}));
 
   nodes.emplace_back(
@@ -201,7 +201,7 @@ auto create_timers_only_nodes_over_utilization()
       rt_nodes::SensorSettings{.node_name = "FrontCamera",
         .topic_name = "FrontCamera",
         .cycle_time = TimingConfig::CAMERA_DRIVER_PERIOD_OVERUTILIZATION,
-        .number_crunch_limit = TimingConfig::CAMERA_DURATION_HIGH_UTILIZATION,
+        .number_crunch_limit = TimingConfig::DEFAULT_DURATION,
         .wcet = TimingConfig::CAMERA_WCET_HIGH_UTILIZATION}));
 
   nodes.emplace_back(
@@ -209,7 +209,7 @@ auto create_timers_only_nodes_over_utilization()
       rt_nodes::SensorSettings{.node_name = "RearCamera",
         .topic_name = "RearCamera",
         .cycle_time = TimingConfig::CAMERA_DRIVER_PERIOD_OVERUTILIZATION,
-        .number_crunch_limit = TimingConfig::CAMERA_DURATION_HIGH_UTILIZATION,
+        .number_crunch_limit = TimingConfig::DEFAULT_DURATION,
         .wcet = TimingConfig::CAMERA_WCET_HIGH_UTILIZATION}));
 
   nodes.emplace_back(
@@ -217,7 +217,7 @@ auto create_timers_only_nodes_over_utilization()
       rt_nodes::SensorSettings{.node_name = "LeftCamera",
         .topic_name = "LeftCamera",
         .cycle_time = TimingConfig::CAMERA_DRIVER_PERIOD_OVERUTILIZATION,
-        .number_crunch_limit = TimingConfig::CAMERA_DURATION_HIGH_UTILIZATION,
+        .number_crunch_limit = TimingConfig::DEFAULT_DURATION,
         .wcet = TimingConfig::CAMERA_WCET_HIGH_UTILIZATION}));
 
   nodes.emplace_back(
@@ -225,7 +225,31 @@ auto create_timers_only_nodes_over_utilization()
       rt_nodes::SensorSettings{.node_name = "RightCamera",
         .topic_name = "RightCamera",
         .cycle_time = TimingConfig::CAMERA_DRIVER_PERIOD_OVERUTILIZATION,
-        .number_crunch_limit = TimingConfig::CAMERA_DURATION_HIGH_UTILIZATION,
+        .number_crunch_limit = TimingConfig::DEFAULT_DURATION,
+        .wcet = TimingConfig::CAMERA_WCET_HIGH_UTILIZATION}));
+
+  nodes.emplace_back(
+    std::make_shared<typename SystemType::Sensor>(
+      rt_nodes::SensorSettings{.node_name = "LeftCamera",
+        .topic_name = "LeftCamera",
+        .cycle_time = TimingConfig::CAMERA_DRIVER_PERIOD_OVERUTILIZATION,
+        .number_crunch_limit = TimingConfig::DEFAULT_DURATION,
+        .wcet = TimingConfig::CAMERA_WCET_HIGH_UTILIZATION}));
+
+  nodes.emplace_back(
+    std::make_shared<typename SystemType::Sensor>(
+      rt_nodes::SensorSettings{.node_name = "UnderCamera",
+        .topic_name = "UnderCamera",
+        .cycle_time = TimingConfig::CAMERA_DRIVER_PERIOD_OVERUTILIZATION,
+        .number_crunch_limit = TimingConfig::DEFAULT_DURATION,
+        .wcet = TimingConfig::CAMERA_WCET_HIGH_UTILIZATION}));
+
+  nodes.emplace_back(
+    std::make_shared<typename SystemType::Sensor>(
+      rt_nodes::SensorSettings{.node_name = "OverCamera",
+        .topic_name = "OverCamera",
+        .cycle_time = TimingConfig::CAMERA_DRIVER_PERIOD_OVERUTILIZATION,
+        .number_crunch_limit = TimingConfig::DEFAULT_DURATION,
         .wcet = TimingConfig::CAMERA_WCET_HIGH_UTILIZATION}));
 
   nodes.emplace_back(
@@ -233,8 +257,8 @@ auto create_timers_only_nodes_over_utilization()
       rt_nodes::SensorSettings{.node_name = "IMU",
         .topic_name = "imu",
         .cycle_time = TimingConfig::IMU_DRIVER_PERIOD,
-        .number_crunch_limit = TimingConfig::IMU_DURATION,
-        .wcet = TimingConfig::IMU_WCET}));
+        .number_crunch_limit = TimingConfig::DEFAULT_DURATION,
+        .wcet = TimingConfig::IMU_WCET_OVER_UTILIZATION}));
 #pragma GCC diagnostic pop
 
   return nodes;

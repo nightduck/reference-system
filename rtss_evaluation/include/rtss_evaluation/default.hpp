@@ -37,6 +37,7 @@ struct Default
   // to figure out what values to place here corresponding to the run_time
   // you would like to run each node for
   // processing
+  static constexpr uint64_t DEFAULT_DURATION = 4096;
   static constexpr uint64_t LIDAR_DURATION = 2048;
   static constexpr uint64_t CAMERA_DURATION = 2048;
   static constexpr uint64_t IMU_DURATION = 512;
@@ -49,6 +50,9 @@ struct Default
   static constexpr uint64_t IMU_WCET = 400000;
   static constexpr uint64_t LIDAR_WCET_HIGH_UTILIZATION = 9900000;
   static constexpr uint64_t CAMERA_WCET_HIGH_UTILIZATION = 6900000;
+  static constexpr uint64_t LIDAR_WCET_OVER_UTILIZATION = 9900000;
+  static constexpr uint64_t CAMERA_WCET_OVER_UTILIZATION = 9900000;
+  static constexpr uint64_t IMU_WCET_OVER_UTILIZATION = 4900000;
 };
 
 constexpr Default::time_t Default::LIDAR_DRIVER_PERIOD;
@@ -56,16 +60,22 @@ constexpr Default::time_t Default::CAMERA_DRIVER_PERIOD;
 constexpr Default::time_t Default::IMU_DRIVER_PERIOD;
 constexpr Default::time_t Default::LIDAR_DRIVER_PERIOD_OVERUTILIZATION;
 constexpr Default::time_t Default::CAMERA_DRIVER_PERIOD_OVERUTILIZATION;
+constexpr uint64_t Default::DEFAULT_DURATION;
 constexpr uint64_t Default::LIDAR_DURATION;
 constexpr uint64_t Default::CAMERA_DURATION;
 constexpr uint64_t Default::IMU_DURATION;
 constexpr uint64_t Default::LIDAR_TRANSFORM_DURATION;
 constexpr uint64_t Default::CAMERA_TRANSFORM_DURATION;
+constexpr uint64_t Default::LIDAR_DURATION_HIGH_UTILIZATION;
+constexpr uint64_t Default::CAMERA_DURATION_HIGH_UTILIZATION;
 constexpr uint64_t Default::LIDAR_WCET;
 constexpr uint64_t Default::CAMERA_WCET;
 constexpr uint64_t Default::IMU_WCET;
-constexpr uint64_t Default::LIDAR_DURATION_HIGH_UTILIZATION;
-constexpr uint64_t Default::CAMERA_DURATION_HIGH_UTILIZATION;
+constexpr uint64_t Default::LIDAR_WCET_HIGH_UTILIZATION;
+constexpr uint64_t Default::CAMERA_WCET_HIGH_UTILIZATION;
+constexpr uint64_t Default::LIDAR_WCET_OVER_UTILIZATION;
+constexpr uint64_t Default::CAMERA_WCET_OVER_UTILIZATION;
+constexpr uint64_t Default::IMU_WCET_OVER_UTILIZATION;
 
 }  // namespace timing
 }  // namespace rt_nodes
