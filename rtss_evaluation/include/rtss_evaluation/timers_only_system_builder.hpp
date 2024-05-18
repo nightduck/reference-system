@@ -186,7 +186,7 @@ auto create_timers_only_nodes_over_utilization()
         .topic_name = "FrontLidarDriver",
         .cycle_time = TimingConfig::LIDAR_DRIVER_PERIOD_OVERUTILIZATION,
         .number_crunch_limit = TimingConfig::DEFAULT_DURATION,
-        .wcet = TimingConfig::LIDAR_WCET_HIGH_UTILIZATION}));
+        .wcet = TimingConfig::LIDAR_WCET_OVER_UTILIZATION}));
 
   nodes.emplace_back(
     std::make_shared<typename SystemType::Sensor>(
@@ -194,7 +194,7 @@ auto create_timers_only_nodes_over_utilization()
         .topic_name = "RearLidarDriver",
         .cycle_time = TimingConfig::LIDAR_DRIVER_PERIOD_OVERUTILIZATION,
         .number_crunch_limit = TimingConfig::DEFAULT_DURATION,
-        .wcet = TimingConfig::LIDAR_WCET_HIGH_UTILIZATION}));
+        .wcet = TimingConfig::LIDAR_WCET_OVER_UTILIZATION}));
 
   nodes.emplace_back(
     std::make_shared<typename SystemType::Sensor>(
@@ -202,7 +202,7 @@ auto create_timers_only_nodes_over_utilization()
         .topic_name = "FrontCamera",
         .cycle_time = TimingConfig::CAMERA_DRIVER_PERIOD_OVERUTILIZATION,
         .number_crunch_limit = TimingConfig::DEFAULT_DURATION,
-        .wcet = TimingConfig::CAMERA_WCET_HIGH_UTILIZATION}));
+        .wcet = TimingConfig::CAMERA_WCET_OVER_UTILIZATION}));
 
   nodes.emplace_back(
     std::make_shared<typename SystemType::Sensor>(
@@ -210,7 +210,7 @@ auto create_timers_only_nodes_over_utilization()
         .topic_name = "RearCamera",
         .cycle_time = TimingConfig::CAMERA_DRIVER_PERIOD_OVERUTILIZATION,
         .number_crunch_limit = TimingConfig::DEFAULT_DURATION,
-        .wcet = TimingConfig::CAMERA_WCET_HIGH_UTILIZATION}));
+        .wcet = TimingConfig::CAMERA_WCET_OVER_UTILIZATION}));
 
   nodes.emplace_back(
     std::make_shared<typename SystemType::Sensor>(
@@ -218,7 +218,7 @@ auto create_timers_only_nodes_over_utilization()
         .topic_name = "LeftCamera",
         .cycle_time = TimingConfig::CAMERA_DRIVER_PERIOD_OVERUTILIZATION,
         .number_crunch_limit = TimingConfig::DEFAULT_DURATION,
-        .wcet = TimingConfig::CAMERA_WCET_HIGH_UTILIZATION}));
+        .wcet = TimingConfig::CAMERA_WCET_OVER_UTILIZATION}));
 
   nodes.emplace_back(
     std::make_shared<typename SystemType::Sensor>(
@@ -226,31 +226,23 @@ auto create_timers_only_nodes_over_utilization()
         .topic_name = "RightCamera",
         .cycle_time = TimingConfig::CAMERA_DRIVER_PERIOD_OVERUTILIZATION,
         .number_crunch_limit = TimingConfig::DEFAULT_DURATION,
-        .wcet = TimingConfig::CAMERA_WCET_HIGH_UTILIZATION}));
+        .wcet = TimingConfig::CAMERA_WCET_OVER_UTILIZATION}));
 
-  nodes.emplace_back(
-    std::make_shared<typename SystemType::Sensor>(
-      rt_nodes::SensorSettings{.node_name = "LeftCamera",
-        .topic_name = "LeftCamera",
-        .cycle_time = TimingConfig::CAMERA_DRIVER_PERIOD_OVERUTILIZATION,
-        .number_crunch_limit = TimingConfig::DEFAULT_DURATION,
-        .wcet = TimingConfig::CAMERA_WCET_HIGH_UTILIZATION}));
+  // nodes.emplace_back(
+  //   std::make_shared<typename SystemType::Sensor>(
+  //     rt_nodes::SensorSettings{.node_name = "UnderCamera",
+  //       .topic_name = "UnderCamera",
+  //       .cycle_time = TimingConfig::CAMERA_DRIVER_PERIOD_OVERUTILIZATION,
+  //       .number_crunch_limit = TimingConfig::DEFAULT_DURATION,
+  //       .wcet = TimingConfig::CAMERA_WCET_HIGH_UTILIZATION}));
 
-  nodes.emplace_back(
-    std::make_shared<typename SystemType::Sensor>(
-      rt_nodes::SensorSettings{.node_name = "UnderCamera",
-        .topic_name = "UnderCamera",
-        .cycle_time = TimingConfig::CAMERA_DRIVER_PERIOD_OVERUTILIZATION,
-        .number_crunch_limit = TimingConfig::DEFAULT_DURATION,
-        .wcet = TimingConfig::CAMERA_WCET_HIGH_UTILIZATION}));
-
-  nodes.emplace_back(
-    std::make_shared<typename SystemType::Sensor>(
-      rt_nodes::SensorSettings{.node_name = "OverCamera",
-        .topic_name = "OverCamera",
-        .cycle_time = TimingConfig::CAMERA_DRIVER_PERIOD_OVERUTILIZATION,
-        .number_crunch_limit = TimingConfig::DEFAULT_DURATION,
-        .wcet = TimingConfig::CAMERA_WCET_HIGH_UTILIZATION}));
+  // nodes.emplace_back(
+  //   std::make_shared<typename SystemType::Sensor>(
+  //     rt_nodes::SensorSettings{.node_name = "OverCamera",
+  //       .topic_name = "OverCamera",
+  //       .cycle_time = TimingConfig::CAMERA_DRIVER_PERIOD_OVERUTILIZATION,
+  //       .number_crunch_limit = TimingConfig::DEFAULT_DURATION,
+  //       .wcet = TimingConfig::CAMERA_WCET_HIGH_UTILIZATION}));
 
   nodes.emplace_back(
     std::make_shared<typename SystemType::Sensor>(
