@@ -20,7 +20,7 @@
 
 #include "rtss_evaluation/sequences_system_builder.hpp"
 #include "rtss_evaluation/default.hpp"
-#include "rclcpp/experimental/executors/events_executor/events_executor.hpp"
+#include "rclcpp/experimental/executors/events_executor/events_executor_rt.hpp"
 #include "rclcpp/experimental/executors/graph_executor.hpp"
 
 int main(int argc, char * argv[])
@@ -79,7 +79,7 @@ int main(int argc, char * argv[])
     }
 
     auto events_queue = std::make_unique<rclcpp::experimental::executors::SimpleEventsQueue>();
-    rclcpp::experimental::executors::EventsExecutor executor(std::move(events_queue), std::move(timers_queue));
+    rclcpp::experimental::executors::EventsExecutorRT executor(std::move(events_queue), std::move(timers_queue));
     for (auto & node : nodes) {
       executor.add_node(node);
     }

@@ -19,7 +19,7 @@
 #include "autoware_reference_system/autoware_system_builder.hpp"
 #include "autoware_reference_system/system/timing/benchmark.hpp"
 #include "autoware_reference_system/system/timing/default.hpp"
-#include "rclcpp/experimental/executors/events_executor/events_executor.hpp"
+#include "rclcpp/experimental/executors/events_executor/events_executor_rt.hpp"
 
 int main(int argc, char * argv[])
 {
@@ -32,7 +32,9 @@ int main(int argc, char * argv[])
 
   auto nodes = create_autoware_nodes<RclcppSystem, TimeConfig>();
 
-  rclcpp::experimental::executors::EventsExecutor executor;
+  auto events_queue = std::make_unique<rclcpp::experimental::executors::SimpleEventsQueue>();
+  auto timers_queue = std::make_unique<rclcpp::experimental::executors::SimpleEventsQueue>();
+  rclcpp::experimental::executors::EventsExecutorRT executor(std::move(events_queue), std::move(timers_queue));
   for (auto & node : nodes) {
     executor.add_node(node);
   }

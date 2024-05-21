@@ -21,6 +21,7 @@
 #include "rtss_evaluation/timers_only_system_builder.hpp"
 #include "rtss_evaluation/default.hpp"
 #include "rclcpp/experimental/executors/events_executor/events_executor.hpp"
+#include "rclcpp/experimental/executors/events_executor/events_executor_rt.hpp"
 #include "rclcpp/experimental/executors/graph_executor.hpp"
 
 int main(int argc, char * argv[])
@@ -70,7 +71,7 @@ int main(int argc, char * argv[])
     }
 
     auto events_queue = std::make_unique<rclcpp::experimental::executors::RMEventsQueue>();
-    rclcpp::experimental::executors::EventsExecutor executor(std::move(events_queue), std::move(timers_queue));
+    rclcpp::experimental::executors::EventsExecutorRT executor(std::move(events_queue), std::move(timers_queue));
 
     for (auto & node : nodes) {
       executor.add_node(node);
@@ -87,12 +88,12 @@ int main(int argc, char * argv[])
     }
 
     auto events_queue = std::make_unique<rclcpp::experimental::executors::EDFEventsQueue>();
-    rclcpp::experimental::executors::EventsExecutor executor(std::move(events_queue), std::move(timers_queue));
+    rclcpp::experimental::executors::EventsExecutorRT executor(std::move(events_queue), std::move(timers_queue));
     for (auto & node : nodes) {
       executor.add_node(node);
     }
     executor.spin();
-  } else if (strcmp(argv[2], "events") == 0) {
+  } else if (strcmp(argv[2], "fifo") == 0) {
     // Get argv[4] to determine RO or RE
     rclcpp::experimental::executors::SimpleEventsQueue::UniquePtr timers_queue = nullptr;
     if (argc > 3 && (strcmp(argv[3], "re") == 0)) {
@@ -103,7 +104,23 @@ int main(int argc, char * argv[])
     }
 
     auto events_queue = std::make_unique<rclcpp::experimental::executors::SimpleEventsQueue>();
-    rclcpp::experimental::executors::EventsExecutor executor(std::move(events_queue), std::move(timers_queue));
+    rclcpp::experimental::executors::EventsExecutorRT executor(std::move(events_queue), std::move(timers_queue));
+    for (auto & node : nodes) {
+      executor.add_node(node);
+    }
+    executor.spin();
+  } else if (strcmp(argv[2], "events") == 0) {
+    // Get argv[4] to determine RO or RE
+    bool separate_thread = false;
+    if (argc > 3 && (strcmp(argv[3], "re") == 0)) {
+      std::cout << "Using events executor in RE mode" << std::endl;
+      separate_thread = true;
+    } else {
+      std::cout << "Using events executor in RO mode" << std::endl;
+    }
+
+    auto events_queue = std::make_unique<rclcpp::experimental::executors::SimpleEventsQueue>();
+    rclcpp::experimental::executors::EventsExecutor executor(std::move(events_queue), separate_thread);
     for (auto & node : nodes) {
       executor.add_node(node);
     }

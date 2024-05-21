@@ -62,17 +62,23 @@ endif()
 #  src/ros2/executor/autoware_default_custom.cpp
 #)
 
-# Events Executor (in RO mode)
-add_benchmark_executable(autoware_default_events
-  src/ros2/executor/autoware_default_events.cpp)
+  # Events Executor (in RO mode)
+  add_benchmark_executable(autoware_default_fifo
+    src/ros2/executor/autoware_default_fifo.cpp)
+  # Events Executor (in RO mode)
+  add_benchmark_executable(autoware_default_events
+    src/ros2/executor/autoware_default_events.cpp)
 
 # RM Executor (in RO mode)
 add_benchmark_executable(autoware_default_rm
   src/ros2/executor/autoware_default_rm.cpp)
 
-# Events Executor (in RE mode)
-add_benchmark_executable(autoware_default_events_re
-  src/ros2/executor/autoware_default_events_re.cpp)
+  # Events Executor (in RE mode)
+  add_benchmark_executable(autoware_default_fifo_re
+    src/ros2/executor/autoware_default_fifo_re.cpp)
+  # Events Executor (in RE mode)
+  add_benchmark_executable(autoware_default_events_re
+    src/ros2/executor/autoware_default_events_re.cpp)
 
 # RM Executor (in RE mode)
 add_benchmark_executable(autoware_default_rm_re
