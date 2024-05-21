@@ -79,6 +79,7 @@ private:
   void timer_callback()
   {
     uint64_t timestamp = now_as_int();
+    std::chrono::nanoseconds time_left = timer_->time_until_trigger();
 
     // Get the next arrival time of timer_, and determine if a job was dropped
     int64_t next_arrival_time = timer_->get_arrival_time();
@@ -99,6 +100,14 @@ private:
     expected_arrival_time = next_arrival_time;
     
     auto number_cruncher_result = number_cruncher(number_crunch_limit_, timestamp + wcet);
+
+    // If timer is ready, then arrival time (eg our deadline) has passed again
+    if (now_as_int() - timestamp > time_left.count()) {
+      // std::cout << "Dropped a job! Expected arrival time: " << expected_arrival_time <<
+      //   " next arrival time: " << next_arrival_time << " period: " << period << std::endl;
+      dropped_jobs_ += 1;
+      return;
+    }
 
     auto message = publisher_->borrow_loaned_message();
     message.get().size = 0;
