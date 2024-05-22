@@ -250,7 +250,7 @@ auto create_timers_only_nodes_over_utilization()
         .topic_name = "imu",
         .cycle_time = TimingConfig::IMU_DRIVER_PERIOD,
         .number_crunch_limit = TimingConfig::DEFAULT_DURATION,
-        .wcet = TimingConfig::IMU_WCET_OVER_UTILIZATION}));
+        .wcet = TimingConfig::IMU_WCET}));
 #pragma GCC diagnostic pop
 
   return nodes;

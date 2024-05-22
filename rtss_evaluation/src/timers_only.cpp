@@ -125,6 +125,15 @@ int main(int argc, char * argv[])
       executor.add_node(node);
     }
     executor.spin();
+  } else if (strcmp(argv[2], "static") == 0) {
+    std::cout << "Using default static executor" << std::endl;
+
+    // Default executor
+    rclcpp::executors::StaticSingleThreadedExecutor executor;
+    for (auto & node : nodes) {
+      executor.add_node(node);
+    }
+    executor.spin();
   } else {
     std::cout << "Using default executor" << std::endl;
 
