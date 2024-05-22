@@ -155,17 +155,32 @@ int main(int argc, char * argv[])
   // Wait for the thread to finish
   shutdown_thread.join();
 
+  uint64_t start_time = UINT64_MAX, end_time = 0;
+  for (auto & node : nodes) {
+    if (node->get_first_job() < start_time) {
+      start_time = node->get_first_job();
+    }
+    if (node->get_last_job() > end_time) {
+      end_time = node->get_last_job();
+    }
+  }
+  uint64_t duration_ns = end_time - start_time;
+
   uint32_t dropped_jobs_sum = 0;
   uint32_t total_jobs_sum = 0;
+  uint32_t total_overrun_jobs = 0;
   std::cout << "Dropped jobs: " << std::endl;
   for (auto & node : nodes) {
-    uint32_t dropped_jobs = node->get_dropped_jobs();
-    uint32_t total_jobs = node->get_completed_jobs() + node->get_dropped_jobs();
-    std::cout << node->get_name() << ": " << dropped_jobs << " / " << total_jobs << std::endl;
+    uint64_t completed_jobs = node->get_completed_jobs();
+    uint32_t released_jobs = std::max(completed_jobs, duration_ns / node->get_timer_period());
+    uint32_t dropped_jobs = released_jobs - completed_jobs;
+    uint32_t overrun_jobs = node->get_deadline_overruns();
+    std::cout << node->get_name() << ": " << dropped_jobs << " / " << overrun_jobs << " / " << released_jobs << std::endl;
     dropped_jobs_sum += dropped_jobs;
-    total_jobs_sum += total_jobs;
+    total_jobs_sum += released_jobs;
+    total_overrun_jobs += overrun_jobs;
   }
-  std::cout << "Total: " << dropped_jobs_sum << " / " << total_jobs_sum << std::endl;
+  std::cout << "Total: " << dropped_jobs_sum << " / " << total_overrun_jobs << " / " << total_jobs_sum << std::endl;
 
   nodes.clear();
   rclcpp::shutdown();

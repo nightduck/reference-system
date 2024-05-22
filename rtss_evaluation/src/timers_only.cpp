@@ -163,16 +163,19 @@ int main(int argc, char * argv[])
 
   uint32_t dropped_jobs_sum = 0;
   uint32_t total_jobs_sum = 0;
+  uint32_t total_overrun_jobs = 0;
   std::cout << "Dropped jobs: " << std::endl;
   for (auto & node : nodes) {
     uint64_t completed_jobs = node->get_completed_jobs();
     uint32_t released_jobs = std::max(completed_jobs, duration_ns / node->get_timer_period());
     uint32_t dropped_jobs = released_jobs - completed_jobs;
-    std::cout << node->get_name() << ": " << dropped_jobs << " / " << released_jobs << std::endl;
+    uint32_t overrun_jobs = node->get_deadline_overruns();
+    std::cout << node->get_name() << ": " << dropped_jobs << " / " << overrun_jobs << " / " << released_jobs << std::endl;
     dropped_jobs_sum += dropped_jobs;
     total_jobs_sum += released_jobs;
+    total_overrun_jobs += overrun_jobs;
   }
-  std::cout << "Total: " << dropped_jobs_sum << " / " << total_jobs_sum << std::endl;
+  std::cout << "Total: " << dropped_jobs_sum << " / " << total_overrun_jobs << " / " << total_jobs_sum << std::endl;
 
   nodes.clear();
   rclcpp::shutdown();

@@ -56,6 +56,12 @@ public:
     return sequence_number_;
   }
 
+  uint32_t
+  get_deadline_overruns() const override
+  {
+    return deadline_overruns_;
+  }
+
   uint64_t
   get_first_job() const override
   {
@@ -124,6 +130,7 @@ private:
   uint32_t sequence_number_ = 0;
   uint32_t input_sequence_number_ = 0;
   uint32_t dropped_jobs_ = 0;
+  uint32_t deadline_overruns_ = 0;
   uint64_t first_job = UINT64_MAX;
   uint64_t last_job = 0;
   uint64_t period = 0;

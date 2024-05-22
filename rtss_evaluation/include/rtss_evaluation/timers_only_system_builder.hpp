@@ -128,7 +128,7 @@ auto create_timers_only_nodes_high_utilization()
       rt_nodes::SensorSettings{.node_name = "FrontCamera",
         .topic_name = "FrontCamera",
         .cycle_time = TimingConfig::CAMERA_DRIVER_PERIOD_HIGH_UTILIZATION,
-        .number_crunch_limit = TimingConfig::DEFAULT_DURATION,
+        .number_crunch_limit = TimingConfig::CAMERA_DURATION_HIGH_UTILIZATION,
         .wcet = TimingConfig::CAMERA_WCET_HIGH_UTILIZATION}));
 
   nodes.emplace_back(
@@ -136,7 +136,7 @@ auto create_timers_only_nodes_high_utilization()
       rt_nodes::SensorSettings{.node_name = "RearCamera",
         .topic_name = "RearCamera",
         .cycle_time = TimingConfig::CAMERA_DRIVER_PERIOD_HIGH_UTILIZATION,
-        .number_crunch_limit = TimingConfig::DEFAULT_DURATION,
+        .number_crunch_limit = TimingConfig::CAMERA_DURATION_HIGH_UTILIZATION,
         .wcet = TimingConfig::CAMERA_WCET_HIGH_UTILIZATION}));
 
   nodes.emplace_back(
@@ -144,7 +144,7 @@ auto create_timers_only_nodes_high_utilization()
       rt_nodes::SensorSettings{.node_name = "LeftCamera",
         .topic_name = "LeftCamera",
         .cycle_time = TimingConfig::CAMERA_DRIVER_PERIOD_HIGH_UTILIZATION,
-        .number_crunch_limit = TimingConfig::DEFAULT_DURATION,
+        .number_crunch_limit = TimingConfig::CAMERA_DURATION_HIGH_UTILIZATION,
         .wcet = TimingConfig::CAMERA_WCET_HIGH_UTILIZATION}));
 
   nodes.emplace_back(
@@ -152,7 +152,7 @@ auto create_timers_only_nodes_high_utilization()
       rt_nodes::SensorSettings{.node_name = "RightCamera",
         .topic_name = "RightCamera",
         .cycle_time = TimingConfig::CAMERA_DRIVER_PERIOD_HIGH_UTILIZATION,
-        .number_crunch_limit = TimingConfig::DEFAULT_DURATION,
+        .number_crunch_limit = TimingConfig::CAMERA_DURATION_HIGH_UTILIZATION,
         .wcet = TimingConfig::CAMERA_WCET_HIGH_UTILIZATION}));
 
   nodes.emplace_back(
@@ -201,7 +201,7 @@ auto create_timers_only_nodes_over_utilization()
       rt_nodes::SensorSettings{.node_name = "FrontCamera",
         .topic_name = "FrontCamera",
         .cycle_time = TimingConfig::CAMERA_DRIVER_PERIOD_OVERUTILIZATION,
-        .number_crunch_limit = TimingConfig::DEFAULT_DURATION,
+        .number_crunch_limit = TimingConfig::CAMERA_DURATION_HIGH_UTILIZATION,
         .wcet = TimingConfig::CAMERA_WCET_OVER_UTILIZATION}));
 
   nodes.emplace_back(
@@ -209,7 +209,7 @@ auto create_timers_only_nodes_over_utilization()
       rt_nodes::SensorSettings{.node_name = "RearCamera",
         .topic_name = "RearCamera",
         .cycle_time = TimingConfig::CAMERA_DRIVER_PERIOD_OVERUTILIZATION,
-        .number_crunch_limit = TimingConfig::DEFAULT_DURATION,
+        .number_crunch_limit = TimingConfig::CAMERA_DURATION_HIGH_UTILIZATION,
         .wcet = TimingConfig::CAMERA_WCET_OVER_UTILIZATION}));
 
   nodes.emplace_back(
@@ -217,7 +217,7 @@ auto create_timers_only_nodes_over_utilization()
       rt_nodes::SensorSettings{.node_name = "LeftCamera",
         .topic_name = "LeftCamera",
         .cycle_time = TimingConfig::CAMERA_DRIVER_PERIOD_OVERUTILIZATION,
-        .number_crunch_limit = TimingConfig::DEFAULT_DURATION,
+        .number_crunch_limit = TimingConfig::CAMERA_DURATION_HIGH_UTILIZATION,
         .wcet = TimingConfig::CAMERA_WCET_OVER_UTILIZATION}));
 
   nodes.emplace_back(
@@ -225,7 +225,7 @@ auto create_timers_only_nodes_over_utilization()
       rt_nodes::SensorSettings{.node_name = "RightCamera",
         .topic_name = "RightCamera",
         .cycle_time = TimingConfig::CAMERA_DRIVER_PERIOD_OVERUTILIZATION,
-        .number_crunch_limit = TimingConfig::DEFAULT_DURATION,
+        .number_crunch_limit = TimingConfig::CAMERA_DURATION_HIGH_UTILIZATION,
         .wcet = TimingConfig::CAMERA_WCET_OVER_UTILIZATION}));
 
   // nodes.emplace_back(

@@ -57,6 +57,12 @@ public:
     return sequence_number_;
   }
 
+  uint32_t
+  get_deadline_overruns() const override
+  {
+    return deadline_overruns_;
+  }
+
   uint64_t
   get_first_job() const override
   {
@@ -105,20 +111,21 @@ private:
     if (now_as_int() - timestamp > time_left.count()) {
       // std::cout << "Dropped a job! Expected arrival time: " << expected_arrival_time <<
       //   " next arrival time: " << next_arrival_time << " period: " << period << std::endl;
-      dropped_jobs_ += 1;
+      deadline_overruns_ += 1;
       return;
     }
 
-    auto message = publisher_->borrow_loaned_message();
-    message.get().size = 0;
+    // auto message = publisher_->borrow_loaned_message();
+    message_t message;
+    message.size = 0;
 
     set_sample(
       this->get_name(), sequence_number_++, missed_jobs, timestamp,
-      message.get());
+      message);
 
     // std::cout << timestamp << ": " << this->get_name() << " published message " << sequence_number_ 
     //   << std::endl;
-    publisher_->publish(std::move(message));
+    publisher_->publish(message);
   }
 
   // int64_t
@@ -153,6 +160,7 @@ private:
   rclcpp::TimerBase::SharedPtr timer_;
   uint32_t sequence_number_ = 0;
   uint32_t dropped_jobs_ = 0;
+  uint32_t deadline_overruns_ = 0;
   uint64_t first_job = UINT64_MAX;
   uint64_t last_job = 0;
   uint64_t period = 0;

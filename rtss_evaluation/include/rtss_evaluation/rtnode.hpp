@@ -34,6 +34,9 @@ public:
   virtual uint32_t
   get_completed_jobs() const = 0;
 
+  virtual uint32_t
+  get_deadline_overruns() const = 0;
+
   virtual uint64_t
   get_first_job() const = 0;
 

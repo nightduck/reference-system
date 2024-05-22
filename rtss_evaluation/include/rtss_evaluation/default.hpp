@@ -30,7 +30,7 @@ struct Default
   static constexpr time_t CAMERA_DRIVER_PERIOD = milliseconds(42);
   static constexpr time_t IMU_DRIVER_PERIOD = milliseconds(15);
   static constexpr time_t CAMERA_DRIVER_PERIOD_HIGH_UTILIZATION = milliseconds(42);
-  static constexpr time_t CAMERA_DRIVER_PERIOD_OVERUTILIZATION = milliseconds(40);
+  static constexpr time_t CAMERA_DRIVER_PERIOD_OVERUTILIZATION = milliseconds(42);
   // the following values are used as the number_cruncher_limit
   // to search for primes up to starting at 3
   // for your platform, run the `number_cruncher_benchmark` executable
@@ -38,14 +38,14 @@ struct Default
   // you would like to run each node for
   // processing
   static constexpr uint64_t DEFAULT_DURATION = 4096;
-  static constexpr uint64_t LIDAR_DURATION = 2048;
+  static constexpr uint64_t LIDAR_DURATION = 6144;
   static constexpr uint64_t CAMERA_DURATION = 2048;
   static constexpr uint64_t IMU_DURATION = 512;
   static constexpr uint64_t LIDAR_TRANSFORM_DURATION = 4096;
   static constexpr uint64_t CAMERA_TRANSFORM_DURATION = 4096;
   static constexpr uint64_t LOCALIZATION_DURATION = 8192;
   static constexpr uint64_t LIDAR_DURATION_HIGH_UTILIZATION = 4096;
-  static constexpr uint64_t CAMERA_DURATION_HIGH_UTILIZATION = 3072;
+  static constexpr uint64_t CAMERA_DURATION_HIGH_UTILIZATION = 8192;
   static constexpr uint64_t LIDAR_WCET = 4900000;
   static constexpr uint64_t CAMERA_WCET = 4900000;
   static constexpr uint64_t IMU_WCET = 400000;
@@ -55,7 +55,7 @@ struct Default
   static constexpr uint64_t LIDAR_WCET_HIGH_UTILIZATION = 4900000;
   static constexpr uint64_t CAMERA_WCET_HIGH_UTILIZATION = 6900000;
   static constexpr uint64_t LIDAR_WCET_OVER_UTILIZATION = 4900000;
-  static constexpr uint64_t CAMERA_WCET_OVER_UTILIZATION = 6900000;
+  static constexpr uint64_t CAMERA_WCET_OVER_UTILIZATION = 7900000;
   static constexpr uint64_t IMU_WCET_OVER_UTILIZATION = 900000;
 };
 
