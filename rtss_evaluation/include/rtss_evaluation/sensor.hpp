@@ -16,6 +16,7 @@
 #include <chrono>
 #include <string>
 #include <utility>
+#include <fstream>
 
 #include "rclcpp/rclcpp.hpp"
 #include "settings.hpp"
@@ -43,6 +44,17 @@ public:
       [this] {timer_callback();}, nullptr, {publisher_});
     period = settings.cycle_time.count();
     wcet = settings.wcet;
+
+    // Open the file stream in append mode
+    file_stream_ = std::ofstream(settings.node_name+".node.txt", std::ofstream::out);
+    if (!file_stream_.is_open()) {
+      throw std::runtime_error("Failed to open file");
+    }
+  }
+
+  ~Sensor()
+  {
+    file_stream_.close();
   }
 
   uint32_t
@@ -82,6 +94,13 @@ public:
   }
 
 private:
+  uint64_t compute_response_time(uint64_t timestamp, std::chrono::nanoseconds time_left)
+  {
+    uint64_t now = now_as_int();
+    uint64_t release = timestamp + time_left.count() - period;
+    return now - release;
+  }
+
   void timer_callback()
   {
     uint64_t timestamp = now_as_int();
@@ -107,14 +126,6 @@ private:
     
     auto number_cruncher_result = number_cruncher(number_crunch_limit_, timestamp + wcet);
 
-    // If timer is ready, then arrival time (eg our deadline) has passed again
-    if (now_as_int() - timestamp > time_left.count()) {
-      // std::cout << "Dropped a job! Expected arrival time: " << expected_arrival_time <<
-      //   " next arrival time: " << next_arrival_time << " period: " << period << std::endl;
-      deadline_overruns_ += 1;
-      return;
-    }
-
     // auto message = publisher_->borrow_loaned_message();
     message_t message;
     message.size = 0;
@@ -126,6 +137,19 @@ private:
     // std::cout << timestamp << ": " << this->get_name() << " published message " << sequence_number_ 
     //   << std::endl;
     publisher_->publish(message);
+
+    int64_t response_time_ns = compute_response_time(timestamp, time_left);
+
+    // If timer is ready, then arrival time (eg our deadline) has passed again
+    if (response_time_ns > period) {
+      // std::cout << "Dropped a job! Expected arrival time: " << expected_arrival_time <<
+      //   " next arrival time: " << next_arrival_time << " period: " << period << std::endl;
+      deadline_overruns_ += 1;
+      return;
+    }
+
+    // Write to file
+    file_stream_ << response_time_ns << std::endl;
   }
 
   // int64_t
@@ -156,6 +180,8 @@ private:
   rclcpp::Publisher<message_t>::SharedPtr publisher_;
   uint64_t number_crunch_limit_;
   int64_t expected_arrival_time;
+
+  std::ofstream file_stream_;
   
   rclcpp::TimerBase::SharedPtr timer_;
   uint32_t sequence_number_ = 0;
