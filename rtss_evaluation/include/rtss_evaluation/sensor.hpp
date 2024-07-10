@@ -117,9 +117,9 @@ private:
       //   " next arrival time: " << next_arrival_time << " period: " << period << std::endl;
       missed_jobs = ((next_arrival_time - expected_arrival_time) / period) - 1;
       dropped_jobs_ += missed_jobs;
-      last_job = timestamp;
-      expected_arrival_time = next_arrival_time;
-      return;
+      // last_job = timestamp;
+      // expected_arrival_time = next_arrival_time;
+      // return;
     }
     last_job = timestamp;
     expected_arrival_time = next_arrival_time;
@@ -145,7 +145,7 @@ private:
       // std::cout << "Dropped a job! Expected arrival time: " << expected_arrival_time <<
       //   " next arrival time: " << next_arrival_time << " period: " << period << std::endl;
       deadline_overruns_ += 1;
-      return;
+      // return;
     }
 
     // Write to file
