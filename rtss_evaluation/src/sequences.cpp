@@ -20,14 +20,14 @@
 
 #include "rtss_evaluation/sequences_system_builder.hpp"
 #include "rtss_evaluation/default.hpp"
-#include "rclcpp/experimental/executors/events_executor/events_executor_rt.hpp"
+#include "rclcpp/experimental/executors/events_executor/events_executor.hpp"
 #include "rclcpp/experimental/executors/graph_executor.hpp"
 
 int main(int argc, char * argv[])
 {
   // Check for correct number of arguments
   if (argc < 3) {
-    std::cerr << "Usage: " << argv[0] << "<duration <executor type> [RO|RE]" << std::endl;
+    std::cerr << "Usage: " << argv[0] << "<duration <executor type>" << std::endl;
     return 1;
   }
 
@@ -54,32 +54,18 @@ int main(int argc, char * argv[])
   if (strcmp(argv[2], "rm") == 0) {
 
     // Get argv[4] to determine RO or RE
-    rclcpp::experimental::executors::RMEventsQueue::UniquePtr timers_queue = nullptr;
-    if (argc > 3 && (strcmp(argv[3], "re") == 0)) {
-      std::cout << "Using rate monotonic fixed priority executor in RE mode" << std::endl;
-      timers_queue = std::make_unique<rclcpp::experimental::executors::RMEventsQueue>();
-    } else {
-      std::cout << "Using rate monotonic fixed priority executor in RO mode" << std::endl;
-    }
-
-    rclcpp::experimental::executors::GraphExecutor executor(std::move(timers_queue));
+    rclcpp::experimental::executors::RMEventsQueue::UniquePtr event_queue =
+      std::make_unique<rclcpp::experimental::executors::RMEventsQueue>();
+    rclcpp::experimental::executors::GraphExecutor executor(std::move(event_queue));
 
     for (auto & node : nodes) {
       executor.add_node(node);
     }
     executor.spin();
   } else if (strcmp(argv[2], "events") == 0) {
-    // Get argv[4] to determine RO or RE
-    rclcpp::experimental::executors::SimpleEventsQueue::UniquePtr timers_queue = nullptr;
-    if (argc > 3 && (strcmp(argv[3], "re") == 0)) {
-      std::cout << "Using events executor in RE mode" << std::endl;
-      timers_queue = std::make_unique<rclcpp::experimental::executors::SimpleEventsQueue>();
-    } else {
-      std::cout << "Using events executor in RO mode" << std::endl;
-    }
-
     auto events_queue = std::make_unique<rclcpp::experimental::executors::SimpleEventsQueue>();
-    rclcpp::experimental::executors::EventsExecutorRT executor(std::move(events_queue), std::move(timers_queue));
+
+    rclcpp::experimental::executors::EventsExecutor executor(std::move(events_queue));
     for (auto & node : nodes) {
       executor.add_node(node);
     }

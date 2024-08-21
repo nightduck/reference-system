@@ -21,14 +21,13 @@
 #include "rtss_evaluation/timers_only_system_builder.hpp"
 #include "rtss_evaluation/default.hpp"
 #include "rclcpp/experimental/executors/events_executor/events_executor.hpp"
-#include "rclcpp/experimental/executors/events_executor/events_executor_rt.hpp"
 #include "rclcpp/experimental/executors/graph_executor.hpp"
 
 int main(int argc, char * argv[])
 {
   // Check for correct number of arguments
   if (argc < 3) {
-    std::cerr << "Usage: " << argv[0] << "<duration <executor type> [RO|RE]" << std::endl;
+    std::cerr << "Usage: " << argv[0] << "<duration <executor type>" << std::endl;
     return 1;
   }
 
@@ -60,67 +59,30 @@ int main(int argc, char * argv[])
 
   // Using argv[2] as a string argument, ascertain which executor we're running
   if (strcmp(argv[2], "rm") == 0) {
-
-    // Get argv[4] to determine RO or RE
-    rclcpp::experimental::executors::RMEventsQueue::UniquePtr timers_queue = nullptr;
-    if (argc > 3 && (strcmp(argv[3], "re") == 0)) {
-      std::cout << "Using rate monotonic fixed priority executor in RE mode" << std::endl;
-      timers_queue = std::make_unique<rclcpp::experimental::executors::RMEventsQueue>();
-    } else {
-      std::cout << "Using rate monotonic fixed priority executor in RO mode" << std::endl;
-    }
-
     auto events_queue = std::make_unique<rclcpp::experimental::executors::RMEventsQueue>();
-    rclcpp::experimental::executors::EventsExecutorRT executor(std::move(events_queue), std::move(timers_queue));
+    rclcpp::experimental::executors::EventsExecutor executor(std::move(events_queue));
 
     for (auto & node : nodes) {
       executor.add_node(node);
     }
     executor.spin();
   } else if (strcmp(argv[2], "edf") == 0) {
-    // Get argv[4] to determine RO or RE
-    rclcpp::experimental::executors::EDFEventsQueue::UniquePtr timers_queue = nullptr;
-    if (argc > 3 && (strcmp(argv[3], "re") == 0)) {
-      std::cout << "Using edf executor in RE mode" << std::endl;
-      timers_queue = std::make_unique<rclcpp::experimental::executors::EDFEventsQueue>();
-    } else {
-      std::cout << "Using edf executor in RO mode" << std::endl;
-    }
-
     auto events_queue = std::make_unique<rclcpp::experimental::executors::EDFEventsQueue>();
-    rclcpp::experimental::executors::EventsExecutorRT executor(std::move(events_queue), std::move(timers_queue));
+    rclcpp::experimental::executors::EventsExecutor executor(std::move(events_queue));
     for (auto & node : nodes) {
       executor.add_node(node);
     }
     executor.spin();
   } else if (strcmp(argv[2], "fifo") == 0) {
-    // Get argv[4] to determine RO or RE
-    rclcpp::experimental::executors::SimpleEventsQueue::UniquePtr timers_queue = nullptr;
-    if (argc > 3 && (strcmp(argv[3], "re") == 0)) {
-      std::cout << "Using events executor in RE mode" << std::endl;
-      timers_queue = std::make_unique<rclcpp::experimental::executors::SimpleEventsQueue>();
-    } else {
-      std::cout << "Using events executor in RO mode" << std::endl;
-    }
-
     auto events_queue = std::make_unique<rclcpp::experimental::executors::SimpleEventsQueue>();
-    rclcpp::experimental::executors::EventsExecutorRT executor(std::move(events_queue), std::move(timers_queue));
+    rclcpp::experimental::executors::EventsExecutor executor(std::move(events_queue));
     for (auto & node : nodes) {
       executor.add_node(node);
     }
     executor.spin();
   } else if (strcmp(argv[2], "events") == 0) {
-    // Get argv[4] to determine RO or RE
-    bool separate_thread = false;
-    if (argc > 3 && (strcmp(argv[3], "re") == 0)) {
-      std::cout << "Using events executor in RE mode" << std::endl;
-      separate_thread = true;
-    } else {
-      std::cout << "Using events executor in RO mode" << std::endl;
-    }
-
     auto events_queue = std::make_unique<rclcpp::experimental::executors::SimpleEventsQueue>();
-    rclcpp::experimental::executors::EventsExecutor executor(std::move(events_queue), separate_thread);
+    rclcpp::experimental::executors::EventsExecutor executor(std::move(events_queue));
     for (auto & node : nodes) {
       executor.add_node(node);
     }
