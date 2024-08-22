@@ -32,7 +32,9 @@ int main(int argc, char * argv[])
 
   auto nodes = create_autoware_nodes<RclcppSystem, TimeConfig>();
 
-  rclcpp::experimental::executors::GraphExecutor executor = rclcpp::experimental::executors::GraphExecutor();
+  auto events_queue = std::make_unique<rclcpp::experimental::executors::RMEventsQueue>();
+  rclcpp::experimental::executors::GraphExecutor executor =
+    rclcpp::experimental::executors::GraphExecutor(std::move(events_queue));
 
   for (auto & node : nodes) {
     executor.add_node(node);
