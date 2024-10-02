@@ -69,9 +69,12 @@ endif()
   add_benchmark_executable(autoware_default_events
     src/ros2/executor/autoware_default_events.cpp)
 
-# RM Executor (in RO mode)
-add_benchmark_executable(autoware_default_rm
-  src/ros2/executor/autoware_default_rm.cpp)
+  # RM Executor
+  add_benchmark_executable(autoware_default_rm
+    src/ros2/executor/autoware_default_rm.cpp)
+  # EDF Executor
+  add_benchmark_executable(autoware_default_edf
+    src/ros2/executor/autoware_default_edf.cpp)
 
 if(${BUILD_TESTING})
   find_package(ament_lint_auto REQUIRED)
