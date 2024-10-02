@@ -19,6 +19,7 @@
 #include <fstream>
 
 #include "rclcpp/rclcpp.hpp"
+#include "rclcpp/experimental/experimental_definitions.hpp"
 #include "settings.hpp"
 #include "rtnode.hpp"
 #include "reference_system/msg_types.hpp"
@@ -41,7 +42,11 @@ public:
     publisher_ = this->create_publisher<message_t>(settings.topic_name, 1);
     timer_ = this->create_wall_timer(
       settings.cycle_time,
+    #ifdef RCLCPP_EXPERIMENTAL_PUBLISHER_HINTS
       [this] {timer_callback();}, nullptr, {publisher_});
+    #else
+      [this] {timer_callback();});
+    #endif
     period = settings.cycle_time.count();
     wcet = settings.wcet;
 
@@ -101,13 +106,23 @@ private:
     return now - release;
   }
 
+  int64_t get_arrival_time(rclcpp::TimerBase::SharedPtr timer) const
+  {
+    int64_t time;
+    rcl_ret_t ret = rcl_timer_get_next_call_time(timer->get_timer_handle().get(), &time);
+    if (ret != RCL_RET_OK) {
+      rclcpp::exceptions::throw_from_rcl_error(ret, "Failed to get timer arrival time");
+    }
+    return time;
+  }
+
   void timer_callback()
   {
     uint64_t timestamp = now_as_int();
     std::chrono::nanoseconds time_left = timer_->time_until_trigger();
 
     // Get the next arrival time of timer_, and determine if a job was dropped
-    int64_t next_arrival_time = timer_->get_arrival_time();
+    int64_t next_arrival_time = get_arrival_time(timer_);
     uint32_t missed_jobs = 0;
     if (sequence_number_ == 0) {
       first_job = timestamp;

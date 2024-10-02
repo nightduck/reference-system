@@ -38,11 +38,19 @@ public:
     publisher_ = this->create_publisher<message_t>(settings.output_topic, 1);
     subscriptions_[0].subscription = this->create_subscription<message_t>(
       settings.input_0, 1,
+    #ifdef RCLCPP_EXPERIMENTAL_PUBLISHER_HINTS
       [this](const message_t::SharedPtr msg) {input_callback(0U, msg);}, {publisher_});
+    #else
+      [this](const message_t::SharedPtr msg) {input_callback(0U, msg);});
+    #endif
 
     subscriptions_[1].subscription = this->create_subscription<message_t>(
       settings.input_1, 1,
+    #ifdef RCLCPP_EXPERIMENTAL_PUBLISHER_HINTS
       [this](const message_t::SharedPtr msg) {input_callback(1U, msg);}, {publisher_});
+    #else
+      [this](const message_t::SharedPtr msg) {input_callback(1U, msg);});
+    #endif
   }
 
 private:

@@ -49,10 +49,15 @@ public:
               connection.input_topic, 1,
               [this, id = connections_.size()](const message_t::SharedPtr msg) {
                 input_callback(msg, id);
+      #ifdef RCLCPP_EXPERIMENTAL_PUBLISHER_HINTS
               },
               {publisher}),
+      #else
+              }),
+      #endif
             callback_group,
             connection.number_crunch_limit});
+
     }
   }
   rclcpp::CallbackGroup::SharedPtr get_callback_group_of_subscription(

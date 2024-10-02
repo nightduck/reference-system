@@ -13,13 +13,19 @@
 // limitations under the License.
 
 #include "rclcpp/rclcpp.hpp"
+#include "rclcpp/experimental/experimental_definitions.hpp"
+#ifdef RCLCPP_EXPERIMENTAL_PERIOD_QUEUE
+#include "rclcpp/experimental/executors/events_executor/period_events_queue.hpp"
+#endif
 
 #include "reference_system/system/type/rclcpp_system.hpp"
 
 #include "autoware_reference_system/autoware_system_builder.hpp"
 #include "autoware_reference_system/system/timing/benchmark.hpp"
 #include "autoware_reference_system/system/timing/default.hpp"
+#ifdef RCLCPP_EXPERIMENTAL_GRAPH_EXECUTOR
 #include "rclcpp/experimental/executors/graph_executor.hpp"
+#endif
 
 int main(int argc, char * argv[])
 {
@@ -32,15 +38,23 @@ int main(int argc, char * argv[])
 
   auto nodes = create_autoware_nodes<RclcppSystem, TimeConfig>();
 
+  #ifdef RCLCPP_EXPERIMENTAL_PERIOD_QUEUE
+  auto events_queue = std::make_unique<rclcpp::experimental::executors::PeriodEventsQueue>();
+  #else
+  #ifdef RCLCPP_EXPERIMENTAL_RM_QUEUE
   auto events_queue = std::make_unique<rclcpp::experimental::executors::RMEventsQueue>();
-  rclcpp::experimental::executors::GraphExecutor executor =
-    rclcpp::experimental::executors::GraphExecutor(std::move(events_queue));
+  #endif
+  #endif
+
+  #if defined(RCLCPP_EXPERIMENTAL_PERIOD_QUEUE) || defined(RCLCPP_EXPERIMENTAL_RM_QUEUE)
+  rclcpp::experimental::executors::EventsExecutor executor =
+    rclcpp::experimental::executors::EventsExecutor(std::move(events_queue));
 
   for (auto & node : nodes) {
     executor.add_node(node);
   }
-  executor.assign_priority();
   executor.spin();
+  #endif
 
   nodes.clear();
   rclcpp::shutdown();

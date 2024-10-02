@@ -38,8 +38,12 @@ public:
     publisher_ = this->create_publisher<message_t>(settings.output_topic, 1);
     subscription_ = this->create_subscription<message_t>(
       settings.input_topic, 1,
+    #ifdef RCLCPP_EXPERIMENTAL_PUBLISHER_HINTS
       [this](const message_t::SharedPtr msg) {input_callback(msg);},
       {publisher_});
+    #else
+      [this](const message_t::SharedPtr msg) {input_callback(msg);});
+    #endif
   }
 
 private:

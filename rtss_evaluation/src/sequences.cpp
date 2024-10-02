@@ -15,13 +15,16 @@
 #include <thread>
 
 #include "rclcpp/rclcpp.hpp"
+#include "rclcpp/experimental/experimental_definitions.hpp"
 
 #include "rtss_evaluation/rt_system.hpp"
 
 #include "rtss_evaluation/sequences_system_builder.hpp"
 #include "rtss_evaluation/default.hpp"
 #include "rclcpp/experimental/executors/events_executor/events_executor.hpp"
+#ifdef RCLCPP_EXPERIMENTAL_GRAPH_EXECUTOR
 #include "rclcpp/experimental/executors/graph_executor.hpp"
+#endif
 
 int main(int argc, char * argv[])
 {
@@ -52,7 +55,7 @@ int main(int argc, char * argv[])
 
   // Using argv[2] as a string argument, ascertain which executor we're running
   if (strcmp(argv[2], "rm") == 0) {
-
+    #if defined(RCLCPP_EXPERIMENTAL_GRAPH_EXECUTOR) && defined(RCLCPP_EXPERIMENTAL_RM_QUEUE)
     // Get argv[4] to determine RO or RE
     rclcpp::experimental::executors::RMEventsQueue::UniquePtr event_queue =
       std::make_unique<rclcpp::experimental::executors::RMEventsQueue>();
@@ -62,6 +65,7 @@ int main(int argc, char * argv[])
       executor.add_node(node);
     }
     executor.spin();
+    #endif
   } else if (strcmp(argv[2], "events") == 0) {
     auto events_queue = std::make_unique<rclcpp::experimental::executors::SimpleEventsQueue>();
 

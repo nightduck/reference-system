@@ -51,7 +51,11 @@ public:
     publisher_ = this->create_publisher<message_t>(settings.output_topic, 1);
     timer_ = this->create_wall_timer(
       settings.cycle_time,
+    #ifdef RCLCPP_EXPERIMENTAL_PUBLISHER_HINTS
       [this] {timer_callback();}, nullptr, {publisher_});
+    #else
+      [this] {timer_callback();});
+    #endif
   }
 
 private:
