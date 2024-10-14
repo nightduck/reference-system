@@ -40,13 +40,9 @@ int main(int argc, char * argv[])
 
   #ifdef RCLCPP_EXPERIMENTAL_DEADLINE_QUEUE
   auto events_queue = std::make_unique<rclcpp::experimental::executors::DeadlineEventsQueue>();
-  #else
-  #ifdef RCLCPP_EXPERIMENTAL_RM_QUEUE
-  auto events_queue = std::make_unique<rclcpp::experimental::executors::RMEventsQueue>();
-  #endif
   #endif
 
-  #if defined(RCLCPP_EXPERIMENTAL_PERIOD_QUEUE) || defined(RCLCPP_EXPERIMENTAL_RM_QUEUE)
+  #if defined(RCLCPP_EXPERIMENTAL_PERIOD_QUEUE) || defined(RCLCPP_EXPERIMENTAL_DEADLINE_QUEUE)
   rclcpp::experimental::executors::EventsExecutor executor =
     rclcpp::experimental::executors::EventsExecutor(std::move(events_queue));
 
