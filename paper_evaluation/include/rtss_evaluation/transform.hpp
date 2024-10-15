@@ -89,6 +89,8 @@ private:
   {
     uint64_t timestamp = now_as_int();
 
+    // std::cout << timestamp << ": " << this->get_name() << " received message " << input_sequence_number_ << std::endl;
+
     // // Get the next arrival time of timer_, and determine if a job was dropped
     // uint32_t missed_jobs = 0;
     // if (sequence_number_ == 0) {
