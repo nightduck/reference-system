@@ -40,21 +40,21 @@ auto create_graph_nodes()
         .topic_name = "Data",
         .cycle_time = 25ms,
         .number_crunch_limit = 8192,
-        .wcet = 4900000}));
+        .wcet = 900000}));
   nodes.emplace_back(
     std::make_shared<typename SystemType::Sensor>(
       rt_nodes::SensorSettings{.node_name = "SensorB",
         .topic_name = "Data",
         .cycle_time = 40ms,
         .number_crunch_limit = 8192,
-        .wcet = 4900000}));
+        .wcet = 900000}));
   nodes.emplace_back(
     std::make_shared<typename SystemType::Sensor>(
       rt_nodes::SensorSettings{.node_name = "SensorC",
         .topic_name = "Data",
         .cycle_time = 50ms,
         .number_crunch_limit = 8192,
-        .wcet = 4900000}));
+        .wcet = 900000}));
 
   nodes.emplace_back(
     std::make_shared<typename SystemType::Transform>(
@@ -63,7 +63,7 @@ auto create_graph_nodes()
         .output_topic = "DataX",
         .number_crunch_limit = 8192,
         .cycle_time = 0ms,
-        .wcet = 4900000}));
+        .wcet = 900000}));
   nodes.emplace_back(
     std::make_shared<typename SystemType::Transform>(
       rt_nodes::TransformSettings{.node_name = "ProcessorY",
@@ -71,7 +71,7 @@ auto create_graph_nodes()
         .output_topic = "DataY",
         .number_crunch_limit = 8192,
         .cycle_time = 0ms,
-        .wcet = 4900000}));
+        .wcet = 900000}));
 
 #pragma GCC diagnostic pop
 

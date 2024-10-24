@@ -108,6 +108,8 @@ int main(int argc, char * argv[])
   // Wait for the thread to finish
   shutdown_thread.join();
 
+  std::cout << "Dropped jobs:" << std::endl;
+
   int total_timer_jobs = 0;
   uint32_t dropped_jobs_sum = 0;
   uint32_t total_jobs_sum = 0;
