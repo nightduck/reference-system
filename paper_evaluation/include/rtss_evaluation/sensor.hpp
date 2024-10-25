@@ -164,7 +164,7 @@ private:
     }
 
     // Write to file
-    file_stream_ << response_time_ns << std::endl;
+    file_stream_ << sequence_number_ << ": " << response_time_ns << std::endl;
   }
 
   // int64_t

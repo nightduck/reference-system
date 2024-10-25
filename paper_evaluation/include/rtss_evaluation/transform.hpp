@@ -16,6 +16,7 @@
 #include <chrono>
 #include <string>
 #include <utility>
+#include <fstream>
 
 #include "rclcpp/rclcpp.hpp"
 #include "settings.hpp"
@@ -46,6 +47,12 @@ public:
     #endif
     period = settings.cycle_time.count();
     wcet = settings.wcet;
+
+    // Open the file stream in append mode
+    file_stream_ = std::ofstream(settings.node_name+".node.txt", std::ofstream::out);
+    if (!file_stream_.is_open()) {
+      throw std::runtime_error("Failed to open file");
+    }
   }
 
   uint32_t
@@ -85,6 +92,14 @@ public:
   }
 
 private:
+  template<typename SampleTypePointer>
+  std::string get_sample_recent_name(
+    SampleTypePointer & sample)
+  {
+    std::string name(reinterpret_cast<const char *>(sample->stats[sample->size-1].node_name.data()));
+    return name;
+  }
+
   void input_callback(const message_t::SharedPtr input_message)
   {
     uint64_t timestamp = now_as_int();
@@ -118,6 +133,8 @@ private:
     uint32_t missed_samples = get_missed_samples_and_update_seq_nr(
       input_message, input_sequence_number_);
 
+    std::string parent_name = get_sample_recent_name(input_message);
+
     set_sample(
       this->get_name(), sequence_number_++, missed_samples, timestamp,
       output_message.get());
@@ -125,6 +142,9 @@ private:
     // use result so that it is not optimizied away by some clever compiler
     output_message.get().data[0] = number_cruncher_result;
     publisher_->publish(std::move(output_message));
+
+    // Write to file
+    file_stream_ << parent_name << ":" << input_sequence_number_ << std::endl;
   }
 
 private:
@@ -132,6 +152,8 @@ private:
   rclcpp::Subscription<message_t>::SharedPtr subscription_;
   uint64_t number_crunch_limit_;
   uint64_t expected_arrival_time;
+
+  std::ofstream file_stream_;
 
   uint32_t sequence_number_ = 0;
   uint32_t input_sequence_number_ = 0;
