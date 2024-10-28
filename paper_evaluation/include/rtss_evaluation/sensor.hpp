@@ -144,7 +144,12 @@ private:
     // auto message = publisher_->borrow_loaned_message();
     message_t message;
     message.size = 0;
-
+    
+    //Calculate release time and put timestamp into the message
+    uint64_t release_time = timestamp + time_left.count() - period;
+    set_sample(
+      "Release", sequence_number_, 0, release_time,
+      message);
     set_sample(
       this->get_name(), sequence_number_++, missed_jobs, timestamp,
       message);

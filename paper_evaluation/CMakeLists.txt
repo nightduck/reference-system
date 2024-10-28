@@ -25,6 +25,8 @@ ament_auto_add_executable(sequences_high_utilization src/sequences_high_utilizat
 
 ament_auto_add_executable(many_to_many_pub src/many_to_many_pub.cpp)
 
+ament_auto_add_executable(many_to_many_sink src/many_to_many_sink.cpp)
+
 # ament_auto_add_executable(sequences_over_utilization src/sequences_over_utilization.cpp)
 
 if(BUILD_TESTING)
@@ -42,7 +44,7 @@ endif()
 
 install(TARGETS
   timers_only timers_only_high_utilization timers_only_over_utilization many_to_many_pub
-  sequences sequences_high_utilization
+  sequences sequences_high_utilization many_to_many_sink
   RUNTIME DESTINATION lib/${PROJECT_NAME}
 )
 

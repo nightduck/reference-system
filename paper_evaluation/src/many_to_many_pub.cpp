@@ -36,7 +36,7 @@ int main(int argc, char * argv[])
 {
   // Check for correct number of arguments
   if (argc < 3) {
-    std::cerr << "Usage: " << argv[0] << "<duration <executor type>" << std::endl;
+    std::cerr << "Usage: " << argv[0] << "<duration> <executor type> [uu/ou]" << std::endl;
     return 1;
   }
 
@@ -48,8 +48,17 @@ int main(int argc, char * argv[])
   // set_benchmark_mode(true);
 
   // Build a set of nodes
-  auto nodes = create_graph_nodes<RTSystem, TimeConfig>();
-
+  std::vector<std::shared_ptr<RTSystem::NodeBaseType>> nodes;
+  if (argc == 4 && strcmp(argv[3], "uu") == 0) {
+    std::cout << "Using underutilized nodes" << std::endl;
+    nodes = create_graph_nodes_underutilized<RTSystem, TimeConfig>();
+  } else if (argc == 4 && strcmp(argv[3], "ou") == 0) {
+    std::cout << "Using overutilized nodes" << std::endl;
+    nodes = create_graph_nodes_overutilized<RTSystem, TimeConfig>();
+  } else {
+    std::cout << "Using normal nodes" << std::endl;
+    nodes = create_graph_nodes<RTSystem, TimeConfig>();
+  }
   int duration = std::stoi(argv[1]);
 
   // Create a new thread that sleeps for the specified duration

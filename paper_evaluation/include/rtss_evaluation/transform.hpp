@@ -38,7 +38,7 @@ public:
   {
     publisher_ = this->create_publisher<message_t>(settings.output_topic, 1);
     subscription_ = this->create_subscription<message_t>(
-      settings.input_topic, 1,
+      settings.input_topic, 10,
     #ifdef RCLCPP_EXPERIMENTAL_PUBLISHER_HINTS
       [this](const message_t::SharedPtr msg) {input_callback(msg);},
       {publisher_});
@@ -138,11 +138,16 @@ private:
     set_sample(
       this->get_name(), sequence_number_++, missed_samples, timestamp,
       output_message.get());
+    
+    set_sample(
+      "Complete", input_sequence_number_, 0, now_as_int(),
+      output_message.get());
 
     // use result so that it is not optimizied away by some clever compiler
     output_message.get().data[0] = number_cruncher_result;
     publisher_->publish(std::move(output_message));
 
+    // TODO: Write results of sample to file
     // Write to file
     file_stream_ << parent_name << ":" << input_sequence_number_ << std::endl;
   }
