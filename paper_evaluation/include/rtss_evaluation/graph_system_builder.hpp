@@ -54,7 +54,7 @@ auto create_graph_nodes_underutilized()
         .topic_name = "Data",
         .cycle_time = 50ms,
         .number_crunch_limit = 8192,
-        .wcet = 9900000}));
+        .wcet = 4900000}));
 
   nodes.emplace_back(
     std::make_shared<typename SystemType::Transform>(
@@ -97,7 +97,7 @@ auto create_graph_nodes()
         .topic_name = "Data",
         .cycle_time = 25ms,
         .number_crunch_limit = 8192,
-        .wcet = 900000}));
+        .wcet = 1900000}));
   nodes.emplace_back(
     std::make_shared<typename SystemType::Sensor>(
       rt_nodes::SensorSettings{.node_name = "SensorB",
@@ -111,7 +111,7 @@ auto create_graph_nodes()
         .topic_name = "Data",
         .cycle_time = 50ms,
         .number_crunch_limit = 8192,
-        .wcet = 14900000}));
+        .wcet = 11900000}));
 
   nodes.emplace_back(
     std::make_shared<typename SystemType::Transform>(
@@ -120,7 +120,7 @@ auto create_graph_nodes()
         .output_topic = "Sink",
         .number_crunch_limit = 8192,
         .cycle_time = 0ms,
-        .wcet = 2900000}));
+        .wcet = 1900000}));
   nodes.emplace_back(
     std::make_shared<typename SystemType::Transform>(
       rt_nodes::TransformSettings{.node_name = "ProcessorY",
@@ -128,7 +128,7 @@ auto create_graph_nodes()
         .output_topic = "Sink",
         .number_crunch_limit = 8192,
         .cycle_time = 0ms,
-        .wcet = 1900000}));
+        .wcet = 900000}));
 
 #pragma GCC diagnostic pop
 
@@ -155,21 +155,21 @@ auto create_graph_nodes_overutilized()
         .topic_name = "Data",
         .cycle_time = 25ms,
         .number_crunch_limit = 8192,
-        .wcet = 1900000}));
+        .wcet = 2900000}));
   nodes.emplace_back(
     std::make_shared<typename SystemType::Sensor>(
       rt_nodes::SensorSettings{.node_name = "SensorB",
         .topic_name = "Data",
         .cycle_time = 40ms,
         .number_crunch_limit = 8192,
-        .wcet = 2900000}));
+        .wcet = 900000}));
   nodes.emplace_back(
     std::make_shared<typename SystemType::Sensor>(
       rt_nodes::SensorSettings{.node_name = "SensorC",
         .topic_name = "Data",
         .cycle_time = 50ms,
         .number_crunch_limit = 8192,
-        .wcet = 15900000}));
+        .wcet = 11900000}));
 
   nodes.emplace_back(
     std::make_shared<typename SystemType::Transform>(
