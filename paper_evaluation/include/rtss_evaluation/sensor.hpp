@@ -146,7 +146,6 @@ private:
     message.size = 0;
     
     //Calculate release time and put timestamp into the message
-    uint64_t release_time = timestamp + time_left.count() - period;
     set_sample(
       "Release", sequence_number_, 0, release_time,
       message);
@@ -158,6 +157,7 @@ private:
     //   << std::endl;
     publisher_->publish(message);
 
+    release_time = timestamp + time_left.count();
     int64_t response_time_ns = compute_response_time(timestamp, time_left);
 
     // If timer is ready, then arrival time (eg our deadline) has passed again
@@ -211,6 +211,7 @@ private:
   uint64_t last_job = 0;
   uint64_t period = 0;
   uint64_t wcet = 0;
+  uint64_t release_time = 0;   // Timestamp of the last release
 };
 }  // namespace rclcpp_system
 }  // namespace nodes

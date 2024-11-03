@@ -45,14 +45,14 @@ auto create_graph_nodes_underutilized()
     std::make_shared<typename SystemType::Sensor>(
       rt_nodes::SensorSettings{.node_name = "SensorB",
         .topic_name = "Data",
-        .cycle_time = 40ms,
+        .cycle_time = 41ms,
         .number_crunch_limit = 8192,
         .wcet = 900000}));
   nodes.emplace_back(
     std::make_shared<typename SystemType::Sensor>(
       rt_nodes::SensorSettings{.node_name = "SensorC",
         .topic_name = "Data",
-        .cycle_time = 50ms,
+        .cycle_time = 51ms,
         .number_crunch_limit = 8192,
         .wcet = 4900000}));
 
@@ -102,14 +102,14 @@ auto create_graph_nodes()
     std::make_shared<typename SystemType::Sensor>(
       rt_nodes::SensorSettings{.node_name = "SensorB",
         .topic_name = "Data",
-        .cycle_time = 40ms,
+        .cycle_time = 41ms,
         .number_crunch_limit = 8192,
         .wcet = 900000}));
   nodes.emplace_back(
     std::make_shared<typename SystemType::Sensor>(
       rt_nodes::SensorSettings{.node_name = "SensorC",
         .topic_name = "Data",
-        .cycle_time = 50ms,
+        .cycle_time = 51ms,
         .number_crunch_limit = 8192,
         .wcet = 11900000}));
 
@@ -160,14 +160,14 @@ auto create_graph_nodes_overutilized()
     std::make_shared<typename SystemType::Sensor>(
       rt_nodes::SensorSettings{.node_name = "SensorB",
         .topic_name = "Data",
-        .cycle_time = 40ms,
+        .cycle_time = 41ms,
         .number_crunch_limit = 8192,
         .wcet = 900000}));
   nodes.emplace_back(
     std::make_shared<typename SystemType::Sensor>(
       rt_nodes::SensorSettings{.node_name = "SensorC",
         .topic_name = "Data",
-        .cycle_time = 50ms,
+        .cycle_time = 51ms,
         .number_crunch_limit = 8192,
         .wcet = 11900000}));
 
