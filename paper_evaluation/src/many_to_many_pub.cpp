@@ -55,6 +55,9 @@ int main(int argc, char * argv[])
   } else if (argc == 4 && strcmp(argv[3], "ou") == 0) {
     std::cout << "Using overutilized nodes" << std::endl;
     nodes = create_graph_nodes_overutilized<RTSystem, TimeConfig>();
+  } else if (argc == 4 && strcmp(argv[3], "human") == 0) {
+    std::cout << "Using real-time nodes" << std::endl;
+    nodes = create_graph_nodes_human_speed<RTSystem, TimeConfig>();
   } else {
     std::cout << "Using normal nodes" << std::endl;
     nodes = create_graph_nodes<RTSystem, TimeConfig>();

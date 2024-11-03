@@ -193,4 +193,62 @@ auto create_graph_nodes_overutilized()
   return nodes;
 }
 
+
+template<typename SystemType, typename TimingConfig>
+auto create_graph_nodes_human_speed()
+->std::vector<std::shared_ptr<typename SystemType::NodeBaseType>>
+{
+  std::vector<std::shared_ptr<typename SystemType::NodeBaseType>> nodes;
+
+// ignore the warning about designated initializers - they make the code much
+// more readable
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wpedantic"
+
+  // setup communication graph
+  // sensor nodes
+  nodes.emplace_back(
+    std::make_shared<typename SystemType::Sensor>(
+      rt_nodes::SensorSettings{.node_name = "SensorA",
+        .topic_name = "Data",
+        .cycle_time = 2500ms,
+        .number_crunch_limit = 81920,
+        .wcet = 290000000}));
+  nodes.emplace_back(
+    std::make_shared<typename SystemType::Sensor>(
+      rt_nodes::SensorSettings{.node_name = "SensorB",
+        .topic_name = "Data",
+        .cycle_time = 4100ms,
+        .number_crunch_limit = 81920,
+        .wcet = 90000000}));
+  nodes.emplace_back(
+    std::make_shared<typename SystemType::Sensor>(
+      rt_nodes::SensorSettings{.node_name = "SensorC",
+        .topic_name = "Data",
+        .cycle_time = 5100ms,
+        .number_crunch_limit = 81920,
+        .wcet = 1190000000}));
+
+  nodes.emplace_back(
+    std::make_shared<typename SystemType::Transform>(
+      rt_nodes::TransformSettings{.node_name = "ProcessorX",
+        .input_topic = "Data",
+        .output_topic = "Sink",
+        .number_crunch_limit = 81920,
+        .cycle_time = 0ms,
+        .wcet = 390000000}));
+  nodes.emplace_back(
+    std::make_shared<typename SystemType::Transform>(
+      rt_nodes::TransformSettings{.node_name = "ProcessorY",
+        .input_topic = "Data",
+        .output_topic = "Sink",
+        .number_crunch_limit = 81920,
+        .cycle_time = 0ms,
+        .wcet = 190000000}));
+
+#pragma GCC diagnostic pop
+
+  return nodes;
+}
+
 #endif  // AUTOWARE_REFERENCE_SYSTEM__SEQUENCES_SYSTEM_BUILDER_HPP_
