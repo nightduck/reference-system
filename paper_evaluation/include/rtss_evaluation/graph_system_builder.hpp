@@ -54,7 +54,7 @@ auto create_graph_nodes_underutilized()
         .topic_name = "Data",
         .cycle_time = 51ms,
         .number_crunch_limit = 8192,
-        .wcet = 4900000}));
+        .wcet = 4800000}));
 
   nodes.emplace_back(
     std::make_shared<typename SystemType::Transform>(
@@ -63,7 +63,7 @@ auto create_graph_nodes_underutilized()
         .output_topic = "Sink",
         .number_crunch_limit = 8192,
         .cycle_time = 0ms,
-        .wcet = 1900000}));
+        .wcet = 1750000}));
   nodes.emplace_back(
     std::make_shared<typename SystemType::Transform>(
       rt_nodes::TransformSettings{.node_name = "ProcessorY",
@@ -71,7 +71,7 @@ auto create_graph_nodes_underutilized()
         .output_topic = "Sink",
         .number_crunch_limit = 8192,
         .cycle_time = 0ms,
-        .wcet = 1900000}));
+        .wcet = 1750000}));
 
 #pragma GCC diagnostic pop
 
@@ -120,7 +120,7 @@ auto create_graph_nodes()
         .output_topic = "Sink",
         .number_crunch_limit = 8192,
         .cycle_time = 0ms,
-        .wcet = 1900000}));
+        .wcet = 1750000}));
   nodes.emplace_back(
     std::make_shared<typename SystemType::Transform>(
       rt_nodes::TransformSettings{.node_name = "ProcessorY",
@@ -128,7 +128,7 @@ auto create_graph_nodes()
         .output_topic = "Sink",
         .number_crunch_limit = 8192,
         .cycle_time = 0ms,
-        .wcet = 900000}));
+        .wcet = 750000}));
 
 #pragma GCC diagnostic pop
 
@@ -178,7 +178,7 @@ auto create_graph_nodes_overutilized()
         .output_topic = "Sink",
         .number_crunch_limit = 8192,
         .cycle_time = 0ms,
-        .wcet = 3900000}));
+        .wcet = 3750000}));
   nodes.emplace_back(
     std::make_shared<typename SystemType::Transform>(
       rt_nodes::TransformSettings{.node_name = "ProcessorY",
@@ -186,7 +186,7 @@ auto create_graph_nodes_overutilized()
         .output_topic = "Sink",
         .number_crunch_limit = 8192,
         .cycle_time = 0ms,
-        .wcet = 1900000}));
+        .wcet = 1750000}));
 
 #pragma GCC diagnostic pop
 
