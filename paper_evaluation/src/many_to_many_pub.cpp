@@ -89,9 +89,15 @@ int main(int argc, char * argv[])
     }
     executor.spin();
   } else if (strcmp(argv[2], "edf") == 0) {
+    #if defined(RCLCPP_EXPERIMENTAL_GRAPH_EXECUTOR) && defined(RCLCPP_EXPERIMENTAL_EDF_QUEUE)
+    // Get argv[4] to determine RO or RE
+    rclcpp::experimental::executors::EDFEventsQueue::UniquePtr event_queue =
+      std::make_unique<rclcpp::experimental::executors::EDFEventsQueue>();
+    rclcpp::experimental::executors::GraphExecutor executor(std::move(event_queue));
+    #elif defined(RCLCPP_EXPERIMENTAL_DEADLINE_QUEUE)
     auto events_queue = std::make_unique<rclcpp::experimental::executors::DeadlineEventsQueue>();
-
     rclcpp::experimental::executors::EventsExecutor executor(std::move(events_queue));
+    #endif
     for (auto & node : nodes) {
       executor.add_node(node);
     }

@@ -21,6 +21,8 @@
 #include "settings.hpp"
 #include "reference_system/sample_management.hpp"
 
+using namespace std::chrono_literals;
+
 template<typename SystemType, typename TimingConfig>
 auto create_graph_nodes_underutilized()
 ->std::vector<std::shared_ptr<typename SystemType::NodeBaseType>>
