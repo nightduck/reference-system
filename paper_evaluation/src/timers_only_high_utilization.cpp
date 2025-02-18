@@ -22,6 +22,7 @@
 #include "rtss_evaluation/timers_only_system_builder.hpp"
 #include "rtss_evaluation/default.hpp"
 #include "rclcpp/experimental/executors/events_executor/events_executor.hpp"
+
 #ifdef RCLCPP_EXPERIMENTAL_GRAPH_EXECUTOR
 #include "rclcpp/experimental/executors/graph_executor.hpp"
 #endif
@@ -62,7 +63,7 @@ int main(int argc, char * argv[])
 
   // Using argv[2] as a string argument, ascertain which executor we're running
   if (strcmp(argv[2], "rm") == 0) {
-    #if RCLCPP_EXPERIMENTAL_GRAPH_EXECUTOR_ENABLED && RCLCPP_EXPERIMENTAL_RM_QUEUE_ENABLED
+    #if defined(RCLCPP_EXPERIMENTAL_GRAPH_EXECUTOR) && defined(RCLCPP_EXPERIMENTAL_RM_QUEUE)
     auto events_queue = std::make_unique<rclcpp::experimental::executors::RMEventsQueue>();
     rclcpp::experimental::executors::EventsExecutor executor(std::move(events_queue));
 
@@ -72,7 +73,7 @@ int main(int argc, char * argv[])
     executor.spin();
     #endif
   } else if (strcmp(argv[2], "edf") == 0) {
-    #if RCLCPP_EXPERIMENTAL_GRAPH_EXECUTOR_ENABLED && RCLCPP_EXPERIMENTAL_EDF_QUEUE_ENABLED
+    #if defined(RCLCPP_EXPERIMENTAL_GRAPH_EXECUTOR) && defined(RCLCPP_EXPERIMENTAL_EDF_QUEUE)
     auto events_queue = std::make_unique<rclcpp::experimental::executors::EDFEventsQueue>();
     rclcpp::experimental::executors::EventsExecutor executor(std::move(events_queue));
     for (auto & node : nodes) {
